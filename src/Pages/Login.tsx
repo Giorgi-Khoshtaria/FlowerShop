@@ -65,7 +65,7 @@ function Login() {
         </div>
         <p className="flex items-center justify-center text-xl not-italic font-normal leading-[normal] text-darkGray max-sm:flex-col ">
           dont have an account?{" "}
-          <Link to="register" className="text-yellow">
+          <Link to="/register" className="text-yellow">
             Register
           </Link>
         </p>
