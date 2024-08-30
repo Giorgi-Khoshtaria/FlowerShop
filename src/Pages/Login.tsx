@@ -5,7 +5,7 @@ function Login() {
   return (
     <div className=" px-[20px] min-h-screen flex items-center justify-center max-lg:flex-col-reverse">
       <div className=" pt-[33px] pr-[49px] pb-[67px] pl-[48px] bg-white w-[488px] max-sm:w-[327px]">
-        <div className=" flex items-baseline justify-between mb-[60px] max-sm:flex-col-reverse max-sm:gap-2">
+        <div className=" flex items-baseline justify-between mb-[57px] max-sm:flex-col-reverse max-sm:gap-2">
           <div>
             <h1 className="text-black text-[32px] not-italic font-normal leading-[normal] mb-[13px]">
               Login
@@ -51,9 +51,17 @@ function Login() {
           </p>
         </div>
         <div className="w-full">
-          <button className="w-full pt-[19px] pb-[15px] bg-yellow rounded-[5px] mt-[55px] mb-[69px] text-white text-xl not-italic font-normal leading-[normal]">
+          <button className="w-full pt-[19px] pb-[15px] bg-yellow rounded-[5px] mt-[45px]  text-white text-xl not-italic font-normal leading-[normal]">
             Login
           </button>
+        </div>
+        <div className="mb-[50px] mt-2 ">
+          <Link
+            to="/forgotpassword"
+            className="text-darkGray text-lg not-italic font-normal leading-[normal] "
+          >
+            Forgot Password?
+          </Link>
         </div>
         <p className="flex items-center justify-center text-xl not-italic font-normal leading-[normal] text-darkGray max-sm:flex-col ">
           dont have an account?{" "}
