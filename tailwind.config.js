@@ -8,6 +8,8 @@ export default {
         black: "#000",
         semiBlack: "#121212",
         yellow: "#FF8F52",
+        darkGray: "#838383",
+        semiGray: "#D9D9D9",
       },
     },
   },

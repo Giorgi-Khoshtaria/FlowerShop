@@ -34,19 +34,19 @@ const router = createBrowserRouter([
         path: "about",
         element: <About />,
       },
-      {
-        path: "login",
-        element: <Login />,
-      },
-      {
-        path: "register",
-        element: <Register />,
-      },
-      {
-        path: "forgotpassword",
-        element: <ForgotPassword />,
-      },
     ],
+  },
+  {
+    path: "login",
+    element: <Login />,
+  },
+  {
+    path: "register",
+    element: <Register />,
+  },
+  {
+    path: "forgotpassword",
+    element: <ForgotPassword />,
   },
 ]);
 

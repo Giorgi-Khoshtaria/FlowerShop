@@ -100,23 +100,25 @@ function Header() {
           {showUser && (
             <div className="absolute text-center w-[200px] top-[70px] right-0 p-4 bg-yellow z-20  ">
               <div>
-                <p className="text-sm font-medium pb-2 border-b border-white ">
-                  Returning Customer?
-                </p>
-                <div className="py-1 mt-2 bg-red-200 rounded-lg">
-                  <Link to="/login" className="text-sm font-medium  mt-3 ">
-                    Sign In
-                  </Link>
+                <div>
+                  <p className="text-sm font-medium pb-2 border-b border-white ">
+                    Returning Customer?
+                  </p>
+                  <div className="py-1 mt-2 bg-red-200 rounded-lg">
+                    <Link to="/login" className="text-sm font-medium  mt-3 ">
+                      Sign In
+                    </Link>
+                  </div>
                 </div>
-              </div>
-              <div>
-                <p className="text-sm font-medium pt-2 border-t mt-2 border-white">
-                  Don't have an account ?
-                </p>
-                <div className="py-1 mt-2 bg-red-200 rounded-lg">
-                  <Link to="/register" className="text-sm font-medium  mt-3 ">
-                    Register
-                  </Link>
+                <div>
+                  <p className="text-sm font-medium pt-2 border-t mt-2 border-white">
+                    Don't have an account ?
+                  </p>
+                  <div className="py-1 mt-2 bg-red-200 rounded-lg">
+                    <Link to="/register" className="text-sm font-medium  mt-3 ">
+                      Register
+                    </Link>
+                  </div>
                 </div>
               </div>
             </div>
