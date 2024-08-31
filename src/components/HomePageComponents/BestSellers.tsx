@@ -1,4 +1,3 @@
-import React from "react";
 import Flowers from "../SemiComponents/Flowers";
 import best1 from "/assets/best1.png";
 import best2 from "/assets/best2.png";
@@ -16,10 +15,10 @@ function BestSellers() {
         <div className="h-[2px] w-[165px] bg-semiGray  max-sm:w-10"> </div>
       </div>
       <div className="flex items-center justify-between  flex-wrap mt-[33px] gap-5 max-sm:justify-center">
-        <Flowers img={best1} name="Daisy" price="5" />
-        <Flowers img={best2} name="Sun flower" price="5" />
-        <Flowers img={best3} name="White Rose" price="5" />
-        <Flowers img={best4} name="Periwinkle" price="5" />
+        <Flowers img={best1} name="Daisy" price={5} />
+        <Flowers img={best2} name="Sun flower" price={5} />
+        <Flowers img={best3} name="White Rose" price={5} />
+        <Flowers img={best4} name="Periwinkle" price={5} />
       </div>
     </div>
   );

@@ -3,7 +3,7 @@ import React from "react";
 interface FlowersProps {
   img: string;
   name: string;
-  price: string;
+  price: number;
 }
 
 const Flowers: React.FC<FlowersProps> = ({ img, name, price }) => {
