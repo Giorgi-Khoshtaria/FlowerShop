@@ -8,6 +8,8 @@ import About from "./Pages/About";
 import Login from "./Pages/Login";
 import Register from "./Pages/Register";
 import ForgotPassword from "./Pages/ForgotPassword";
+import Profile from "./Pages/Profile";
+import AddBlogs from "./Pages/AddBlogs";
 
 const router = createBrowserRouter([
   {
@@ -33,6 +35,14 @@ const router = createBrowserRouter([
       {
         path: "about",
         element: <About />,
+      },
+      {
+        path: "profile",
+        element: <Profile />,
+      },
+      {
+        path: "addblogs",
+        element: <AddBlogs />,
       },
     ],
   },

@@ -1,11 +1,12 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import user from "/assets/user-solid.svg";
 import cart from "/assets/cart-shopping-solid.svg";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 function Header() {
   const [show, setShow] = useState(false);
   const [showUser, setShowUser] = useState(false);
+  const location = useLocation();
 
   const showModal = () => {
     setShow(!show);
@@ -15,6 +16,9 @@ function Header() {
     setShowUser(!showUser);
   };
 
+  useEffect(() => {
+    setShowUser(false);
+  }, [location]);
   return (
     <header className="relative flex justify-center items-center p-4 w-full bg-white">
       <div className="flex justify-between items-center max-w-[1440px] w-full">
@@ -120,6 +124,19 @@ function Header() {
                     </Link>
                   </div>
                 </div>
+              </div>
+              <div>
+                <ul>
+                  <li>
+                    <Link to="profile">Profile</Link>
+                  </li>
+                  <li>
+                    <Link to="addblogs">AddBlogs</Link>
+                  </li>
+                  <li>
+                    <button>LogOut</button>
+                  </li>
+                </ul>
               </div>
             </div>
           )}
