@@ -128,10 +128,13 @@ function Header() {
               <div>
                 <ul>
                   <li>
-                    <Link to="profile">Profile</Link>
+                    <Link to="/profile">Profile</Link>
                   </li>
                   <li>
-                    <Link to="addblogs">AddBlogs</Link>
+                    <Link to="/addblogs">AddBlogs</Link>
+                  </li>
+                  <li>
+                    <Link to="/addflowers">AddFlowers</Link>
                   </li>
                   <li>
                     <button>LogOut</button>

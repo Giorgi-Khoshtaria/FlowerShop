@@ -10,6 +10,7 @@ import Register from "./Pages/Register";
 import ForgotPassword from "./Pages/ForgotPassword";
 import Profile from "./Pages/Profile";
 import AddBlogs from "./Pages/AddBlogs";
+import AddFlowers from "./Pages/AddFolwers";
 
 const router = createBrowserRouter([
   {
@@ -43,6 +44,10 @@ const router = createBrowserRouter([
       {
         path: "addblogs",
         element: <AddBlogs />,
+      },
+      {
+        path: "addflowers",
+        element: <AddFlowers />,
       },
     ],
   },
