@@ -1,4 +1,3 @@
-import React from "react";
 import "../components/Css/profile.css";
 function Profile() {
   return (
@@ -9,14 +8,19 @@ function Profile() {
         </h1>
 
         {/* Profile Picture Upload */}
-        <div className="mb-6">
-          <label className="block text-lg font-medium text-yellow mb-2">
-            Upload Profile Picture
-          </label>
-          <input
-            type="file"
-            className="block w-full text-sm text-yellow-600 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-yellow-50 file:text-yellow-700 hover:file:bg-yellow-100"
-          />
+        <div>
+          <div className="mb-6">
+            <label className="block text-lg font-medium text-yellow mb-2">
+              Upload Profile Picture
+            </label>
+            <input
+              type="file"
+              className="block w-full text-sm text-yellow file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-yellow file:text-white hover:file:bg-yellow-100"
+            />
+          </div>
+          <div>
+            <h1>uploaded image</h1>
+          </div>
         </div>
 
         {/* User Information */}
@@ -24,7 +28,7 @@ function Profile() {
           <div>
             <label
               htmlFor="username"
-              className="block text-lg font-medium text-yellow mb-2"
+              className=" text-lg font-medium text-yellow mb-2"
             >
               Username
             </label>
@@ -38,7 +42,7 @@ function Profile() {
           <div>
             <label
               htmlFor="email"
-              className="block text-lg font-medium text-yellow mb-2"
+              className=" text-lg font-medium text-yellow mb-2"
             >
               Email
             </label>
@@ -60,7 +64,7 @@ function Profile() {
             <div>
               <label
                 htmlFor="fullname"
-                className="block text-lg font-medium text-yellow mb-2"
+                className="text-lg font-medium text-yellow mb-2"
               >
                 User FullName
               </label>
@@ -74,7 +78,7 @@ function Profile() {
             <div>
               <label
                 htmlFor="phone"
-                className="block text-lg font-medium text-yellow mb-2"
+                className=" text-lg font-medium text-yellow mb-2"
               >
                 Contact Number
               </label>
@@ -88,7 +92,7 @@ function Profile() {
             <div>
               <label
                 htmlFor="age"
-                className="block text-lg font-medium text-yellow mb-2"
+                className="text-lg font-medium text-yellow mb-2"
               >
                 Age
               </label>
@@ -102,7 +106,7 @@ function Profile() {
             <div>
               <label
                 htmlFor="address"
-                className="block text-lg font-medium text-yellow mb-2"
+                className="text-lg font-medium text-yellow mb-2"
               >
                 Full Address
               </label>
