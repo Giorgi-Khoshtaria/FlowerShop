@@ -14,7 +14,7 @@ function BestSellers() {
         </h2>
         <div className="h-[2px] w-[165px] bg-semiGray  max-sm:w-10"> </div>
       </div>
-      <div className="flex items-center justify-between  flex-wrap mt-[33px] gap-5 max-sm:justify-center">
+      <div className="flex items-center justify-between  flex-wrap mt-[33px] gap-5 max-xl:justify-center">
         <Flowers img={best1} name="Daisy" price={5} />
         <Flowers img={best2} name="Sun flower" price={5} />
         <Flowers img={best3} name="White Rose" price={5} />

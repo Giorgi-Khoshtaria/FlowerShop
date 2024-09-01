@@ -11,7 +11,7 @@ function Coments() {
         </h2>
         <div className="h-[2px] w-[165px] bg-semiGray  max-sm:w-10"> </div>
       </div>
-      <div className=" flex items-center justify-between flex-wrap gap-5 mt-4 max-[800px]:justify-center">
+      <div className=" flex items-center justify-between flex-wrap gap-5 mt-4 max-xl:justify-center ">
         <CommentDetails
           img={commentImage}
           name="Atena"
