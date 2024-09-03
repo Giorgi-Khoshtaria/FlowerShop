@@ -3,10 +3,12 @@ import { Link, useNavigate } from "react-router-dom";
 import axios, { AxiosError } from "axios";
 import houseimg from "/assets/house.svg";
 import loginImage from "/assets/login.png";
+import { useAuth } from "../Contexts/AuthContext";
 
 function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const { login, setUserData } = useAuth();
   const navigate = useNavigate(); // Initialize the navigate function
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -22,6 +24,9 @@ function Login() {
       );
 
       if (response.status === 200) {
+        login(response.data);
+        setUserData(response.data);
+        console.log(response.data);
         setPassword("");
         setUsername("");
         alert("Login successful!");

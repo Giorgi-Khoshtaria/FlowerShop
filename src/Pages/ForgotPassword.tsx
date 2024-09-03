@@ -48,9 +48,8 @@ function ForgotPassword() {
         setConfirmPassword("");
 
         // Navigate to the login page after a short delay to allow the user to see the success message
-        setTimeout(() => {
-          navigate("/login");
-        }, 2000);
+
+        navigate("/login");
       }
     } catch (error: unknown) {
       if (error instanceof AxiosError) {

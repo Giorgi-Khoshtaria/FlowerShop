@@ -2,11 +2,13 @@ import { Link, useLocation } from "react-router-dom";
 import user from "/assets/user-solid.svg";
 import cart from "/assets/cart-shopping-solid.svg";
 import { useState, useEffect } from "react";
+import { useAuth } from "../Contexts/AuthContext";
 
 function Header() {
   const [show, setShow] = useState(false);
   const [showUser, setShowUser] = useState(false);
   const location = useLocation();
+  const { isAuthenticated, logout } = useAuth();
 
   const showModal = () => {
     setShow(!show);
@@ -19,6 +21,7 @@ function Header() {
   useEffect(() => {
     setShowUser(false);
   }, [location]);
+
   return (
     <header className="relative flex justify-center items-center p-4 w-full bg-white">
       <div className="flex justify-between items-center max-w-[1440px] w-full">
@@ -102,45 +105,63 @@ function Header() {
 
           {/* User Dropdown */}
           {showUser && (
-            <div className="absolute text-center w-[200px] top-[70px] right-0 p-4 bg-yellow z-20  ">
-              <div>
+            <div className="absolute text-center w-[200px] top-[70px] right-0 p-4 bg-yellow z-20">
+              {isAuthenticated ? (
+                <ul>
+                  <li>
+                    <Link
+                      to="/profile"
+                      className="text-white text-lg font-semibold "
+                    >
+                      {" "}
+                      Profile
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      to="/addblogs"
+                      className="text-white text-lg font-semibold "
+                    >
+                      Add Blogs
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      to="/addflowers"
+                      className="text-white text-lg font-semibold "
+                    >
+                      Add Flowers
+                    </Link>
+                  </li>
+                  <li>
+                    <button
+                      onClick={logout}
+                      className="text-white text-lg font-semibold "
+                    >
+                      Log Out
+                    </button>
+                  </li>
+                </ul>
+              ) : (
                 <div>
-                  <p className="text-sm font-medium pb-2 border-b border-white ">
+                  <p className="text-sm font-medium pb-2 border-b border-white">
                     Returning Customer?
                   </p>
                   <div className="py-1 mt-2 bg-red-200 rounded-lg">
-                    <Link to="/login" className="text-sm font-medium  mt-3 ">
+                    <Link to="/login" className="text-sm font-medium mt-3">
                       Sign In
                     </Link>
                   </div>
-                </div>
-                <div>
                   <p className="text-sm font-medium pt-2 border-t mt-2 border-white">
-                    Don't have an account ?
+                    Don't have an account?
                   </p>
                   <div className="py-1 mt-2 bg-red-200 rounded-lg">
-                    <Link to="/register" className="text-sm font-medium  mt-3 ">
+                    <Link to="/register" className="text-sm font-medium mt-3">
                       Register
                     </Link>
                   </div>
                 </div>
-              </div>
-              <div>
-                <ul>
-                  <li>
-                    <Link to="/profile">Profile</Link>
-                  </li>
-                  <li>
-                    <Link to="/addblogs">AddBlogs</Link>
-                  </li>
-                  <li>
-                    <Link to="/addflowers">AddFlowers</Link>
-                  </li>
-                  <li>
-                    <button>LogOut</button>
-                  </li>
-                </ul>
-              </div>
+              )}
             </div>
           )}
         </div>
