@@ -8,7 +8,8 @@ function Header() {
   const [show, setShow] = useState(false);
   const [showUser, setShowUser] = useState(false);
   const location = useLocation();
-  const { isAuthenticated, logout } = useAuth();
+  const { isAuthenticated, logout, userData } = useAuth();
+  console.log(userData);
 
   const showModal = () => {
     setShow(!show);
@@ -125,14 +126,19 @@ function Header() {
                       Add Blogs
                     </Link>
                   </li>
-                  <li>
-                    <Link
-                      to="/addflowers"
-                      className="text-white text-lg font-semibold "
-                    >
-                      Add Flowers
-                    </Link>
-                  </li>
+                  {userData?.user.role === "admin" ? (
+                    <li>
+                      <Link
+                        to="/addflowers"
+                        className="text-white text-lg font-semibold "
+                      >
+                        Add Flowers
+                      </Link>
+                    </li>
+                  ) : (
+                    ""
+                  )}
+
                   <li>
                     <button
                       onClick={logout}

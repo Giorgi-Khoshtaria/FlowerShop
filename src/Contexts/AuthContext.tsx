@@ -10,10 +10,7 @@ import React, {
 
 // Define the shape of your user data
 interface UserData {
-  id: string;
-  email: string;
-  isAdmin: boolean;
-  data: string;
+  user: { role: string; id: string; email: string };
 }
 
 interface AuthContextProps {
@@ -66,7 +63,13 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
 
   return (
     <AuthContext.Provider
-      value={{ userData, setUserData, login, logout, isAuthenticated }}
+      value={{
+        userData,
+        setUserData,
+        login,
+        logout,
+        isAuthenticated,
+      }}
     >
       {children}
     </AuthContext.Provider>
