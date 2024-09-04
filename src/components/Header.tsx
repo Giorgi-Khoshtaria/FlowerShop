@@ -3,6 +3,7 @@ import user from "/assets/user-solid.svg";
 import cart from "/assets/cart-shopping-solid.svg";
 import { useState, useEffect } from "react";
 import { useAuth } from "../Contexts/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 function Header() {
   const [show, setShow] = useState(false);
@@ -10,6 +11,7 @@ function Header() {
   const location = useLocation();
   const { isAuthenticated, logout, userData } = useAuth();
   console.log(userData);
+  const navigate = useNavigate();
 
   const showModal = () => {
     setShow(!show);
@@ -22,7 +24,10 @@ function Header() {
   useEffect(() => {
     setShowUser(false);
   }, [location]);
-
+  const handleLogout = () => {
+    logout();
+    navigate("/home");
+  };
   return (
     <header className="relative flex justify-center items-center p-4 w-full bg-white">
       <div className="flex justify-between items-center max-w-[1440px] w-full">
@@ -141,7 +146,7 @@ function Header() {
 
                   <li>
                     <button
-                      onClick={logout}
+                      onClick={handleLogout}
                       className="text-white text-lg font-semibold "
                     >
                       Log Out

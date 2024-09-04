@@ -29,12 +29,18 @@ function Register() {
     }
 
     try {
+      const token = localStorage.getItem("token");
       const response = await axios.post(
         "http://localhost:3005/api/user/signup",
         {
           email,
           username,
           password,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         }
       );
 

@@ -15,11 +15,17 @@ function Login() {
     e.preventDefault();
 
     try {
+      const token = localStorage.getItem("token");
       const response = await axios.post(
         "http://localhost:3005/api/user/login",
         {
           username,
           password,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         }
       );
 

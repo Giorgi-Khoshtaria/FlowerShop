@@ -1,5 +1,75 @@
+import { ChangeEvent, useEffect, useState } from "react";
+import axios from "axios";
 import "../components/Css/profile.css";
+import { useAuth } from "../Contexts/AuthContext";
+import { useNavigate } from "react-router-dom";
+
 function Profile() {
+  const { userData, logout } = useAuth();
+  const [profileData, setProfileData] = useState({
+    email: "",
+    username: "",
+    fullName: "",
+    contactNumber: "",
+    age: "",
+    fullAddress: "",
+  });
+  const navigate = useNavigate();
+  const userId = userData?.user.id;
+  console.log(userId);
+  const handleLogout = () => {
+    logout();
+    navigate("/home");
+  };
+  useEffect(() => {
+    const fetchProfileData = async () => {
+      try {
+        const token = localStorage.getItem("token"); // Assuming token is stored in localStorage
+        const response = await axios.get(
+          `http://localhost:3005/api/user/getUserProfile/${userId}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+            params: {
+              userId,
+            },
+          }
+        );
+        console.log(response.data);
+        setProfileData({
+          email: response.data.email || "",
+          username: response.data.username || "",
+          fullName: response.data.fullName || "",
+          contactNumber: response.data.contactNumber || "",
+          age: response.data.age || "",
+          fullAddress: response.data.fullAddress || "",
+        });
+      } catch (error) {
+        if (error.response?.status === 401) {
+          // Token expired or invalid, prompt for re-authentication or handle token refresh
+          // Optionally implement token refresh logic here
+          handleLogout(); // Implement logout or redirect to login
+        } else {
+          console.error("Error fetching user profile data:", error);
+        }
+      }
+    };
+
+    if (userId) {
+      fetchProfileData();
+    }
+  }, [userId]);
+
+  const handleChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value } = e.target;
+    setProfileData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
   return (
     <div className="flex items-center justify-center mt-20 p-4">
       <div className="max-w-[1440px] w-full flex flex-col items-start bg-white p-6 rounded-lg shadow-md">
@@ -8,7 +78,7 @@ function Profile() {
         </h1>
 
         {/* Profile Picture Upload */}
-        <div>
+        <div className="flex items-center justify-between w-full">
           <div className="mb-6">
             <label className="block text-lg font-medium text-yellow mb-2">
               Upload Profile Picture
@@ -35,6 +105,9 @@ function Profile() {
             <input
               type="text"
               id="username"
+              name="username"
+              value={profileData.username}
+              onChange={handleChange}
               className="focus:outline-none w-full border border-darkGray p-3 rounded-lg text-yellow"
             />
           </div>
@@ -49,6 +122,9 @@ function Profile() {
             <input
               type="email"
               id="email"
+              name="email"
+              value={profileData.email}
+              onChange={handleChange}
               className="focus:outline-none w-full border border-darkGray p-3 rounded-lg text-yellow"
             />
           </div>
@@ -71,6 +147,9 @@ function Profile() {
               <input
                 type="text"
                 id="fullname"
+                name="fullName"
+                value={profileData.fullName}
+                onChange={handleChange}
                 className="focus:outline-none w-full border border-darkGray p-3 rounded-lg text-yellow"
               />
             </div>
@@ -85,6 +164,9 @@ function Profile() {
               <input
                 type="number"
                 id="phone"
+                name="contactNumber"
+                value={profileData.contactNumber}
+                onChange={handleChange}
                 className="focus:outline-none w-full border border-darkGray p-3 rounded-lg text-yellow"
               />
             </div>
@@ -99,6 +181,9 @@ function Profile() {
               <input
                 type="number"
                 id="age"
+                name="age"
+                value={profileData.age}
+                onChange={handleChange}
                 className="focus:outline-none w-full border border-darkGray p-3 rounded-lg text-yellow"
               />
             </div>
@@ -113,6 +198,9 @@ function Profile() {
               <input
                 type="text"
                 id="address"
+                name="fullAddress"
+                value={profileData.fullAddress}
+                onChange={handleChange}
                 className=" focus:outline-none w-full border border-darkGray p-3 rounded-lg text-yellow"
               />
             </div>

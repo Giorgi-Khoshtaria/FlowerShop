@@ -32,12 +32,18 @@ function ForgotPassword() {
     }
 
     try {
+      const token = localStorage.getItem("token");
       const response = await axios.post(
         "http://localhost:3005/api/user/forgot-password",
         {
           username,
           newPassword,
           confirmPassword,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         }
       );
 
