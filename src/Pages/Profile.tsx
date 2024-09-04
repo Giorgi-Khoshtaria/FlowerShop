@@ -12,19 +12,22 @@ function Profile() {
     fullName: "",
     contactNumber: "",
     age: "",
-    fullAddress: "",
+    fullAddreess: "",
   });
+
+  const [base64Image, setBase64Image] = useState<string | null>(null);
   const navigate = useNavigate();
   const userId = userData?.user.id;
-  console.log(userId);
+
   const handleLogout = () => {
     logout();
     navigate("/home");
   };
+
   useEffect(() => {
     const fetchProfileData = async () => {
       try {
-        const token = localStorage.getItem("token"); // Assuming token is stored in localStorage
+        const token = localStorage.getItem("token");
         const response = await axios.get(
           `http://localhost:3005/api/user/getUserProfile/${userId}`,
           {
@@ -36,20 +39,20 @@ function Profile() {
             },
           }
         );
-        console.log(response.data);
         setProfileData({
           email: response.data.email || "",
           username: response.data.username || "",
           fullName: response.data.fullName || "",
           contactNumber: response.data.contactNumber || "",
           age: response.data.age || "",
-          fullAddress: response.data.fullAddress || "",
+          fullAddreess: response.data.fullAddress || "",
         });
+        if (response.data.profilePicture) {
+          setBase64Image(response.data.profilePicture);
+        }
       } catch (error) {
         if (error.response?.status === 401) {
-          // Token expired or invalid, prompt for re-authentication or handle token refresh
-          // Optionally implement token refresh logic here
-          handleLogout(); // Implement logout or redirect to login
+          handleLogout();
         } else {
           console.error("Error fetching user profile data:", error);
         }
@@ -70,6 +73,50 @@ function Profile() {
       [name]: value,
     }));
   };
+
+  const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      const file = e.target.files[0];
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setBase64Image(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleSaveChanges = async () => {
+    const formData = {
+      email: profileData.email,
+      username: profileData.username,
+      fullName: profileData.fullName,
+      contactNumber: profileData.contactNumber,
+      age: profileData.age,
+      fullAddreess: profileData.fullAddreess,
+      profilePicture: base64Image,
+    };
+
+    try {
+      const token = localStorage.getItem("token");
+      await axios.post(
+        `http://localhost:3005/api/user/updateProfile/${userId}`,
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+          params: {
+            userId,
+          },
+        }
+      );
+      alert("Profile updated successfully.");
+    } catch (error) {
+      console.error("Error updating profile:", error);
+    }
+  };
+
   return (
     <div className="flex items-center justify-center mt-20 p-4">
       <div className="max-w-[1440px] w-full flex flex-col items-start bg-white p-6 rounded-lg shadow-md">
@@ -86,10 +133,17 @@ function Profile() {
             <input
               type="file"
               className="block w-full text-sm text-yellow file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-yellow file:text-white hover:file:bg-yellow-100"
+              onChange={handleFileChange}
             />
           </div>
           <div>
-            <h1>uploaded image</h1>
+            {base64Image && (
+              <img
+                src={base64Image}
+                alt="Profile Preview"
+                className="w-24 h-24 object-cover rounded-full"
+              />
+            )}
           </div>
         </div>
 
@@ -198,8 +252,8 @@ function Profile() {
               <input
                 type="text"
                 id="address"
-                name="fullAddress"
-                value={profileData.fullAddress}
+                name="fullAddreess"
+                value={profileData.fullAddreess}
                 onChange={handleChange}
                 className=" focus:outline-none w-full border border-darkGray p-3 rounded-lg text-yellow"
               />
@@ -209,7 +263,11 @@ function Profile() {
 
         {/* Save Button */}
         <div className="mt-8 w-full flex justify-end">
-          <button className="bg-yellow text-white py-3 px-6 rounded-lg shadow focus:outline-none">
+          <button
+            type="button"
+            onClick={handleSaveChanges}
+            className="bg-yellow text-white py-3 px-6 rounded-lg shadow focus:outline-none"
+          >
             Save Changes
           </button>
         </div>
