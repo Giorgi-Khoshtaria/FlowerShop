@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useRef, useState } from "react";
 import { useAuth } from "../Contexts/AuthContext";
 import axios from "axios";
 
@@ -12,7 +12,9 @@ function AddBlogs() {
     blogDescription: "",
     blogUserId: userId,
   });
-  // State for displaying validation errors
+
+  // Reference for the file input
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   // Handle input changes
   const handleChange = (
@@ -34,6 +36,21 @@ function AddBlogs() {
     }
   };
 
+  // Reset all fields including file input
+  const resetFields = () => {
+    setBlogData({
+      blogName: "",
+      blogDescription: "",
+      blogUserId: userId,
+    });
+    setBlogImage(null);
+
+    // Reset the file input
+    if (fileInputRef.current) {
+      fileInputRef.current.value = ""; // Clears the file input
+    }
+  };
+
   // Handle form submission
   const handleSubmit = async () => {
     // Check if all required fields are filled
@@ -41,6 +58,7 @@ function AddBlogs() {
       alert("All fields, including the image, must be filled out.");
       return; // Stop submission if validation fails
     }
+
     const formData = {
       blogName: blogData.blogName,
       blogDescription: blogData.blogDescription,
@@ -61,7 +79,11 @@ function AddBlogs() {
         }
       );
 
-      console.log("Blog created successfully:", response.data);
+      if (response.status === 201) {
+        resetFields(); // Reset all fields on success
+        console.log("Blog created successfully:", response.data);
+        alert("Blog created successfully:");
+      }
     } catch (error) {
       console.error("Error creating blog:", error);
       alert("There was an error creating the blog.");
@@ -84,6 +106,7 @@ function AddBlogs() {
             </label>
             <input
               type="file"
+              ref={fileInputRef}
               id="blogimage"
               onChange={handleFileChange}
               className="w-full text-sm text-yellow file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-yellow file:text-white hover:file:bg-yellow-100"
