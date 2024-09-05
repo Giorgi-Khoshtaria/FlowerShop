@@ -4,13 +4,16 @@ import cart from "/assets/cart-shopping-solid.svg";
 import { useState, useEffect } from "react";
 import { useAuth } from "../Contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 function Header() {
   const [show, setShow] = useState(false);
   const [showUser, setShowUser] = useState(false);
+  const [profileImage, setProfileImage] = useState<string | null>(null);
   const location = useLocation();
   const { isAuthenticated, logout, userData } = useAuth();
-  console.log(userData);
+  const userId = userData?.user?.id;
+  // console.log(userData);
   const navigate = useNavigate();
 
   const showModal = () => {
@@ -24,7 +27,39 @@ function Header() {
   useEffect(() => {
     setShowUser(false);
   }, [location]);
+  useEffect(() => {
+    if (isAuthenticated && userId) {
+      // Fetch the user profile data using Axios
+      const fetchUserProfile = async () => {
+        try {
+          const token = localStorage.getItem("token");
+          const response = await axios.get(
+            `http://localhost:3005/api/user/getUserProfile/${userId}`,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+              params: {
+                userId,
+              },
+            }
+          ); // Replace with your API endpoint
+          if (response.data.profilePicture) {
+            setProfileImage(response.data.profilePicture);
+          } else {
+            setProfileImage(null); // Ensure no image is set if none exists
+          } // Assuming the profile image URL is in this field
+        } catch (error) {
+          console.error("Failed to fetch user profile:", error);
+        }
+      };
+
+      fetchUserProfile();
+    }
+  }, [isAuthenticated, userData, userId]);
+  // console.log(profileImage, "profileimage");
   const handleLogout = () => {
+    setProfileImage(null);
     logout();
     navigate("/home");
   };
@@ -74,12 +109,24 @@ function Header() {
           </ul>
         </nav>
         <div className="relative flex items-center gap-4">
-          <img
-            src={user}
-            alt="User Icon"
-            className="w-7 h-7 cursor-pointer"
-            onClick={showUserModal}
-          />
+          <div>
+            {profileImage ? (
+              <img
+                src={profileImage}
+                alt="User Icon"
+                className="w-10 h-10 cursor-pointer object-cover rounded-full"
+                onClick={showUserModal}
+              />
+            ) : (
+              <img
+                src={user}
+                alt="User Icon"
+                className="w-7 h-7 cursor-pointer  "
+                onClick={showUserModal}
+              />
+            )}
+          </div>
+
           <img src={cart} alt="Cart Icon" className="w-7 h-7" />
           <div className="md:hidden" onClick={showModal}>
             <svg

@@ -12,7 +12,7 @@ function Profile() {
     fullName: "",
     contactNumber: "",
     age: "",
-    fullAddreess: "",
+    fullAddress: "",
   });
 
   const [base64Image, setBase64Image] = useState<string | null>(null);
@@ -45,10 +45,12 @@ function Profile() {
           fullName: response.data.fullName || "",
           contactNumber: response.data.contactNumber || "",
           age: response.data.age || "",
-          fullAddreess: response.data.fullAddress || "",
+          fullAddress: response.data.fullAddress || "",
         });
         if (response.data.profilePicture) {
           setBase64Image(response.data.profilePicture);
+        } else {
+          setBase64Image(null); // Ensure no image is set if none exists
         }
       } catch (error) {
         if (error.response?.status === 401) {
@@ -63,7 +65,6 @@ function Profile() {
       fetchProfileData();
     }
   }, [userId]);
-
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -92,7 +93,7 @@ function Profile() {
       fullName: profileData.fullName,
       contactNumber: profileData.contactNumber,
       age: profileData.age,
-      fullAddreess: profileData.fullAddreess,
+      fullAddress: profileData.fullAddress,
       profilePicture: base64Image,
     };
 
@@ -141,7 +142,7 @@ function Profile() {
               <img
                 src={base64Image}
                 alt="Profile Preview"
-                className="w-24 h-24 object-cover rounded-full"
+                className="w-24 h-24 object-cover rounded-full "
               />
             )}
           </div>
@@ -252,8 +253,8 @@ function Profile() {
               <input
                 type="text"
                 id="address"
-                name="fullAddreess"
-                value={profileData.fullAddreess}
+                name="fullAddress"
+                value={profileData.fullAddress}
                 onChange={handleChange}
                 className=" focus:outline-none w-full border border-darkGray p-3 rounded-lg text-yellow"
               />
