@@ -1,9 +1,7 @@
-import React from "react";
-
 interface BlogsProps {
-  userImage: string;
+  blogUserImage: string;
   name: string;
-  date: string;
+  date: string; // Pass the createdAt date as a string
   mainImage: string;
   blogName: string;
   description: string;
@@ -11,8 +9,16 @@ interface BlogsProps {
   view: number;
 }
 
-const Blogs: React.FC<BlogsProps> = ({
-  userImage,
+const formatDate = (dateString: string): string => {
+  const date = new Date(dateString);
+  const year = date.getFullYear();
+  const month = (date.getMonth() + 1).toString().padStart(2, "0"); // Adding 1 to get the correct month
+  const day = date.getDate().toString().padStart(2, "0");
+  return `${year}/${day}/${month}`;
+};
+
+const BlogsSection: React.FC<BlogsProps> = ({
+  blogUserImage,
   name,
   date,
   mainImage,
@@ -21,23 +27,29 @@ const Blogs: React.FC<BlogsProps> = ({
   like,
   view,
 }) => {
+  const formattedDate = formatDate(date); // Format the date here
+
   return (
     <div className="bg-white pb-[18px] w-[360px]">
-      <div className="flex items-center justify-between px-[10px] pt-[10px]">
+      <div className=" w-[360px] flex items-center justify-between px-[10px] pt-[10px]">
         <div className="flex items-center justify-start gap-2">
-          <img src={userImage} alt="userimage" />
+          <img
+            src={blogUserImage}
+            alt="userimage"
+            className="w-10 h-10 rounded-full"
+          />
           <p className="text-base not-italic font-normal leading-[normal] text-black">
             {name}
           </p>
         </div>
         <p className="text-base not-italic font-normal leading-[normal] text-darkGray">
-          {date}
+          {formattedDate}
         </p>
       </div>
       <img
         src={mainImage}
         alt="blogimage"
-        className="w-[360px] mt-[11px] mb-[17px]"
+        className="w-[360px] mt-[11px] mb-[17px] bg-white"
       />
       <div className="px-[10px]">
         <h2 className="mb-[13px] w-[255px] text-xl not-italic font-normal leading-[normal] text-black">
@@ -95,4 +107,4 @@ const Blogs: React.FC<BlogsProps> = ({
   );
 };
 
-export default Blogs;
+export default BlogsSection;

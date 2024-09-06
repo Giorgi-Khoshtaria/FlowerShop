@@ -10,7 +10,7 @@ import React, {
 
 // Define the shape of your user data
 interface UserData {
-  user: { role: string; id: string; email: string };
+  user: { role: string; id: string; email: string; username: string };
 }
 
 interface AuthContextProps {

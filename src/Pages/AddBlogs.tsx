@@ -1,4 +1,4 @@
-import { ChangeEvent, useRef, useState } from "react";
+import { ChangeEvent, useEffect, useRef, useState } from "react";
 import { useAuth } from "../Contexts/AuthContext";
 import axios from "axios";
 
@@ -7,10 +7,13 @@ function AddBlogs() {
   const userId = userData?.user.id;
 
   const [blogImage, setBlogImage] = useState<string | null>(null);
+  const [blogUserImage, setblogUserImage] = useState<string | null>(null);
+  // const [BlogUserName, setBlogUserName] = useState("");
   const [blogData, setBlogData] = useState({
     blogName: "",
     blogDescription: "",
     blogUserId: userId,
+    blogUserName: userData?.user.username,
   });
 
   // Reference for the file input
@@ -42,6 +45,7 @@ function AddBlogs() {
       blogName: "",
       blogDescription: "",
       blogUserId: userId,
+      blogUserName: userData?.user.username,
     });
     setBlogImage(null);
 
@@ -50,6 +54,36 @@ function AddBlogs() {
       fileInputRef.current.value = ""; // Clears the file input
     }
   };
+  useEffect(() => {
+    const fetchProfileData = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        const response = await axios.get(
+          `http://localhost:3005/api/user/getUserProfile/${userId}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+            params: {
+              userId,
+            },
+          }
+        );
+
+        if (response.data.profilePicture) {
+          setblogUserImage(response.data.profilePicture);
+        } else {
+          setblogUserImage(null); // Ensure no image is set if none exists
+        }
+      } catch (error) {
+        console.error("Error creating blog:", error);
+      }
+    };
+
+    if (userId) {
+      fetchProfileData();
+    }
+  }, [userId]);
 
   // Handle form submission
   const handleSubmit = async () => {
@@ -64,6 +98,8 @@ function AddBlogs() {
       blogDescription: blogData.blogDescription,
       blogUserId: blogData.blogUserId,
       blogImage: blogImage,
+      blogUserImage: blogUserImage,
+      blogUserName: userData?.user.username,
     };
 
     try {
