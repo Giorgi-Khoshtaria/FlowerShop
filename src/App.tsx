@@ -11,6 +11,7 @@ import ForgotPassword from "./Pages/ForgotPassword";
 import Profile from "./Pages/Profile";
 import AddBlogs from "./Pages/AddBlogs";
 import AddFlowers from "./Pages/AddFolwers";
+import BlogDetails from "./Pages/BlogDetails";
 
 const router = createBrowserRouter([
   {
@@ -44,6 +45,10 @@ const router = createBrowserRouter([
       {
         path: "addblogs",
         element: <AddBlogs />,
+      },
+      {
+        path: "blogDetails/:blogid",
+        element: <BlogDetails />,
       },
       {
         path: "addflowers",

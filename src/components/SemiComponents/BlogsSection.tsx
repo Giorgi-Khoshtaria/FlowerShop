@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import user from "/assets/user-solid.svg";
 interface BlogsProps {
   blogUserImage: string;
@@ -8,6 +9,7 @@ interface BlogsProps {
   description: string;
   like: number;
   view: number;
+  blogId: string;
 }
 
 const formatDate = (dateString: string): string => {
@@ -25,6 +27,7 @@ const BlogsSection: React.FC<BlogsProps> = ({
   mainImage,
   blogName,
   description,
+  blogId,
   like,
   view,
 }) => {
@@ -110,9 +113,12 @@ const BlogsSection: React.FC<BlogsProps> = ({
           </div>
         </div>
         <div>
-          <p className="text-lg not-italic font-normal leading-[normal] text-black">
+          <Link
+            to={`/blogDetails/${blogId}`}
+            className="text-lg not-italic font-normal leading-[normal] text-black"
+          >
             Read more
-          </p>
+          </Link>
         </div>
       </div>
     </div>

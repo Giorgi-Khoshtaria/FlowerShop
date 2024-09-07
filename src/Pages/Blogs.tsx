@@ -3,16 +3,21 @@ import { useEffect, useState } from "react";
 import BlogsSection from "../components/SemiComponents/BlogsSection";
 import { useAuth } from "../Contexts/AuthContext";
 interface Blog {
+  _id: string;
+  id: string;
   blogUserImage: string;
   createdAt: string;
   blogImage: string;
   blogName: string;
   blogDescription: string;
   blogUserName: string;
+  likes: number;
+  views: number;
 }
 
 function Blogs() {
   const [blogsData, setBlogData] = useState<Blog[]>([]);
+  // const [blogId, setBlogId] = useState<string | null>(null);
   const { userData, isAuthenticated } = useAuth();
   useEffect(() => {
     fetchBlogs();
@@ -29,6 +34,7 @@ function Blogs() {
         }
       );
       console.log(blogsData);
+      // setBlogId(response.data.id);
       setBlogData(response.data);
     } catch (error) {
       console.error("error fetChing blogs", error);
@@ -79,8 +85,9 @@ function Blogs() {
                   mainImage={blog.blogImage}
                   blogName={blog.blogName}
                   description={blog.blogDescription}
-                  like={1}
-                  view={1}
+                  blogId={blog._id}
+                  like={blog.likes}
+                  view={blog.views}
                 />
               </div>
             ))}
