@@ -1,3 +1,4 @@
+import user from "/assets/user-solid.svg";
 interface BlogsProps {
   blogUserImage: string;
   name: string;
@@ -33,11 +34,22 @@ const BlogsSection: React.FC<BlogsProps> = ({
     <div className="bg-white pb-[18px] w-[360px]">
       <div className=" w-[360px] flex items-center justify-between px-[10px] pt-[10px]">
         <div className="flex items-center justify-start gap-2">
-          <img
-            src={blogUserImage}
-            alt="userimage"
-            className="w-10 h-10 rounded-full"
-          />
+          <div>
+            {blogUserImage ? (
+              <img
+                src={blogUserImage}
+                alt="userimage"
+                className="w-10 h-10 rounded-full"
+              />
+            ) : (
+              <img
+                src={user}
+                alt="userimage"
+                className="w-10 h-10 rounded-full"
+              />
+            )}
+          </div>
+
           <p className="text-base not-italic font-normal leading-[normal] text-black">
             {name}
           </p>
@@ -49,7 +61,7 @@ const BlogsSection: React.FC<BlogsProps> = ({
       <img
         src={mainImage}
         alt="blogimage"
-        className="w-[360px] mt-[11px] mb-[17px] bg-white"
+        className="w-[360px] h-[250px] mt-[11px] mb-[17px] bg-white"
       />
       <div className="px-[10px]">
         <h2 className="mb-[13px] w-[255px] text-xl not-italic font-normal leading-[normal] text-black">
