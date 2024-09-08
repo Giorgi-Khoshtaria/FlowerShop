@@ -1,7 +1,7 @@
 import { ChangeEvent, useEffect, useState } from "react";
 import axios from "axios";
-import "../components/Css/profile.css";
-import { useAuth } from "../Contexts/AuthContext";
+import "../../components/Css/profile.css";
+import { useAuth } from "../../Contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
 
 function Profile() {
@@ -53,10 +53,14 @@ function Profile() {
           setBase64Image(null); // Ensure no image is set if none exists
         }
       } catch (error) {
-        if (error.response?.status === 401) {
-          handleLogout();
+        if (axios.isAxiosError(error)) {
+          if (error.response?.status === 401) {
+            handleLogout();
+          } else {
+            console.error("Error fetching user profile data:", error.message);
+          }
         } else {
-          console.error("Error fetching user profile data:", error);
+          console.error("Unexpected error:", error);
         }
       }
     };

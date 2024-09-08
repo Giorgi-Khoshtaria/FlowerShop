@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import axios, { AxiosError } from "axios";
 import houseimg from "/assets/house.svg";
 import loginImage from "/assets/login.png";
-import { useAuth } from "../Contexts/AuthContext";
+import { useAuth } from "../../Contexts/AuthContext";
 
 function Login() {
   const [username, setUsername] = useState("");

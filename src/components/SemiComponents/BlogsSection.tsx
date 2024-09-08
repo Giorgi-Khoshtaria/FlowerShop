@@ -39,17 +39,21 @@ const BlogsSection: React.FC<BlogsProps> = ({
         <div className="flex items-center justify-start gap-2">
           <div>
             {blogUserImage ? (
-              <img
-                src={blogUserImage}
-                alt="userimage"
-                className="w-10 h-10 rounded-full"
-              />
+              <Link to={`/userProfile/:id`}>
+                <img
+                  src={blogUserImage}
+                  alt="userimage"
+                  className="w-10 h-10 rounded-full"
+                />
+              </Link>
             ) : (
-              <img
-                src={user}
-                alt="userimage"
-                className="w-10 h-10 rounded-full"
-              />
+              <Link to={``}>
+                <img
+                  src={user}
+                  alt="userimage"
+                  className="w-10 h-10 rounded-full"
+                />
+              </Link>
             )}
           </div>
 

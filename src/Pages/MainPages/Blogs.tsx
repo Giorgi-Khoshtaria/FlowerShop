@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import BlogsSection from "../components/SemiComponents/BlogsSection";
-import { useAuth } from "../Contexts/AuthContext";
+import BlogsSection from "../../components/SemiComponents/BlogsSection";
+import { useAuth } from "../../Contexts/AuthContext";
 interface Blog {
   _id: string;
   id: string;

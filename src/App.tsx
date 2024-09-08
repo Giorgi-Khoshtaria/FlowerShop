@@ -1,17 +1,17 @@
 import "./App.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Layout from "./components/layout/Layout";
-import Home from "./Pages/Home";
-import ShopPage from "./Pages/ShopPage";
-import Blogs from "./Pages/Blogs";
-import About from "./Pages/About";
-import Login from "./Pages/Login";
-import Register from "./Pages/Register";
-import ForgotPassword from "./Pages/ForgotPassword";
-import Profile from "./Pages/Profile";
-import AddBlogs from "./Pages/AddBlogs";
-import AddFlowers from "./Pages/AddFolwers";
-import BlogDetails from "./Pages/BlogDetails";
+import Home from "./Pages/MainPages/Home";
+import ShopPage from "./Pages/MainPages/ShopPage";
+import Blogs from "./Pages/MainPages/Blogs";
+import About from "./Pages/MainPages/About";
+import Login from "./Pages/AuthPages/Login";
+import Register from "./Pages/AuthPages/Register";
+import ForgotPassword from "./Pages/AuthPages/ForgotPassword";
+import Profile from "./Pages/UserPages/Profile";
+import AddBlogs from "./Pages/UserPages/AddBlogs";
+import AddFlowers from "./Pages/AdminPages/AddFolwers";
+import BlogDetails from "./Pages/UserPages/BlogDetails";
 
 const router = createBrowserRouter([
   {

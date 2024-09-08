@@ -1,5 +1,5 @@
 import { ChangeEvent, useEffect, useRef, useState } from "react";
-import { useAuth } from "../Contexts/AuthContext";
+import { useAuth } from "../../Contexts/AuthContext";
 import axios from "axios";
 
 function AddBlogs() {
