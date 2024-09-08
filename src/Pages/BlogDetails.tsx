@@ -46,7 +46,7 @@ const BlogDetails: React.FC = () => {
   const formattedDate = new Date(blog.createdAt).toLocaleDateString();
 
   return (
-    <div className="p-10">
+    <div className="p-10 w-full">
       <div className="flex items-center mb-6">
         {blog.blogUserImage ? (
           <img
@@ -66,7 +66,7 @@ const BlogDetails: React.FC = () => {
           <p className="text-sm text-gray-500">{formattedDate}</p>
         </div>
       </div>
-      <img src={blog.blogImage} alt="Blog" className="w-full h-auto mb-6" />
+      <img src={blog.blogImage} alt="Blog" className="w-[800px] h-auto mb-6" />
       <h1 className="text-3xl font-bold mb-4">{blog.blogName}</h1>
       <p className="text-lg mb-4">{blog.blogDescription}</p>
       <div className="flex items-center gap-4">
