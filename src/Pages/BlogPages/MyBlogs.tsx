@@ -37,6 +37,35 @@ function MyBlogs() {
       setIsLoadingBlogs(false);
     }
   };
+
+  // Delete blog by blog ID
+  const handleDeleteBlog = async (blogId: string) => {
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this blog?"
+    );
+    if (!confirmDelete) return; // If user cancels, return early
+
+    try {
+      const token = localStorage.getItem("token");
+      await axios.delete(
+        `http://localhost:3005/api/blogs/deleteBlog/${blogId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      // Update the state to remove the deleted blog from the list
+      setBlogsByUser((prevBlogs) =>
+        prevBlogs.filter((blog) => blog._id !== blogId)
+      );
+      alert("Blog deleted successfully.");
+    } catch (error) {
+      console.error("Error deleting blog:", error);
+      alert("Failed to delete the blog. Please try again.");
+    }
+  };
+
   return (
     <div className=" flex-1 flex items-center justify-center">
       <div className="max-w-[1440px] w-full mt-10">
@@ -56,12 +85,21 @@ function MyBlogs() {
                 key={index}
                 className="bg-white rounded-lg shadow-md p-6 flex flex-col items-start"
               >
-                <Link
-                  to={`/editblogs/${blog._id}`}
-                  className="my-3 text-yellow"
-                >
-                  Edit this blog
-                </Link>
+                <div className="w-full flex items-center justify-between">
+                  <Link
+                    to={`/editblogs/${blog._id}`}
+                    className="my-3 text-yellow"
+                  >
+                    Edit this blog
+                  </Link>
+                  <button
+                    onClick={() => handleDeleteBlog(blog._id)}
+                    className="text-yellow text-base"
+                  >
+                    Delate Blog
+                  </button>
+                </div>
+
                 <img
                   src={blog.blogImage}
                   alt={blog.blogName}

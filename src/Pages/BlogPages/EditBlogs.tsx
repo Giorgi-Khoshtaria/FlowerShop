@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useEffect, useState, useRef } from "react";
+import React, { ChangeEvent, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import "../../components/Css/profile.css";
@@ -14,7 +14,7 @@ function EditBlogs() {
   const { blogId } = useParams<{ blogId: string }>();
   const [blog, setBlog] = useState<BlogDetail | null>(null);
   const [base64Image, setBase64Image] = useState<string | null>(null);
-  const fileInputRef = useRef<HTMLInputElement>(null);
+
   useEffect(() => {
     const fetchBlogDetails = async () => {
       try {
@@ -57,24 +57,6 @@ function EditBlogs() {
     }
   };
 
-  const handleResetFields = () => {
-    setBlog((prevBlog) => {
-      if (prevBlog) {
-        return {
-          ...prevBlog,
-          blogName: "",
-          blogDescription: "",
-          blogImage: base64Image || "", // Use the base64 image if available
-        };
-      }
-      return null;
-    });
-    // Reset the file input
-    if (fileInputRef.current) {
-      fileInputRef.current.value = ""; // Clears the file input
-    }
-  };
-
   const handleSaveChanges = async () => {
     const updatedBlog = {
       blogName: blog?.blogName,
@@ -95,7 +77,6 @@ function EditBlogs() {
         }
       );
       alert("Blog updated successfully.");
-      handleResetFields();
     } catch (error) {
       console.error("Error updating blog:", error);
     }
@@ -104,9 +85,11 @@ function EditBlogs() {
   return (
     <div className="flex-1 w-full flex flex-col items-center justify-center p-4 mx-auto mt-10">
       <div className="max-w-[1440px] w-full flex flex-col items-start bg-white p-6 rounded-lg shadow-md">
-        <h1 className="text-3xl font-semibold text-yellow-600 mb-6">
-          Edit Blog
-        </h1>
+        <div>
+          <h1 className="text-3xl font-semibold text-yellow-600 mb-6">
+            Edit Blog
+          </h1>
+        </div>
 
         {/* Blog Image Upload */}
         <div className="flex items-center justify-between w-full mb-6">
@@ -116,7 +99,6 @@ function EditBlogs() {
             </label>
             <input
               type="file"
-              ref={fileInputRef}
               className="block w-full text-sm text-yellow file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-yellow file:text-white hover:file:bg-yellow-100"
               onChange={handleFileChange}
             />
