@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useEffect, useState } from "react";
+import React, { ChangeEvent, useEffect, useState, useRef } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import "../../components/Css/profile.css";
@@ -14,7 +14,7 @@ function EditBlogs() {
   const { blogId } = useParams<{ blogId: string }>();
   const [blog, setBlog] = useState<BlogDetail | null>(null);
   const [base64Image, setBase64Image] = useState<string | null>(null);
-
+  const fileInputRef = useRef<HTMLInputElement>(null);
   useEffect(() => {
     const fetchBlogDetails = async () => {
       try {
@@ -64,11 +64,15 @@ function EditBlogs() {
           ...prevBlog,
           blogName: "",
           blogDescription: "",
-          blogImage: base64Image, // Use the base64 image if available
+          blogImage: base64Image || "", // Use the base64 image if available
         };
       }
       return null;
     });
+    // Reset the file input
+    if (fileInputRef.current) {
+      fileInputRef.current.value = ""; // Clears the file input
+    }
   };
 
   const handleSaveChanges = async () => {
@@ -112,17 +116,20 @@ function EditBlogs() {
             </label>
             <input
               type="file"
+              ref={fileInputRef}
               className="block w-full text-sm text-yellow file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-yellow file:text-white hover:file:bg-yellow-100"
               onChange={handleFileChange}
             />
           </div>
           <div>
-            {base64Image && (
+            {base64Image ? (
               <img
                 src={base64Image}
                 alt="Blog Preview"
                 className="w-24 h-24 object-cover rounded-full"
               />
+            ) : (
+              "Upload image"
             )}
           </div>
         </div>
