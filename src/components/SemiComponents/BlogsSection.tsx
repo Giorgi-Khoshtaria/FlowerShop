@@ -10,6 +10,7 @@ interface BlogsProps {
   like: number;
   view: number;
   blogId: string;
+  blogUserId: string;
 }
 
 const formatDate = (dateString: string): string => {
@@ -28,6 +29,7 @@ const BlogsSection: React.FC<BlogsProps> = ({
   blogName,
   description,
   blogId,
+  blogUserId,
   like,
   view,
 }) => {
@@ -39,7 +41,7 @@ const BlogsSection: React.FC<BlogsProps> = ({
         <div className="flex items-center justify-start gap-2">
           <div>
             {blogUserImage ? (
-              <Link to={`/userProfile/:id`}>
+              <Link to={`/userProfile/${blogUserId}`}>
                 <img
                   src={blogUserImage}
                   alt="userimage"
@@ -47,7 +49,7 @@ const BlogsSection: React.FC<BlogsProps> = ({
                 />
               </Link>
             ) : (
-              <Link to={``}>
+              <Link to={`/userProfile/${blogUserId}`}>
                 <img
                   src={user}
                   alt="userimage"

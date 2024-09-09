@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import BlogsSection from "../../components/SemiComponents/BlogsSection";
-import { useAuth } from "../../Contexts/AuthContext";
+
 interface Blog {
   _id: string;
   id: string;
@@ -11,6 +11,7 @@ interface Blog {
   blogName: string;
   blogDescription: string;
   blogUserName: string;
+  blogUserId: string;
   likes: number;
   views: number;
 }
@@ -19,10 +20,10 @@ function Blogs() {
   const [blogsData, setBlogData] = useState<Blog[]>([]);
   // const [blogId, setBlogId] = useState<string | null>(null);
   const [filter, setFilter] = useState<string>("All");
-  const { userData, isAuthenticated } = useAuth();
+
   useEffect(() => {
     fetchBlogs();
-  }, [userData, isAuthenticated]);
+  }, []);
   const fetchBlogs = async () => {
     try {
       const token = localStorage.getItem("token");
@@ -76,6 +77,7 @@ function Blogs() {
                     blogName={blog.blogName}
                     description={blog.blogDescription}
                     blogId={blog._id}
+                    blogUserId={blog.blogUserId}
                     like={blog.likes}
                     view={blog.views}
                   />

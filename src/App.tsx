@@ -12,6 +12,7 @@ import Profile from "./Pages/UserPages/Profile";
 import AddBlogs from "./Pages/UserPages/AddBlogs";
 import AddFlowers from "./Pages/AdminPages/AddFolwers";
 import BlogDetails from "./Pages/UserPages/BlogDetails";
+import UserProfile from "./Pages/UserPages/UserProfile";
 
 const router = createBrowserRouter([
   {
@@ -49,6 +50,10 @@ const router = createBrowserRouter([
       {
         path: "blogDetails/:blogid",
         element: <BlogDetails />,
+      },
+      {
+        path: "userProfile/:blogUserId",
+        element: <UserProfile />,
       },
       {
         path: "addflowers",
