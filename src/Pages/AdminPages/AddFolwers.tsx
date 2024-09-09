@@ -47,7 +47,7 @@ function AddFlowers() {
   };
 
   return (
-    <div className="flex justify-center items-center p-4 w-full">
+    <div className=" flex-1 flex justify-center items-center p-4 w-full">
       <div className="flex justify-between items-center p-6 bg-white max-w-[1440px] w-full">
         <div className="w-full">
           <h2 className="text-xl font-bold mb-4 text-yellow">Add New Flower</h2>

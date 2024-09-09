@@ -127,7 +127,7 @@ function AddBlogs() {
   };
 
   return (
-    <div className="flex items-center justify-center mt-20 p-4">
+    <div className="flex-1 flex items-center justify-center mt-20 p-4">
       <div className="max-w-[1440px] w-full flex flex-col items-start bg-white p-6 rounded-lg shadow-md">
         <h1 className="text-3xl font-semibold text-yellow mb-6">Add Blog</h1>
 

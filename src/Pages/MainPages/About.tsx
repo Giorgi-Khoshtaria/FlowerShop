@@ -43,7 +43,7 @@ function About() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center mt-20 p-4">
+    <div className="flex-1 flex flex-col items-center justify-center mt-20 p-4">
       <div className="max-w-[1440px] w-full flex flex-col items-start bg-white p-6 rounded-lg shadow-md">
         <h1 className="text-3xl font-semibold text-yellow mb-6">About Us</h1>
 

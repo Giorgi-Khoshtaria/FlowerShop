@@ -76,7 +76,7 @@ function Register() {
   };
 
   return (
-    <div className="px-[20px] min-h-screen flex items-center justify-center max-lg:flex-col-reverse">
+    <div className="flex-1 px-[20px] min-h-screen flex items-center justify-center max-lg:flex-col-reverse">
       <div className="pt-[30px] pr-[49px] pb-[43px] pl-[48px] bg-white w-[488px] max-sm:w-[327px]">
         <div className="flex items-baseline justify-between mb-[57px] max-sm:flex-col-reverse max-sm:gap-2">
           <div>

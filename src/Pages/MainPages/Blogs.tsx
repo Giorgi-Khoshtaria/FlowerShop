@@ -49,7 +49,7 @@ function Blogs() {
           blog.blogUserName.toLowerCase().includes(filter.toLowerCase())
         );
   return (
-    <div className="flex items-center justify-center mt-10 p-4">
+    <div className="flex-1 flex items-center justify-center mt-10 p-4">
       <div className=" max-w-[1440px] w-full flex flex-col items-start  p-6  ">
         <div className=" max-md:flex-col mb-10 bg-white p-6 rounded-md flex w-full gap-5 items-center justify-between">
           <h2 className="text-yellow font-bold">Find Your Blog</h2>

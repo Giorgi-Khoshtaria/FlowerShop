@@ -166,7 +166,6 @@ function Header() {
                       to="/profile"
                       className="text-white text-lg font-semibold "
                     >
-                      {" "}
                       Profile
                     </Link>
                   </li>
@@ -176,6 +175,14 @@ function Header() {
                       className="text-white text-lg font-semibold "
                     >
                       Add Blogs
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      to="/myblogs"
+                      className="text-white text-lg font-semibold "
+                    >
+                      My Blogs
                     </Link>
                   </li>
                   {userData?.user.role === "admin" ? (

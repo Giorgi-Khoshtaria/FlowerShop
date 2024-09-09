@@ -75,7 +75,7 @@ function UserProfile() {
   };
 
   return (
-    <div className="w-full flex flex-col items-center justify-center p-4 mx-auto mt-10">
+    <div className="flex-1 w-full flex flex-col items-center justify-center p-4 mx-auto mt-10">
       <div className="max-w-[1440px] w-full flex flex-col items-start p-6 bg-white rounded-lg shadow-md ">
         <h1 className="text-3xl font-semibold text-yellow-600 mb-6">
           User Profile

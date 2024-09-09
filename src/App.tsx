@@ -9,10 +9,12 @@ import Login from "./Pages/AuthPages/Login";
 import Register from "./Pages/AuthPages/Register";
 import ForgotPassword from "./Pages/AuthPages/ForgotPassword";
 import Profile from "./Pages/UserPages/Profile";
-import AddBlogs from "./Pages/UserPages/AddBlogs";
+import AddBlogs from "./Pages/BlogPages/AddBlogs";
 import AddFlowers from "./Pages/AdminPages/AddFolwers";
-import BlogDetails from "./Pages/UserPages/BlogDetails";
+import BlogDetails from "./Pages/BlogPages/BlogDetails";
 import UserProfile from "./Pages/UserPages/UserProfile";
+import MyBlogs from "./Pages/BlogPages/MyBlogs";
+import EditBlogs from "./Pages/BlogPages/EditBlogs";
 
 const router = createBrowserRouter([
   {
@@ -46,6 +48,14 @@ const router = createBrowserRouter([
       {
         path: "addblogs",
         element: <AddBlogs />,
+      },
+      {
+        path: "myblogs",
+        element: <MyBlogs />,
+      },
+      {
+        path: "editblogs/:blogId",
+        element: <EditBlogs />,
       },
       {
         path: "blogDetails/:blogid",
