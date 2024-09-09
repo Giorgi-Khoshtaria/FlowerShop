@@ -86,9 +86,9 @@ function UserProfile() {
           <p>Loading user details...</p>
         ) : (
           userDetailsData && (
-            <div className="w-full flex items-start justify-between gap-6">
+            <div className="w-full flex items-start justify-between gap-6 max-sm:flex-col-reverse">
               {/* User Info Section */}
-              <div className="w-3/5">
+              <div className="w-full">
                 <div className="mb-4">
                   <h2 className="text-lg font-medium text-gray-700">
                     Username:
@@ -136,12 +136,12 @@ function UserProfile() {
               </div>
 
               {/* Profile Picture Section */}
-              <div className="w-2/5 flex justify-center items-center">
+              <div className="flex justify-center items-center">
                 {userDetailsData.profilePicture ? (
                   <img
                     src={userDetailsData.profilePicture}
                     alt="User"
-                    className="w-60 h-60 object-cover rounded-xl"
+                    className="w-90 h-80 object-contain rounded-xl"
                   />
                 ) : (
                   <p>No Profile Image</p>
