@@ -12,9 +12,10 @@ import Profile from "./Pages/UserPages/Profile";
 import AddBlogs from "./Pages/BlogPages/AddBlogs";
 import AddFlowers from "./Pages/AdminPages/AddFolwers";
 import BlogDetails from "./Pages/BlogPages/BlogDetails";
-import UserProfile from "./Pages/UserPages/UserProfile";
+
 import MyBlogs from "./Pages/BlogPages/MyBlogs";
 import EditBlogs from "./Pages/BlogPages/EditBlogs";
+import UserProfile from "./Pages/UserPages/UserProfile";
 
 const router = createBrowserRouter([
   {
