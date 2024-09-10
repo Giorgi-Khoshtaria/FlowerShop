@@ -103,7 +103,7 @@ function MyBlogs() {
                 <img
                   src={blog.blogImage}
                   alt={blog.blogName}
-                  className="w-full h-40 object-cover rounded-md mb-4"
+                  className="w-full h-40 object-fill rounded-md mb-4"
                 />
                 <h2 className="text-xl font-bold text-gray-800 mb-2">
                   {blog.blogName}

@@ -1,14 +1,21 @@
-import { useState } from "react";
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import { ChangeEvent, useRef, useState } from "react";
+import axios from "axios";
 import yellowStar from "/assets/yellowStar.svg";
 import whiteStar from "/assets/whiteStar.svg";
 
 function AddFlowers() {
-  const [photo, setPhoto] = useState<File | null>(null);
+  const [photo, setPhoto] = useState<string | null>(null);
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
   const [rating, setRating] = useState<number | null>(null);
   const [alertMessage, setAlertMessage] = useState("");
+  const [submitError, setSubmitError] = useState<string | null>(null);
+  const [submitSuccess, setSubmitSuccess] = useState<string | null>(null);
+
+  // Reference for the file input
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   const handleRatingChange = (value: number) => {
     if (value > 5) {
@@ -19,7 +26,7 @@ function AddFlowers() {
     }
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (rating === null || rating > 5) {
@@ -29,43 +36,94 @@ function AddFlowers() {
       return;
     }
 
-    // Handle form submission (e.g., send data to the server)
-    console.log({ photo, name, description, price, rating });
+    // Prepare the form data
+    const formData = {
+      flowersName: name,
+      flowersDescription: description,
+      flowersPrice: price,
+      flowersRating: rating,
+      flowersPhoto: photo,
+    };
 
-    // Clear form after submission
-    setPhoto(null);
-    setName("");
-    setDescription("");
-    setPrice("");
-    setRating(null);
+    try {
+      const response = await axios.post(
+        "http://localhost:3005/api/flowers/addFlowers",
+        formData,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (response.status === 201) {
+        setSubmitSuccess("Flower added successfully!");
+        setSubmitError(null);
+        // Clear form after successful submission
+        setPhoto(null);
+        setName("");
+        setDescription("");
+        setPrice("");
+        setRating(null);
+        // Reset file input
+        if (fileInputRef.current) {
+          fileInputRef.current.value = "";
+        }
+      } else {
+        setSubmitError("Failed to submit the form.");
+        setSubmitSuccess(null);
+      }
+    } catch (error) {
+      setSubmitError("An error occurred while submitting the form.");
+      setSubmitSuccess(null);
+    }
   };
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files[0]) {
-      setPhoto(e.target.files[0]);
+  const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      const file = e.target.files[0];
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setPhoto(reader.result as string); // Set the base64 image
+      };
+      reader.readAsDataURL(file);
     }
   };
 
   return (
-    <div className=" flex-1 flex justify-center items-center p-4 w-full">
+    <div className="flex-1 flex justify-center items-center p-4 w-full">
       <div className="flex justify-between items-center p-6 bg-white max-w-[1440px] w-full">
         <div className="w-full">
           <h2 className="text-xl font-bold mb-4 text-yellow">Add New Flower</h2>
           <form onSubmit={handleSubmit} className="space-y-4">
-            <div>
-              <label
-                htmlFor="flowersImage"
-                className="text-sm font-medium mb-1 text-yellow"
-              >
-                Flower Photo:
-              </label>
-              <input
-                id="flowersImage"
-                type="file"
-                accept="image/*"
-                onChange={handleFileChange}
-                className="border border-semiGray rounded p-2 w-full"
-              />
+            <div className="flex items-center justify-between w-full">
+              <div>
+                <label
+                  htmlFor="flowersImage"
+                  className="text-sm font-medium mb-1 text-yellow"
+                >
+                  Flower Photo:
+                </label>
+                <input
+                  id="flowersImage"
+                  type="file"
+                  accept="image/*"
+                  onChange={handleFileChange}
+                  className="border border-semiGray rounded p-2 w-full"
+                  ref={fileInputRef}
+                />
+              </div>
+              <div>
+                {photo ? (
+                  <img
+                    src={photo}
+                    className="w-24 h-24 object-cover rounded-full"
+                    alt="Blog Preview"
+                  />
+                ) : (
+                  "No Image Uploaded"
+                )}
+              </div>
             </div>
 
             <div>
@@ -132,6 +190,16 @@ function AddFlowers() {
               <div className="mb-4 text-red-600 font-medium">
                 {alertMessage}
               </div>
+            )}
+
+            {/* Submission Success or Error Messages */}
+            {submitSuccess && (
+              <div className="mb-4 text-green-600 font-medium">
+                {submitSuccess}
+              </div>
+            )}
+            {submitError && (
+              <div className="mb-4 text-red-600 font-medium">{submitError}</div>
             )}
 
             <div className="flex w-full justify-end">
