@@ -46,11 +46,13 @@ function AddFlowers() {
     };
 
     try {
+      const token = localStorage.getItem("token");
       const response = await axios.post(
         "http://localhost:3005/api/flowers/addFlowers",
         formData,
         {
           headers: {
+            Authorization: `Bearer ${token}`,
             "Content-Type": "application/json",
           },
         }

@@ -8,8 +8,8 @@ interface FlowersProps {
 
 const Flowers: React.FC<FlowersProps> = ({ img, name, price }) => {
   return (
-    <div className="bg-white p-4 rounded-[5px]">
-      <img src={img} alt="flowers image" />
+    <div className="bg-white p-4 rounded-[5px] w-[287px]">
+      <img src={img} alt="flowers image" className=" w-[251px] h-[251px]" />
       <p className="text-[22px] not-italic font-normal leading-[normal] text-black mt-[9px] mb-[39px]">
         {name}
       </p>
