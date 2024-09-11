@@ -1,18 +1,23 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 interface FlowersProps {
   img: string;
   name: string;
   price: number;
+  flowerId: string;
 }
 
-const Flowers: React.FC<FlowersProps> = ({ img, name, price }) => {
+const Flowers: React.FC<FlowersProps> = ({ img, name, price, flowerId }) => {
   return (
     <div className="bg-white p-4 rounded-[5px] w-[287px]">
-      <img src={img} alt="flowers image" className=" w-[251px] h-[251px]" />
-      <p className="text-[22px] not-italic font-normal leading-[normal] text-black mt-[9px] mb-[39px]">
-        {name}
-      </p>
+      <Link to={`/flowersDetails/${flowerId}`}>
+        <img src={img} alt="flowers image" className=" w-[251px] h-[251px]" />
+        <p className="text-[22px] not-italic font-normal leading-[normal] text-black mt-[9px] mb-[39px]">
+          {name}
+        </p>
+      </Link>
+
       <div className="flex items-center justify-between">
         <p className="text-lg not-italic font-normal leading-[normal] text-darkGray">
           {price}$

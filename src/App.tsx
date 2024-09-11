@@ -16,6 +16,7 @@ import BlogDetails from "./Pages/BlogPages/BlogDetails";
 import MyBlogs from "./Pages/BlogPages/MyBlogs";
 import EditBlogs from "./Pages/BlogPages/EditBlogs";
 import UserProfile from "./Pages/UserPages/UserProfile";
+import FlowersDetails from "./Pages/FlowerPages/FlowersDetails";
 
 const router = createBrowserRouter([
   {
@@ -69,6 +70,10 @@ const router = createBrowserRouter([
       {
         path: "addflowers",
         element: <AddFlowers />,
+      },
+      {
+        path: "flowersDetails/:flowersId",
+        element: <FlowersDetails />,
       },
     ],
   },
