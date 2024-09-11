@@ -1,6 +1,11 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+
+interface Flower {
+  _id: string;
+  flowersPhoto: string;
+}
 
 function FlowersDetails() {
   const { flowersId } = useParams();
@@ -12,10 +17,48 @@ function FlowersDetails() {
     flowersRating: "",
   });
   const [loading, setLoading] = useState(true);
+  const [moreFlowerdata, setMoreFlowerdata] = useState<Flower[]>([]); // Explicitly typing it as an array of 'Flower'
 
   useEffect(() => {
     fetchFlowersDetails();
-  }, []);
+    fetchFlowersData();
+  }, [flowersId]);
+
+  const fetchFlowersData = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      const response = await axios.get(
+        `http://localhost:3005/api/flowers/getFlowers`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      setMoreFlowerdata(response.data);
+    } catch (error) {
+      console.error("Error fetching flowers data:", error);
+    }
+  };
+  const getrendomFlower = () => {
+    if (moreFlowerdata?.length > 0) {
+      // Filter out the current flower by comparing the ID
+      const filteredFlowers = moreFlowerdata.filter(
+        (flower) => flower._id !== flowersId
+      );
+
+      // Shuffle the remaining flowers
+      const shuffledFlowers = [...filteredFlowers].sort(
+        () => 0.5 - Math.random()
+      );
+
+      // Return the first 4 flowers
+      return shuffledFlowers.slice(0, 4);
+    }
+    return []; // Return an empty array if moreFlowerdata is undefined or empty
+  };
+
+  const rendomFlower = getrendomFlower();
 
   const fetchFlowersDetails = async () => {
     try {
@@ -110,6 +153,29 @@ function FlowersDetails() {
                   Add to cart
                 </button>
               </div>
+            </div>
+          </div>
+        </div>
+        <div className="mt-[37px]">
+          <div></div>
+          <div>
+            <p>Maybe you like...</p>
+            <div className="flex flex-wrap gap-4">
+              {rendomFlower.length > 0 ? (
+                rendomFlower.map((flower) => (
+                  <div key={flower._id} className="w-[356px]">
+                    <Link to={`/flowersDetails/${flower._id}`}>
+                      <img
+                        src={flower.flowersPhoto}
+                        alt="flowerPhoto"
+                        className="w-full h-auto"
+                      />
+                    </Link>
+                  </div>
+                ))
+              ) : (
+                <p>There are no more items</p>
+              )}
             </div>
           </div>
         </div>
