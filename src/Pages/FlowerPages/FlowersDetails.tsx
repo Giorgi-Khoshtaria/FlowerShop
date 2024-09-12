@@ -4,6 +4,8 @@ import { Link, useParams } from "react-router-dom";
 import Comment from "../../components/ComentsComponents/Comment";
 import yellowStar from "/assets/yellowStar.svg";
 import whiteStar from "/assets/whiteStar.svg";
+import { useAuth } from "../../Contexts/AuthContext";
+import user from "/assets/user-solid.svg";
 
 interface Flower {
   _id: string;
@@ -12,6 +14,8 @@ interface Flower {
 
 function FlowersDetails() {
   const { flowersId } = useParams();
+  const { userData, logout } = useAuth();
+  const userId = userData?.user.id;
   const [rating, setRating] = useState<number | null>(null);
   const [flowerDetails, setFlowerDetails] = useState({
     flowersPhoto: "",
@@ -23,10 +27,13 @@ function FlowersDetails() {
   const [loading, setLoading] = useState(true);
   const [moreFlowerdata, setMoreFlowerdata] = useState<Flower[]>([]);
   const [showCommentModal, setShowCommentModal] = useState(false);
+  const [userPicture, setUserPicture] = useState();
+  const [comment, setComment] = useState<string>("");
 
   useEffect(() => {
     fetchFlowersDetails();
     fetchFlowersData();
+    fetchProfileData();
   }, [flowersId]);
 
   const handleRatingChange = (value: number) => {
@@ -93,6 +100,65 @@ function FlowersDetails() {
     } catch (error) {
       console.error("Error fetching flowers data:", error);
       setLoading(false); // Stop loader even if there's an error
+    }
+  };
+  const fetchProfileData = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      const response = await axios.get(
+        `http://localhost:3005/api/user/getUserProfile/${userId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          params: {
+            userId,
+          },
+        }
+      );
+      if (response.data.profilePicture) {
+        setUserPicture(response.data.profilePicture);
+      } else {
+        setUserPicture(null); // Ensure no image is set if none exists
+      }
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        if (error.response?.status === 401) {
+          logout();
+        } else {
+          console.error("Error fetching user profile data:", error.message);
+        }
+      } else {
+        console.error("Unexpected error:", error);
+      }
+    }
+  };
+  const submitReview = async () => {
+    const token = localStorage.getItem("token");
+    try {
+      const response = await axios.post(
+        `http://localhost:3005/api/reviews/addComment`,
+        {
+          userId: userId,
+          userImage: userPicture,
+          userName: userData?.user.username,
+          flowersId: flowersId,
+          comment: comment,
+          rating: rating,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      if (response.status === 201) {
+        setShowCommentModal(false);
+        alert("Review submitted!");
+      }
+    } catch (error) {
+      console.error("Error submitting review:", error);
+      alert("Error submitting review");
     }
   };
 
@@ -219,6 +285,7 @@ function FlowersDetails() {
                 type="text"
                 placeholder="Write your comment here..."
                 className="border p-2 w-full mb-4"
+                onChange={(e) => setComment(e.target.value)}
               />
               <div>
                 <label className="block text-sm font-medium mb-1 text-yellow">
@@ -254,7 +321,7 @@ function FlowersDetails() {
                   className="bg-yellow text-white py-2 px-4 rounded-md"
                   onClick={() => {
                     // handle form submission here
-                    setShowCommentModal(false);
+                    submitReview();
                   }}
                 >
                   Submit
