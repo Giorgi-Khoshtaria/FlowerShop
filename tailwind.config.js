@@ -11,6 +11,10 @@ export default {
         darkGray: "#838383",
         semiGray: "#D9D9D9",
       },
+      fontFamily: {
+        roboto: ["Roboto", "sans-serif"],
+        inter: ["Inter", "sans-serif"],
+      },
     },
   },
   plugins: [],

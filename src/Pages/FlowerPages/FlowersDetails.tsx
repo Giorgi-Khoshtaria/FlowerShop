@@ -1,6 +1,9 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
+import Comment from "../../components/ComentsComponents/Comment";
+import yellowStar from "/assets/yellowStar.svg";
+import whiteStar from "/assets/whiteStar.svg";
 
 interface Flower {
   _id: string;
@@ -9,6 +12,7 @@ interface Flower {
 
 function FlowersDetails() {
   const { flowersId } = useParams();
+  const [rating, setRating] = useState<number | null>(null);
   const [flowerDetails, setFlowerDetails] = useState({
     flowersPhoto: "",
     flowersName: "",
@@ -17,12 +21,25 @@ function FlowersDetails() {
     flowersRating: "",
   });
   const [loading, setLoading] = useState(true);
-  const [moreFlowerdata, setMoreFlowerdata] = useState<Flower[]>([]); // Explicitly typing it as an array of 'Flower'
+  const [moreFlowerdata, setMoreFlowerdata] = useState<Flower[]>([]);
+  const [showCommentModal, setShowCommentModal] = useState(false);
 
   useEffect(() => {
     fetchFlowersDetails();
     fetchFlowersData();
   }, [flowersId]);
+
+  const handleRatingChange = (value: number) => {
+    if (value > 5) {
+      alert("Rating cannot be more than 5.");
+    } else {
+      return;
+    }
+  };
+
+  const handloshowCommentModal = () => {
+    setShowCommentModal(!showCommentModal);
+  };
 
   const fetchFlowersData = async () => {
     try {
@@ -156,14 +173,29 @@ function FlowersDetails() {
             </div>
           </div>
         </div>
-        <div className="mt-[37px]">
-          <div></div>
-          <div>
-            <p>Maybe you like...</p>
-            <div className="flex flex-wrap gap-4">
+        <div className="mt-[37px] flex w-full items-top justify-between  ">
+          <div className=" flex flex-col items-center w-[580px] bg-white  pt-[23px] pr-[34px] pb-[45px] pl-[42px] ">
+            <div className="flex items-center justify-between w-full mb-9">
+              <h2 className="text-[22px] text-black font-inter">Reviews</h2>
+              <p
+                onClick={handloshowCommentModal}
+                className="text-[22px] text-yellow font-inter"
+              >
+                Add a review
+              </p>
+            </div>
+            <div>
+              <Comment userimage={""} name={""} comment={""} rate={""} />
+            </div>
+          </div>
+          <div className="bg-white pt-[23px] pr-[41px] pb-[34px] pl-[30px]">
+            <p className=" font-inter mb-[19px] text-black text-[22px]">
+              Maybe you like...
+            </p>
+            <div className="grid grid-cols-2 gap-5">
               {rendomFlower.length > 0 ? (
                 rendomFlower.map((flower) => (
-                  <div key={flower._id} className="w-[356px]">
+                  <div key={flower._id} className="w-[246px]">
                     <Link to={`/flowersDetails/${flower._id}`}>
                       <img
                         src={flower.flowersPhoto}
@@ -179,6 +211,58 @@ function FlowersDetails() {
             </div>
           </div>
         </div>
+        {showCommentModal && (
+          <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+            <div className="bg-white p-6 rounded-md w-[400px]">
+              <h2 className="text-lg mb-4">Add a review</h2>
+              <input
+                type="text"
+                placeholder="Write your comment here..."
+                className="border p-2 w-full mb-4"
+              />
+              <div>
+                <label className="block text-sm font-medium mb-1 text-yellow">
+                  Rating:
+                </label>
+                <div className="flex items-center space-x-2">
+                  {[1, 2, 3, 4, 5].map((star) => (
+                    <img
+                      key={star}
+                      src={
+                        rating !== null && star <= rating
+                          ? yellowStar
+                          : whiteStar
+                      }
+                      alt="star"
+                      className="w-6 h-6 cursor-pointer"
+                      onClick={() => {
+                        setRating(star);
+                        handleRatingChange(star);
+                      }}
+                    />
+                  ))}
+                </div>
+              </div>
+              <div className="flex items-center justify-end mt-4 space-x-2">
+                <button
+                  className="bg-gray-300 py-2 px-4 rounded-md"
+                  onClick={() => setShowCommentModal(false)}
+                >
+                  Cancel
+                </button>
+                <button
+                  className="bg-yellow text-white py-2 px-4 rounded-md"
+                  onClick={() => {
+                    // handle form submission here
+                    setShowCommentModal(false);
+                  }}
+                >
+                  Submit
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
