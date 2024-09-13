@@ -22,7 +22,7 @@ const Comment: React.FC<CommentProps> = ({
         alt="img"
         className="w-[77px] h-[77px] rounded-full mr-[23px]"
       />
-      <div className="w-[356px]">
+      <div className="w-[356px] max-sm:w-[200px]">
         <p className="text-black font-inter text-[22px] mb-[10px]">{name}</p>
         <p className="text-darkGray font-inter text-[22px] mb-[15px]">
           {comment}

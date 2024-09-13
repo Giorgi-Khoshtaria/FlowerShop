@@ -208,12 +208,12 @@ function FlowersDetails() {
   return (
     <div className="flex-1 flex items-center justify-center mt-20 p-4">
       <div className="max-w-[1440px] w-full">
-        <div className="bg-white  rounded-md pt-12 pr-[37px] pb-12 pl-12 flex items-top justify-between gap-14">
+        <div className="bg-white  rounded-md pt-12 pr-[37px] pb-12 pl-12 flex items-top justify-between gap-14  max-[960px]:flex-col ">
           <div>
             <img
               src={flowerDetails.flowersPhoto}
               alt=""
-              className="w-[356px] h-[326px]"
+              className="w-[356px] h-[326px]  max-[960px]:w-full"
             />
           </div>
           <div>
@@ -221,7 +221,7 @@ function FlowersDetails() {
               <h2 className="text-black text-[22px] not-italic font-normal leading-[normal] mb-[22px]">
                 {flowerDetails.flowersName}
               </h2>
-              <p className="w-[700px] mb-[11px] text-darkGray text-[22px] not-italic font-normal leading-[normal] ">
+              <p className="w-[700px] max-[1200px]:w-[450px] max-sm:w-full mb-[11px] text-darkGray text-[22px] not-italic font-normal leading-[normal] ">
                 {flowerDetails.flowersDescription}
               </p>
               <p className="text-black text-[22px] not-italic font-normal leading-[normal] mb-[22px] flex items-center justify-start gap-2">
@@ -273,8 +273,8 @@ function FlowersDetails() {
             </div>
           </div>
         </div>
-        <div className="mt-[37px] flex w-full items-top justify-between  ">
-          <div className=" flex flex-col items-center w-[580px] bg-white  pt-[23px] pr-[34px] pb-[45px] pl-[42px] ">
+        <div className="mt-[37px] flex w-full items-top justify-between gap-5 max-lg:flex-col-reverse ">
+          <div className=" flex flex-col items-center w-[580px] max-[1200px]:w-[400px] max-lg:w-full max-lg:items-start bg-white  pt-[23px] pr-[34px] pb-[45px] pl-[42px] ">
             <div className="flex items-center justify-between w-full mb-9">
               <h2 className="text-[22px] text-black font-inter">Reviews</h2>
               <p
@@ -306,15 +306,18 @@ function FlowersDetails() {
             <p className=" font-inter mb-[19px] text-black text-[22px]">
               Maybe you like...
             </p>
-            <div className="grid grid-cols-2 gap-5">
+            <div className="grid grid-cols-2  gap-5 max-[1200px]:grid-cols-1 max-lg:flex   max-lg:items-center  max-lg:justify-center  max-lg:flex-wrap ">
               {rendomFlower.length > 0 ? (
                 rendomFlower.map((flower) => (
-                  <div key={flower._id} className="w-[246px]">
+                  <div
+                    key={flower._id}
+                    className="w-[246px] max-[1200px]:w-[340px]"
+                  >
                     <Link to={`/flowersDetails/${flower._id}`}>
                       <img
                         src={flower.flowersPhoto}
                         alt="flowerPhoto"
-                        className="w-full h-auto"
+                        className="w-full h-auto  max-[1200px]:"
                       />
                     </Link>
                   </div>
