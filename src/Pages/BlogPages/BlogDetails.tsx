@@ -42,7 +42,6 @@ const BlogDetails: React.FC = () => {
   if (!blog) {
     return <div>Loading...</div>;
   }
-
   const formattedDate = new Date(blog.createdAt).toLocaleDateString();
 
   return (

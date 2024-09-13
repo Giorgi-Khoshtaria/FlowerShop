@@ -42,6 +42,7 @@ function FlowersDetails() {
   const [userPicture, setUserPicture] = useState<string | null>();
   const [comment, setComment] = useState<string>("");
   const [getComments, setGetComments] = useState<Comment[]>([]);
+  const [randomFlower, setRendomFlower] = useState<Flower[]>([]);
 
   useEffect(() => {
     fetchFlowersDetails();
@@ -49,6 +50,26 @@ function FlowersDetails() {
     fetchProfileData();
     getCommentsByFlowerId();
   }, [flowersId]);
+
+  useEffect(() => {
+    if (moreFlowerdata?.length > 0) {
+      // Filter out the current flower by comparing the ID
+      const filteredFlowers = moreFlowerdata.filter(
+        (flower) => flower._id !== flowersId
+      );
+
+      // Shuffle the remaining flowers
+      const shuffledFlowers = [...filteredFlowers].sort(
+        () => 0.5 - Math.random()
+      );
+
+      // Set the first 4 flowers as random
+      setRendomFlower(shuffledFlowers.slice(0, 4));
+    } else {
+      // If moreFlowerdata is undefined or empty, set an empty array
+      setRendomFlower([]);
+    }
+  }, [moreFlowerdata, flowersId]);
 
   const handleRatingChange = (value: number) => {
     if (value > 5) {
@@ -73,30 +94,12 @@ function FlowersDetails() {
           },
         }
       );
+      console.log("add flowers data");
       setMoreFlowerdata(response.data);
     } catch (error) {
       console.error("Error fetching flowers data:", error);
     }
   };
-  const getrendomFlower = () => {
-    if (moreFlowerdata?.length > 0) {
-      // Filter out the current flower by comparing the ID
-      const filteredFlowers = moreFlowerdata.filter(
-        (flower) => flower._id !== flowersId
-      );
-
-      // Shuffle the remaining flowers
-      const shuffledFlowers = [...filteredFlowers].sort(
-        () => 0.5 - Math.random()
-      );
-
-      // Return the first 4 flowers
-      return shuffledFlowers.slice(0, 4);
-    }
-    return []; // Return an empty array if moreFlowerdata is undefined or empty
-  };
-
-  const rendomFlower = getrendomFlower();
 
   const fetchFlowersDetails = async () => {
     try {
@@ -307,8 +310,8 @@ function FlowersDetails() {
               Maybe you like...
             </p>
             <div className="grid grid-cols-2  gap-5 1 max-[1200px]:flex   max-[1200px]:items-center  max-[1200px]:justify-center  max-[1200px]:flex-wrap ">
-              {rendomFlower.length > 0 ? (
-                rendomFlower.map((flower) => (
+              {randomFlower.length > 0 ? (
+                randomFlower.map((flower) => (
                   <div
                     key={flower._id}
                     className="w-[246px] max-[1200px]:w-[340px]"
