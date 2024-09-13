@@ -12,6 +12,18 @@ interface Flower {
   flowersPhoto: string;
 }
 
+interface Comment {
+  _id: string; // Unique identifier for the comment
+  comment: string; // The comment text
+  createdAt: string; // Date when the comment was created (ISO 8601 format)
+  flowersId: string; // ID of the flower the comment is related to
+  rating: number; // Rating for the flower (e.g., out of 5)
+  userId: string; // ID of the user who made the comment
+  userName: string; // Name of the user who made the comment
+  userImage: string; // Base64 encoded image of the user
+  __v: number; // Version key used by Mongoose for document versioning
+}
+
 function FlowersDetails() {
   const { flowersId } = useParams();
   const { userData, logout } = useAuth();
@@ -27,13 +39,15 @@ function FlowersDetails() {
   const [loading, setLoading] = useState(true);
   const [moreFlowerdata, setMoreFlowerdata] = useState<Flower[]>([]);
   const [showCommentModal, setShowCommentModal] = useState(false);
-  const [userPicture, setUserPicture] = useState();
+  const [userPicture, setUserPicture] = useState<string | null>();
   const [comment, setComment] = useState<string>("");
+  const [getComments, setGetComments] = useState<Comment[]>([]);
 
   useEffect(() => {
     fetchFlowersDetails();
     fetchFlowersData();
     fetchProfileData();
+    getCommentsByFlowerId();
   }, [flowersId]);
 
   const handleRatingChange = (value: number) => {
@@ -133,6 +147,25 @@ function FlowersDetails() {
       }
     }
   };
+
+  const getCommentsByFlowerId = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      const response = await axios.get(
+        `http://localhost:3005/api/reviews/getCommentsByFlowerId/${flowersId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      console.log(getComments);
+      setGetComments(response.data);
+    } catch (error) {
+      console.error(error, "error fetching comments");
+    }
+  };
+
   const submitReview = async () => {
     const token = localStorage.getItem("token");
     try {
@@ -154,6 +187,7 @@ function FlowersDetails() {
       );
       if (response.status === 201) {
         setShowCommentModal(false);
+        setRating(0);
         alert("Review submitted!");
       }
     } catch (error) {
@@ -250,8 +284,22 @@ function FlowersDetails() {
                 Add a review
               </p>
             </div>
-            <div>
-              <Comment userimage={""} name={""} comment={""} rate={""} />
+            <div className="flex flex-col items-center gap-[35px]">
+              {getComments.length > 0 ? (
+                getComments.map((comment) => (
+                  <div key={comment._id} className="">
+                    <Comment
+                      key={comment._id}
+                      comment={comment.comment}
+                      name={comment.userName}
+                      userimage={comment.userImage}
+                      rate={comment.rating}
+                    />
+                  </div>
+                ))
+              ) : (
+                <p>No comments available for this flower.</p>
+              )}
             </div>
           </div>
           <div className="bg-white pt-[23px] pr-[41px] pb-[34px] pl-[30px]">
