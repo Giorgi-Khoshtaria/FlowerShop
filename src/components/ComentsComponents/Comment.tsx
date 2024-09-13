@@ -1,6 +1,7 @@
 import React from "react";
 import yellowStar from "/assets/yellowStar.svg";
 import whiteStar from "/assets/whiteStar.svg";
+import user from "/assets/user-solid.svg";
 
 interface CommentProps {
   userimage: string;
@@ -18,11 +19,11 @@ const Comment: React.FC<CommentProps> = ({
   return (
     <div className="flex items-center justify-center">
       <img
-        src={userimage}
+        src={userimage ? userimage : user}
         alt="img"
         className="w-[77px] h-[77px] rounded-full mr-[23px]"
       />
-      <div className="w-[356px] max-sm:w-[200px]">
+      <div className="w-[356px] max-[1200px]:w-full max-sm:w-[200px]">
         <p className="text-black font-inter text-[22px] mb-[10px]">{name}</p>
         <p className="text-darkGray font-inter text-[22px] mb-[15px]">
           {comment}

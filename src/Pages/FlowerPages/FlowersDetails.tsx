@@ -5,7 +5,7 @@ import Comment from "../../components/ComentsComponents/Comment";
 import yellowStar from "/assets/yellowStar.svg";
 import whiteStar from "/assets/whiteStar.svg";
 import { useAuth } from "../../Contexts/AuthContext";
-import user from "/assets/user-solid.svg";
+// import user from "/assets/user-solid.svg";
 
 interface Flower {
   _id: string;
@@ -273,8 +273,8 @@ function FlowersDetails() {
             </div>
           </div>
         </div>
-        <div className="mt-[37px] flex w-full items-top justify-between gap-5 max-lg:flex-col-reverse ">
-          <div className=" flex flex-col items-center w-[580px] max-[1200px]:w-[400px] max-lg:w-full max-lg:items-start bg-white  pt-[23px] pr-[34px] pb-[45px] pl-[42px] ">
+        <div className="mt-[37px] flex w-full items-top justify-between gap-5 max-[1200px]:flex-col-reverse ">
+          <div className=" flex flex-col items-center w-[580px] max-[1200px]:w-full  max-[1200px]:items-start bg-white  pt-[23px] pr-[34px] pb-[45px] pl-[42px] ">
             <div className="flex items-center justify-between w-full mb-9">
               <h2 className="text-[22px] text-black font-inter">Reviews</h2>
               <p
@@ -306,7 +306,7 @@ function FlowersDetails() {
             <p className=" font-inter mb-[19px] text-black text-[22px]">
               Maybe you like...
             </p>
-            <div className="grid grid-cols-2  gap-5 max-[1200px]:grid-cols-1 max-lg:flex   max-lg:items-center  max-lg:justify-center  max-lg:flex-wrap ">
+            <div className="grid grid-cols-2  gap-5 1 max-[1200px]:flex   max-[1200px]:items-center  max-[1200px]:justify-center  max-[1200px]:flex-wrap ">
               {rendomFlower.length > 0 ? (
                 rendomFlower.map((flower) => (
                   <div
@@ -329,8 +329,8 @@ function FlowersDetails() {
           </div>
         </div>
         {showCommentModal && (
-          <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-            <div className="bg-white p-6 rounded-md w-[400px]">
+          <div className="fixed inset-0 w-full flex items-center justify-center bg-black bg-opacity-50 z-50">
+            <div className="bg-white p-6 rounded-md w-[400px] max-sm:w-[330px] ">
               <h2 className="text-lg mb-4">Add a review</h2>
               <input
                 type="text"
