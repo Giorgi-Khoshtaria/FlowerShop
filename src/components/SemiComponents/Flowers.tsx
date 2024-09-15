@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useCart } from "../../Contexts/CartContext";
 
 interface FlowersProps {
   img: string;
@@ -9,6 +10,31 @@ interface FlowersProps {
 }
 
 const Flowers: React.FC<FlowersProps> = ({ img, name, price, flowerId }) => {
+  const { addToCart, cartItems } = useCart();
+
+  // Create the cart item object
+  const cartItem = {
+    id: flowerId,
+    name: name,
+    mainImage: img,
+    price: price,
+    quantity: 1, // default quantity to 1 when added to the cart
+  };
+
+  const handleOrder = () => {
+    // Check if the item is already in the cart
+    const itemExists = cartItems.some((item) => item.id === flowerId);
+
+    if (!itemExists) {
+      addToCart(cartItem);
+      console.log(cartItem, "Cart item");
+      alert("Item successfully added to cart");
+    } else {
+      // If the item is already in the cart, show an alert
+      alert("This item is already in your cart.");
+    }
+  };
+
   return (
     <div className="bg-white p-4 rounded-[5px] w-[287px]">
       <Link to={`/flowersDetails/${flowerId}`}>
@@ -22,7 +48,10 @@ const Flowers: React.FC<FlowersProps> = ({ img, name, price, flowerId }) => {
         <p className="text-lg not-italic font-normal leading-[normal] text-darkGray">
           {price}$
         </p>
-        <button className="flex items-center justify-center text-lg not-italic font-normal leading-[normal]  text-yellow">
+        <button
+          onClick={handleOrder}
+          className="flex items-center justify-center text-lg not-italic font-normal leading-[normal]  text-yellow"
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="21"

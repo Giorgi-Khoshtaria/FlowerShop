@@ -17,6 +17,7 @@ import MyBlogs from "./Pages/BlogPages/MyBlogs";
 import EditBlogs from "./Pages/BlogPages/EditBlogs";
 import UserProfile from "./Pages/UserPages/UserProfile";
 import FlowersDetails from "./Pages/FlowerPages/FlowersDetails";
+import Cart from "./Pages/CartPages/Cart.tsx";
 
 const router = createBrowserRouter([
   {
@@ -75,6 +76,7 @@ const router = createBrowserRouter([
         path: "flowersDetails/:flowersId",
         element: <FlowersDetails />,
       },
+      { path: "/cart", element: <Cart /> },
     ],
   },
   {

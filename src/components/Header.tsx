@@ -126,8 +126,10 @@ function Header() {
               />
             )}
           </div>
+          <Link to={`/cart`}>
+            <img src={cart} alt="Cart Icon" className="w-7 h-7" />
+          </Link>
 
-          <img src={cart} alt="Cart Icon" className="w-7 h-7" />
           <div className="md:hidden" onClick={showModal}>
             <svg
               className="w-7 h-7 cursor-pointer"

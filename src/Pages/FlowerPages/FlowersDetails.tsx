@@ -5,6 +5,7 @@ import Comment from "../../components/ComentsComponents/Comment";
 import yellowStar from "/assets/yellowStar.svg";
 import whiteStar from "/assets/whiteStar.svg";
 import { useAuth } from "../../Contexts/AuthContext";
+import { useCart } from "../../Contexts/CartContext";
 // import user from "/assets/user-solid.svg";
 
 interface Flower {
@@ -43,6 +44,39 @@ function FlowersDetails() {
   const [comment, setComment] = useState<string>("");
   const [getComments, setGetComments] = useState<Comment[]>([]);
   const [randomFlower, setRendomFlower] = useState<Flower[]>([]);
+  const { addToCart, cartItems } = useCart();
+
+  const handleOrder = () => {
+    // Ensure flowerDetails and flowersId are valid
+    if (!flowerDetails || !flowerDetails.flowersName || !flowersId) {
+      alert("Flower details are incomplete or the flower ID is missing.");
+      return;
+    }
+
+    // Check if the item is already in the cart by comparing the ID
+    const isItemInCart = cartItems.some((cartItem) => {
+      console.log("Cart Item ID:", cartItem.id);
+      console.log("Flower ID:", flowersId);
+      return cartItem.id === flowersId;
+    });
+
+    if (!isItemInCart) {
+      // If the item is not in the cart, add it
+      const cartItem = {
+        id: flowersId,
+        name: flowerDetails.flowersName,
+        price: flowerDetails.flowersPrice,
+        mainImage: flowerDetails.flowersPhoto,
+        quantity: 1, // Set default quantity as 1 for the initial order
+      };
+      addToCart(cartItem);
+      console.log(cartItem, "Cart item");
+      alert("Item successfully added to cart");
+    } else {
+      // If the item is already in the cart, show an alert
+      alert("This item is already in your cart.");
+    }
+  };
 
   useEffect(() => {
     fetchFlowersDetails();
@@ -257,7 +291,10 @@ function FlowersDetails() {
                 </p>
               </div>
               <div>
-                <button className=" bg-yellow text-lg not-italic font-normal leading-[normal] text-white flex items-center justify-end gap-2 py-[9px] px-5 rounded-md">
+                <button
+                  onClick={handleOrder}
+                  className=" bg-yellow text-lg not-italic font-normal leading-[normal] text-white flex items-center justify-end gap-2 py-[9px] px-5 rounded-md"
+                >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="21"
