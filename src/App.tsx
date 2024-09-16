@@ -18,6 +18,8 @@ import EditBlogs from "./Pages/BlogPages/EditBlogs";
 import UserProfile from "./Pages/UserPages/UserProfile";
 import FlowersDetails from "./Pages/FlowerPages/FlowersDetails";
 import Cart from "./Pages/CartPages/Cart.tsx";
+import CheckoutPage from "./Pages/CheckoutPages/CheckoutPage.tsx";
+import MyOrdersPage from "./Pages/MyOrdersPage/MyOrdersPage.tsx";
 
 const router = createBrowserRouter([
   {
@@ -77,6 +79,14 @@ const router = createBrowserRouter([
         element: <FlowersDetails />,
       },
       { path: "/cart", element: <Cart /> },
+      {
+        path: "/checkout",
+        element: <CheckoutPage />,
+      },
+      {
+        path: "/mtorders",
+        element: <MyOrdersPage />,
+      },
     ],
   },
   {
