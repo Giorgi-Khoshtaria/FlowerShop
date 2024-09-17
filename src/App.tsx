@@ -84,7 +84,7 @@ const router = createBrowserRouter([
         element: <CheckoutPage />,
       },
       {
-        path: "/mtorders",
+        path: "/myorders",
         element: <MyOrdersPage />,
       },
     ],

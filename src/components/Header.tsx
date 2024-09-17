@@ -187,6 +187,14 @@ function Header() {
                       My Blogs
                     </Link>
                   </li>
+                  <li>
+                    <Link
+                      to="/myorders"
+                      className="text-white text-lg font-semibold "
+                    >
+                      My Orders
+                    </Link>
+                  </li>
                   {userData?.user.role === "admin" ? (
                     <li>
                       <Link
