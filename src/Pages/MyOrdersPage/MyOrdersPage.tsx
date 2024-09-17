@@ -10,6 +10,7 @@ interface Order {
   flowerQuantity: number;
   flowerPrice: number;
   createdAt: string;
+  flowerImage: string;
 }
 
 interface UserData {
@@ -84,13 +85,25 @@ const MyOrdersPage: React.FC = () => {
               <div key={date} className="mb-8">
                 <h2 className="text-xl font-semibold">Order #{index + 1}</h2>
                 <h2 className="text-xl font-semibold">Order Date: {date}</h2>
-                <div className="border p-4 rounded-md">
+                <div className="border p-4 rounded-md w-full flex items-center flex-col gap-4 ">
                   {groupedOrders[date].map((order) => (
-                    <div key={order._id} className="mb-2">
-                      <p>Order ID: {order._id}</p>
-                      <p>Item Name: {order.flowerName}</p>
-                      <p>Quantity: {order.flowerQuantity}</p>
-                      <p>Price: ${order.flowerPrice}</p>
+                    <div
+                      key={order._id}
+                      className="w-full flex items-center justify-between gap-4 max-sm:flex-col-reverse max-sm:items-start"
+                    >
+                      <div className="mb-2">
+                        <p>Order ID: {order._id}</p>
+                        <p>Item Name: {order.flowerName}</p>
+                        <p>Quantity: {order.flowerQuantity}</p>
+                        <p>Price: ${order.flowerPrice}</p>
+                      </div>
+                      <div>
+                        <img
+                          src={order.flowerImage}
+                          alt="flowerImage"
+                          className="w-40"
+                        />
+                      </div>
                     </div>
                   ))}
                   <p className="font-bold">
