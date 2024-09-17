@@ -77,27 +77,33 @@ const MyOrdersPage: React.FC = () => {
   return (
     <div className="flex-1 flex items-start justify-center mt-20 p-4">
       <div className="max-w-[1440px] w-full">
-        <h1 className="text-2xl font-bold mb-4">My Orders</h1>
-        {Object.keys(groupedOrders).map((date, index) => (
-          <div key={date} className="mb-8">
-            <h2 className="text-xl font-semibold">Order #{index + 1}</h2>
-            <h2 className="text-xl font-semibold">Order Date: {date}</h2>
-            <div className="border p-4 rounded-md">
-              {groupedOrders[date].map((order) => (
-                <div key={order._id} className="mb-2">
-                  <p>Order ID: {order._id}</p>
-                  <p>Item Name: {order.flowerName}</p>
-                  <p>Quantity: {order.flowerQuantity}</p>
-                  <p>Price: ${order.flowerPrice}</p>
+        {orderData.length > 0 ? (
+          <div>
+            <h1 className="text-2xl font-bold mb-4">My Orders</h1>
+            {Object.keys(groupedOrders).map((date, index) => (
+              <div key={date} className="mb-8">
+                <h2 className="text-xl font-semibold">Order #{index + 1}</h2>
+                <h2 className="text-xl font-semibold">Order Date: {date}</h2>
+                <div className="border p-4 rounded-md">
+                  {groupedOrders[date].map((order) => (
+                    <div key={order._id} className="mb-2">
+                      <p>Order ID: {order._id}</p>
+                      <p>Item Name: {order.flowerName}</p>
+                      <p>Quantity: {order.flowerQuantity}</p>
+                      <p>Price: ${order.flowerPrice}</p>
+                    </div>
+                  ))}
+                  <p className="font-bold">
+                    Total Price of Order: $
+                    {calculateTotalPrice(groupedOrders[date]).toFixed(2)}
+                  </p>
                 </div>
-              ))}
-              <p className="font-bold">
-                Total Price of Order: $
-                {calculateTotalPrice(groupedOrders[date]).toFixed(2)}
-              </p>
-            </div>
+              </div>
+            ))}
           </div>
-        ))}
+        ) : (
+          <p> you have no Order</p>
+        )}
       </div>
     </div>
   );
