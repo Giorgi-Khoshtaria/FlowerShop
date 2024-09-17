@@ -52,7 +52,6 @@ const MyOrdersPage: React.FC = () => {
     }
   };
 
-  // Function to group orders by 'createdAt'
   const groupOrdersByCreatedAt = (orders: Order[]) => {
     return orders.reduce<Record<string, Order[]>>((acc, order) => {
       const orderDate = dayjs(order.createdAt).format("YYYY-MM-DD HH:mm:ss");

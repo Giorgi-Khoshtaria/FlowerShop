@@ -12,7 +12,7 @@ interface CartItem {
   mainImage: string;
   id: string;
   name: string;
-  price: number;
+  price: string;
 }
 
 interface CartContextType {
