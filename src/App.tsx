@@ -21,6 +21,7 @@ import Cart from "./Pages/CartPages/Cart.tsx";
 import CheckoutPage from "./Pages/CheckoutPages/CheckoutPage.tsx";
 import MyOrdersPage from "./Pages/MyOrdersPage/MyOrdersPage.tsx";
 import Dashboard from "./Pages/AdminPages/Dashboard.tsx";
+import Users from "./Pages/AdminPages/Users.tsx";
 
 const router = createBrowserRouter([
   {
@@ -91,6 +92,10 @@ const router = createBrowserRouter([
       {
         path: "/dashboard",
         element: <Dashboard />,
+      },
+      {
+        path: "/users",
+        element: <Users />,
       },
     ],
   },
