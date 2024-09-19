@@ -20,6 +20,7 @@ import FlowersDetails from "./Pages/FlowerPages/FlowersDetails";
 import Cart from "./Pages/CartPages/Cart.tsx";
 import CheckoutPage from "./Pages/CheckoutPages/CheckoutPage.tsx";
 import MyOrdersPage from "./Pages/MyOrdersPage/MyOrdersPage.tsx";
+import Dashboard from "./Pages/AdminPages/Dashboard.tsx";
 
 const router = createBrowserRouter([
   {
@@ -86,6 +87,10 @@ const router = createBrowserRouter([
       {
         path: "/myorders",
         element: <MyOrdersPage />,
+      },
+      {
+        path: "/dashboard",
+        element: <Dashboard />,
       },
     ],
   },

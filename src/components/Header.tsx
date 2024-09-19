@@ -196,14 +196,25 @@ function Header() {
                     </Link>
                   </li>
                   {userData?.user.role === "admin" ? (
-                    <li>
-                      <Link
-                        to="/addflowers"
-                        className="text-white text-lg font-semibold "
-                      >
-                        Add Flowers
-                      </Link>
-                    </li>
+                    <div>
+                      {" "}
+                      <li>
+                        <Link
+                          to="/addflowers"
+                          className="text-white text-lg font-semibold "
+                        >
+                          Add Flowers
+                        </Link>
+                      </li>
+                      <li>
+                        <Link
+                          to="/dashboard"
+                          className="text-white text-lg font-semibold "
+                        >
+                          Dashboard
+                        </Link>
+                      </li>
+                    </div>
                   ) : (
                     ""
                   )}
