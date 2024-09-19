@@ -52,6 +52,23 @@ const MyOrdersPage: React.FC = () => {
     }
   };
 
+  const delateOrder = async (orderId: string) => {
+    try {
+      const token = localStorage.getItem("token");
+      await axios.delete<Order[]>(
+        `http://localhost:3005/api/checkout/detaleOrder/${orderId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      fetchOrders();
+    } catch (error) {
+      console.error("Error fetching orders data:", error);
+    }
+  };
+
   const groupOrdersByCreatedAt = (orders: Order[]) => {
     return orders.reduce<Record<string, Order[]>>((acc, order) => {
       const orderDate = dayjs(order.createdAt).format("YYYY-MM-DD HH:mm:ss");
@@ -86,26 +103,33 @@ const MyOrdersPage: React.FC = () => {
                 <h2 className="text-xl font-semibold">Order Date: {date}</h2>
                 <div className="border p-4 rounded-md w-full flex items-center flex-col gap-4 ">
                   {groupedOrders[date].map((order) => (
-                    <div
-                      key={order._id}
-                      className="w-full flex items-center justify-between gap-4 max-sm:flex-col-reverse max-sm:items-start"
-                    >
-                      <div className="mb-2">
-                        <p>Order ID: {order._id}</p>
-                        <p>Item Name: {order.flowerName}</p>
-                        <p>Quantity: {order.flowerQuantity}</p>
-                        <p>Price: ${order.flowerPrice}</p>
+                    <div key={order._id} className="w-full">
+                      <div className="flex items-center justify-center">
+                        <p
+                          onClick={() => delateOrder(order._id)}
+                          className="font-bold hover:text-yellow"
+                        >
+                          Delate Order
+                        </p>
                       </div>
-                      <div>
-                        <img
-                          src={order.flowerImage}
-                          alt="flowerImage"
-                          className="w-40"
-                        />
+                      <div className="w-full flex items-center justify-between gap-4 max-sm:flex-col-reverse max-sm:items-start">
+                        <div className="mb-2">
+                          <p>Order ID: {order._id}</p>
+                          <p>Item Name: {order.flowerName}</p>
+                          <p>Quantity: {order.flowerQuantity}</p>
+                          <p>Price: ${order.flowerPrice}</p>
+                        </div>
+                        <div>
+                          <img
+                            src={order.flowerImage}
+                            alt="flowerImage"
+                            className="w-40"
+                          />
+                        </div>
                       </div>
                     </div>
                   ))}
-                  <p className="font-bold">
+                  <p className="font-bold hover:text-yellow">
                     Total Price of Order: $
                     {calculateTotalPrice(groupedOrders[date]).toFixed(2)}
                   </p>
