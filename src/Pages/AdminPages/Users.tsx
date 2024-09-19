@@ -47,9 +47,22 @@ function Users() {
     }
   };
 
-  const handleDeleteUser = (id: string) => {
-    navigate("/register");
-    logout();
+  const detaleUser = async (id: string) => {
+    try {
+      const token = localStorage.getItem("token");
+      await axios.delete(`http://localhost:3005/api/user/delateUser/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+    } catch (error) {
+      console.error("Error delate users:", error);
+    }
+  };
+
+  const handleDeleteUser = async (id: string) => {
+    await detaleUser(id);
+    await fetchAllUsers();
     console.log("Delete user:", id);
   };
 
