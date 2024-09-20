@@ -52,24 +52,47 @@ function Users() {
     }
   };
 
-  const detaleUser = async (id: string) => {
+  const handleDeleteUser = async (id: string) => {
     try {
+      // Fetch user's blogs (assuming the API endpoint exists)
       const token = localStorage.getItem("token");
+      const userBlogs = await axios.get(
+        `http://localhost:3005/api/blogs/getBlogByUserId/${id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      // Delete all blogs for the user
+      if (userBlogs.data.length > 0) {
+        for (const blog of userBlogs.data) {
+          await axios.delete(
+            `http://localhost:3005/api/blogs/deleteBlog/${blog._id}`,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
+        }
+      }
+
+      // Once blogs are deleted, delete the user
       await axios.delete(`http://localhost:3005/api/user/delateUser/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
+
+      // Fetch updated users list
+      await fetchAllUsers();
     } catch (error) {
-      console.error("Error deleting user:", error);
+      console.error("Error deleting user or blogs:", error);
+      alert("Failed to delete the user and their blogs. Please try again.");
     }
   };
-
-  const handleDeleteUser = async (id: string) => {
-    await detaleUser(id);
-    await fetchAllUsers();
-  };
-
   const handleUpdateUser = (id: string) => {
     navigate(`/updateUser/${id}`);
   };
@@ -79,21 +102,26 @@ function Users() {
   };
 
   const filteredUsers = userInfo
-    ?.filter((user) =>
-      user.fullName.toLocaleLowerCase().includes(searchTerm.toLocaleLowerCase())
+    ?.filter(
+      (user) =>
+        user.username
+          ?.toLocaleLowerCase()
+          .includes(searchTerm.toLocaleLowerCase()) || ""
     )
     .sort((a, b) => {
       if (sortOrder === "asc") {
-        return a.fullName.localeCompare(b.fullName);
+        return a.username.localeCompare(b.username);
       } else {
-        return b.fullName.localeCompare(a.fullName);
+        return b.username.localeCompare(a.username);
       }
     });
 
   return (
     <div className="flex-1 flex items-center justify-center mt-20 p-4">
       <div className="max-w-[1440px] w-full">
-        <Link to={`/dashboard`}>Go Back</Link>
+        <Link to={`/dashboard`} className="text-yellow">
+          Go Back
+        </Link>
         <div className="mt-10 flex items-center justify-between w-full gap-4 border-b border-black pb-4 max-md:flex-col max-md:items-start">
           <div className="flex items-center gap-3">
             <label htmlFor="search">Search user</label>

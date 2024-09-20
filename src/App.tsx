@@ -23,6 +23,7 @@ import MyOrdersPage from "./Pages/MyOrdersPage/MyOrdersPage.tsx";
 import Dashboard from "./Pages/AdminPages/Dashboard.tsx";
 import Users from "./Pages/AdminPages/Users.tsx";
 import UpdateUser from "./Pages/AdminPages/UpdateUser.tsx";
+import BlogsAdmin from "./Pages/AdminPages/BlogsAdmin.tsx";
 
 const router = createBrowserRouter([
   {
@@ -101,6 +102,10 @@ const router = createBrowserRouter([
       {
         path: "/updateUser/:id",
         element: <UpdateUser />,
+      },
+      {
+        path: "blogsAdmin",
+        element: <BlogsAdmin />,
       },
     ],
   },

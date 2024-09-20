@@ -12,7 +12,7 @@ function Dashboard() {
             Users
           </Link>
           <Link
-            to={`/blogs`}
+            to={`/blogsAdmin`}
             className="block text-center bg-yellow text-white py-6 px-4 rounded-lg text-xl font-semibold hover:bg-green-600 transition-colors"
           >
             Blogs
