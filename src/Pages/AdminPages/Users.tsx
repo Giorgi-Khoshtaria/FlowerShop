@@ -21,12 +21,12 @@ interface UserInfo {
 }
 
 function Users() {
-  const { userData, logout } = useAuth();
+  const { userData } = useAuth();
   const [userInfo, setUserInfo] = useState<UserInfo[] | null>(null);
   const navigate = useNavigate();
-
   useEffect(() => {
     fetchAllUsers();
+    console.log(userInfo);
   }, [userData]);
 
   const fetchAllUsers = async () => {
@@ -63,12 +63,10 @@ function Users() {
   const handleDeleteUser = async (id: string) => {
     await detaleUser(id);
     await fetchAllUsers();
-    console.log("Delete user:", id);
   };
 
   const handleUpdateUser = (id: string) => {
-    // You can add the logic to update the user here.
-    console.log("Update user:", id);
+    navigate(`/updateUser/${id}`);
   };
 
   return (
@@ -93,6 +91,7 @@ function Users() {
               <tr>
                 <th className="py-2 px-4 text-left">Profile</th>
                 <th className="py-2 px-4 text-left">Name</th>
+                <th className="py-2 px-4 text-left">UserName</th>
                 <th className="py-2 px-4 text-left">Email</th>
                 <th className="py-2 px-4 text-left">Role</th>
                 <th className="py-2 px-4 text-left">Age</th>
@@ -116,6 +115,9 @@ function Users() {
                     </td>
                     <td className="py-2 px-4">
                       {user.fullName || "No Information"}
+                    </td>
+                    <td className="py-2 px-4">
+                      {user.username || "No Information"}
                     </td>
                     <td className="py-2 px-4">
                       {user.email || "No Information"}

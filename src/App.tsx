@@ -22,6 +22,7 @@ import CheckoutPage from "./Pages/CheckoutPages/CheckoutPage.tsx";
 import MyOrdersPage from "./Pages/MyOrdersPage/MyOrdersPage.tsx";
 import Dashboard from "./Pages/AdminPages/Dashboard.tsx";
 import Users from "./Pages/AdminPages/Users.tsx";
+import UpdateUser from "./Pages/AdminPages/UpdateUser.tsx";
 
 const router = createBrowserRouter([
   {
@@ -96,6 +97,10 @@ const router = createBrowserRouter([
       {
         path: "/users",
         element: <Users />,
+      },
+      {
+        path: "/updateUser/:id",
+        element: <UpdateUser />,
       },
     ],
   },
