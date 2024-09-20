@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router-dom";
 
 interface UserInfo {
   _id: string;
@@ -84,6 +84,9 @@ function UpdateUser() {
   return (
     <div className="flex-1 flex items-start justify-center mt-20 p-4">
       <div className="max-w-[1440px] w-full">
+        <Link to={`/users`} className="text-yellow text-base font-bold">
+          Go Back
+        </Link>
         <h1 className="text-2xl mb-6">Update User</h1>
         {userInfo ? (
           <form onSubmit={handleSubmit} className="space-y-4">

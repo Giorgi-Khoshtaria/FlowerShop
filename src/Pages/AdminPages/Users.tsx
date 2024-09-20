@@ -23,11 +23,17 @@ interface UserInfo {
 function Users() {
   const { userData } = useAuth();
   const [userInfo, setUserInfo] = useState<UserInfo[] | null>(null);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
   const navigate = useNavigate();
+
   useEffect(() => {
     fetchAllUsers();
-    console.log(userInfo);
   }, [userData]);
+
+  const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(event.target.value);
+  };
 
   const fetchAllUsers = async () => {
     try {
@@ -40,7 +46,6 @@ function Users() {
           },
         }
       );
-
       setUserInfo(response.data);
     } catch (error) {
       console.error("Error fetching all users:", error);
@@ -56,7 +61,7 @@ function Users() {
         },
       });
     } catch (error) {
-      console.error("Error delate users:", error);
+      console.error("Error deleting user:", error);
     }
   };
 
@@ -69,6 +74,22 @@ function Users() {
     navigate(`/updateUser/${id}`);
   };
 
+  const handleSortOrder = () => {
+    setSortOrder(sortOrder === "asc" ? "desc" : "asc");
+  };
+
+  const filteredUsers = userInfo
+    ?.filter((user) =>
+      user.fullName.toLocaleLowerCase().includes(searchTerm.toLocaleLowerCase())
+    )
+    .sort((a, b) => {
+      if (sortOrder === "asc") {
+        return a.fullName.localeCompare(b.fullName);
+      } else {
+        return b.fullName.localeCompare(a.fullName);
+      }
+    });
+
   return (
     <div className="flex-1 flex items-center justify-center mt-20 p-4">
       <div className="max-w-[1440px] w-full">
@@ -79,10 +100,17 @@ function Users() {
             <input
               type="search"
               id="search"
+              value={searchTerm}
+              onChange={handleSearch}
               className="py-2 px-2 rounded-md border bg-semiGray border-black focus:outline-none"
             />
           </div>
-          <div>Sort User a/z</div>
+          <button
+            onClick={handleSortOrder}
+            className="text-yellow hover:underline"
+          >
+            Sort Users {sortOrder === "asc" ? "A-Z" : "Z-A"}
+          </button>
         </div>
         {/* Responsive Table */}
         <div className="mt-6 overflow-x-auto">
@@ -101,8 +129,8 @@ function Users() {
               </tr>
             </thead>
             <tbody>
-              {userInfo ? (
-                userInfo.map((user) => (
+              {filteredUsers ? (
+                filteredUsers.map((user) => (
                   <tr key={user._id} className="border-b border-gray-300">
                     <td className="py-2 px-4">
                       <img
