@@ -9,6 +9,7 @@ interface Comment {
   userImage: string;
   rating: number;
   flowersName: string;
+  flowersId: string;
   createdAt: string;
   comment: string;
 }
@@ -28,6 +29,7 @@ function CommetsAdmin() {
 
   useEffect(() => {
     fetchAllComments();
+    console.log(comments);
   }, []);
 
   const fetchAllComments = async () => {
@@ -144,7 +146,7 @@ function CommetsAdmin() {
                         Update
                       </Link>
                       <button
-                        onClick={() => handleDeleteComment(comment._id)}
+                        onClick={() => handleDeleteComment(comment.flowersId)}
                         className="text-red-500 hover:underline"
                       >
                         Delete
