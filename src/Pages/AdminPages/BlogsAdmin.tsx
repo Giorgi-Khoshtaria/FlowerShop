@@ -127,7 +127,7 @@ function BlogsAdmin() {
                       />
                     </td>
                     <td className="py-2 px-4">{blog.blogName || "No Info"}</td>
-                    <td className="py-2 px-4">
+                    <td className="py-2 px-4 max-w-[200px] overflow-x-auto">
                       {blog.blogDescription || "No Info"}
                     </td>
                     <td className="py-2 px-4 flex items-center gap-2">
@@ -136,7 +136,9 @@ function BlogsAdmin() {
                         alt="Author"
                         className="w-8 h-8 object-cover rounded-full"
                       />
-                      <span>{blog.blogUserName || "No Info"}</span>
+                      <span className="max-w-[200px] overflow-x-auto">
+                        {blog.blogUserName || "No Info"}
+                      </span>
                     </td>
 
                     <td className="py-2 px-4">{blog.views}</td>

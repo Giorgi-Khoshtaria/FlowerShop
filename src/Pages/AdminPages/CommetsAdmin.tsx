@@ -1,3 +1,4 @@
+// ... other imports
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
@@ -29,7 +30,6 @@ function CommetsAdmin() {
 
   useEffect(() => {
     fetchAllComments();
-    console.log(comments);
   }, []);
 
   const fetchAllComments = async () => {
@@ -43,6 +43,7 @@ function CommetsAdmin() {
           },
         }
       );
+      console.log("Fetched comments:", response.data);
       setComments(response.data);
     } catch (error) {
       console.error("Error fetching comments:", error);
@@ -115,45 +116,53 @@ function CommetsAdmin() {
               </tr>
             </thead>
             <tbody>
-              {filteredComments ? (
-                filteredComments.map((comment) => (
-                  <tr key={comment._id} className="border-b border-gray-300">
-                    <td className="py-2 px-4">
-                      <img
-                        src={comment.userImage || UserImg}
-                        alt="User"
-                        className="w-16 h-16 object-cover rounded-full"
-                      />
-                    </td>
-                    <td className="py-2 px-4">
-                      {comment.userName || "No Info"}
-                    </td>
-                    <td className="py-2 px-4">
-                      {comment.flowersName || "No Info"}
-                    </td>
-                    <td className="py-2 px-4">
-                      {comment.comment || "No Info"}
-                    </td>
-                    <td className="py-2 px-4">{comment.rating}</td>
-                    <td className="py-2 px-4">
-                      {new Date(comment.createdAt).toLocaleDateString()}
-                    </td>
-                    <td className="py-2 px-4">
-                      <Link
-                        to={`/editComment/${comment._id}`}
-                        className="mr-2 text-blue-500 hover:underline"
-                      >
-                        Update
-                      </Link>
-                      <button
-                        onClick={() => handleDeleteComment(comment.flowersId)}
-                        className="text-red-500 hover:underline"
-                      >
-                        Delete
-                      </button>
+              {comments ? (
+                filteredComments && filteredComments.length > 0 ? (
+                  filteredComments.map((comment) => (
+                    <tr key={comment._id} className="border-b border-gray-300">
+                      <td className="py-2 px-4">
+                        <img
+                          src={comment.userImage || UserImg}
+                          alt="User"
+                          className="w-16 h-16 object-cover rounded-full"
+                        />
+                      </td>
+                      <td className="py-2 px-4">
+                        {comment.userName || "No Info"}
+                      </td>
+                      <td className="py-2 px-4">
+                        {comment.flowersName || "No Info"}
+                      </td>
+                      <td className="py-2 px-4 w-[200px] max-w-[200px] overflow-x-auto ">
+                        {comment.comment || "No Info"}
+                      </td>
+                      <td className="py-2 px-4">{comment.rating}</td>
+                      <td className="py-2 px-4">
+                        {new Date(comment.createdAt).toLocaleDateString()}
+                      </td>
+                      <td className="py-2 px-4">
+                        <Link
+                          to={`/editComment/${comment._id}`}
+                          className="mr-2 text-blue-500 hover:underline"
+                        >
+                          Update
+                        </Link>
+                        <button
+                          onClick={() => handleDeleteComment(comment._id)}
+                          className="text-red-500 hover:underline"
+                        >
+                          Delete
+                        </button>
+                      </td>
+                    </tr>
+                  ))
+                ) : (
+                  <tr>
+                    <td colSpan={7} className="py-2 px-4 text-center">
+                      No comments found.
                     </td>
                   </tr>
-                ))
+                )
               ) : (
                 <tr>
                   <td colSpan={7} className="py-2 px-4 text-center">

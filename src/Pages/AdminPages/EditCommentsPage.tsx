@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router-dom";
 
 function EditCommentsPage() {
   const { id } = useParams(); // Get the comment ID from the URL
@@ -67,6 +67,9 @@ function EditCommentsPage() {
   return (
     <div className="flex-1 flex items-center justify-center mt-20 p-4">
       <div className="max-w-[1440px] w-full">
+        <Link to={`/comments`} className="text-yellow">
+          Go Back
+        </Link>
         <h2 className="text-2xl font-semibold">Edit Comment</h2>
 
         <form onSubmit={handleUpdateComment} className="mt-6 space-y-4">
