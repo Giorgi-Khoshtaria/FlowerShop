@@ -18,6 +18,7 @@ interface Comment {
   comment: string; // The comment text
   createdAt: string; // Date when the comment was created (ISO 8601 format)
   flowersId: string; // ID of the flower the comment is related to
+  flowersName: string;
   rating: number; // Rating for the flower (e.g., out of 5)
   userId: string; // ID of the user who made the comment
   userName: string; // Name of the user who made the comment
@@ -213,6 +214,7 @@ function FlowersDetails() {
           userImage: userPicture,
           userName: userData?.user.username,
           flowersId: flowersId,
+          flowersName: flowerDetails.flowersName,
           comment: comment,
           rating: rating,
         },
@@ -224,6 +226,7 @@ function FlowersDetails() {
       );
       if (response.status === 201) {
         setShowCommentModal(false);
+        getCommentsByFlowerId();
         setRating(0);
         alert("Review submitted!");
       }
@@ -287,7 +290,7 @@ function FlowersDetails() {
             <div className="mt-12 flex w-full items-center justify-between">
               <div>
                 <p className="text-black text-[22px] not-italic font-normal leading-[normal] ">
-                  {flowerDetails.flowersPrice}/ each
+                  {flowerDetails.flowersPrice}$/ each
                 </p>
               </div>
               <div>
@@ -314,7 +317,7 @@ function FlowersDetails() {
           </div>
         </div>
         <div className="mt-[37px] flex w-full items-top justify-between gap-5 max-[1200px]:flex-col-reverse ">
-          <div className=" flex flex-col items-center w-[580px] max-[1200px]:w-full  max-[1200px]:items-start bg-white  pt-[23px] pr-[34px] pb-[45px] pl-[42px] ">
+          <div className="overflow-y-auto flex flex-col items-center w-[580px] max-[1200px]:w-full  max-[1200px]:items-start bg-white  pt-[23px] pr-[34px] pb-[45px] pl-[42px] ">
             <div className="flex items-center justify-between w-full mb-9">
               <h2 className="text-[22px] text-black font-inter">Reviews</h2>
               <p

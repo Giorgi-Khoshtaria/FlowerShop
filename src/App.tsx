@@ -24,6 +24,7 @@ import Dashboard from "./Pages/AdminPages/Dashboard.tsx";
 import Users from "./Pages/AdminPages/Users.tsx";
 import UpdateUser from "./Pages/AdminPages/UpdateUser.tsx";
 import BlogsAdmin from "./Pages/AdminPages/BlogsAdmin.tsx";
+import CommetsAdmin from "./Pages/AdminPages/CommetsAdmin.tsx";
 
 const router = createBrowserRouter([
   {
@@ -39,47 +40,47 @@ const router = createBrowserRouter([
         element: <Home />,
       },
       {
-        path: "shop",
+        path: "/shop",
         element: <ShopPage />,
       },
       {
-        path: "blog",
+        path: "/blog",
         element: <Blogs />,
       },
       {
-        path: "about",
+        path: "/about",
         element: <About />,
       },
       {
-        path: "profile",
+        path: "/profile",
         element: <Profile />,
       },
       {
-        path: "addblogs",
+        path: "/addblogs",
         element: <AddBlogs />,
       },
       {
-        path: "myblogs",
+        path: "/myblogs",
         element: <MyBlogs />,
       },
       {
-        path: "editblogs/:blogId",
+        path: "/editblogs/:blogId",
         element: <EditBlogs />,
       },
       {
-        path: "blogDetails/:blogid",
+        path: "/blogDetails/:blogid",
         element: <BlogDetails />,
       },
       {
-        path: "userProfile/:blogUserId",
+        path: "/userProfile/:blogUserId",
         element: <UserProfile />,
       },
       {
-        path: "addflowers",
+        path: "/addflowers",
         element: <AddFlowers />,
       },
       {
-        path: "flowersDetails/:flowersId",
+        path: "/flowersDetails/:flowersId",
         element: <FlowersDetails />,
       },
       { path: "/cart", element: <Cart /> },
@@ -104,8 +105,12 @@ const router = createBrowserRouter([
         element: <UpdateUser />,
       },
       {
-        path: "blogsAdmin",
+        path: "/blogsAdmin",
         element: <BlogsAdmin />,
+      },
+      {
+        path: "/comments",
+        element: <CommetsAdmin />,
       },
     ],
   },
