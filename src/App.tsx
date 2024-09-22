@@ -10,7 +10,7 @@ import Register from "./Pages/AuthPages/Register";
 import ForgotPassword from "./Pages/AuthPages/ForgotPassword";
 import Profile from "./Pages/UserPages/Profile";
 import AddBlogs from "./Pages/BlogPages/AddBlogs";
-import AddFlowers from "./Pages/AdminPages/AddFolwers";
+import AddFlowers from "./Pages/AdminPages/AdminFlowers/AddFolwers.tsx";
 import BlogDetails from "./Pages/BlogPages/BlogDetails";
 
 import MyBlogs from "./Pages/BlogPages/MyBlogs";
@@ -21,12 +21,12 @@ import Cart from "./Pages/CartPages/Cart.tsx";
 import CheckoutPage from "./Pages/CheckoutPages/CheckoutPage.tsx";
 import MyOrdersPage from "./Pages/MyOrdersPage/MyOrdersPage.tsx";
 import Dashboard from "./Pages/AdminPages/Dashboard.tsx";
-import Users from "./Pages/AdminPages/Users.tsx";
-import UpdateUser from "./Pages/AdminPages/UpdateUser.tsx";
-import BlogsAdmin from "./Pages/AdminPages/BlogsAdmin.tsx";
-import CommetsAdmin from "./Pages/AdminPages/CommetsAdmin.tsx";
-import EditCommentsPage from "./Pages/AdminPages/EditCommentsPage.tsx";
-import FlowersAdmin from "./Pages/AdminPages/FlowersAdmin.tsx";
+import Users from "./Pages/AdminPages/AdminUser/Users.tsx";
+import UpdateUser from "./Pages/AdminPages/AdminUser/UpdateUser.tsx";
+import BlogsAdmin from "./Pages/AdminPages/AdminBlogs/BlogsAdmin.tsx";
+import CommetsAdmin from "./Pages/AdminPages/AdminCommets/CommetsAdmin.tsx";
+import EditCommentsPage from "./Pages/AdminPages/AdminCommets/EditCommentsPage.tsx";
+import FlowersAdmin from "./Pages/AdminPages/AdminFlowers/FlowersAdmin.tsx";
 
 const router = createBrowserRouter([
   {
