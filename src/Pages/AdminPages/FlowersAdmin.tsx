@@ -39,6 +39,26 @@ function FlowersAdmin() {
     }
   };
 
+  const deleteFlowers = async (id: string) => {
+    try {
+      const token = localStorage.getItem("token");
+      const response = await axios.delete(
+        `http://localhost:3005/api/flowers/deleteFlowers/${id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      if (response.status === 200) {
+        alert("flower deleted successfully");
+        fetchFlowersData();
+      }
+    } catch (error) {
+      console.error("Error fetching flowers data:", error);
+    }
+  };
+
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value);
   };
@@ -125,7 +145,10 @@ function FlowersAdmin() {
                       >
                         Edit
                       </Link>
-                      <button className="text-red-500 hover:underline">
+                      <button
+                        onClick={() => deleteFlowers(flower._id)}
+                        className="text-red-500 hover:underline"
+                      >
                         Delete
                       </button>
                     </td>
