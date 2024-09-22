@@ -27,6 +27,7 @@ import BlogsAdmin from "./Pages/AdminPages/AdminBlogs/BlogsAdmin.tsx";
 import CommetsAdmin from "./Pages/AdminPages/AdminCommets/CommetsAdmin.tsx";
 import EditCommentsPage from "./Pages/AdminPages/AdminCommets/EditCommentsPage.tsx";
 import FlowersAdmin from "./Pages/AdminPages/AdminFlowers/FlowersAdmin.tsx";
+import EditFlowers from "./Pages/AdminPages/AdminFlowers/EditFlowers.tsx";
 
 const router = createBrowserRouter([
   {
@@ -121,6 +122,10 @@ const router = createBrowserRouter([
       {
         path: "/flowersAdmin",
         element: <FlowersAdmin />,
+      },
+      {
+        path: "/editFlower/:id",
+        element: <EditFlowers />,
       },
     ],
   },

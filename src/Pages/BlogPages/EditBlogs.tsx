@@ -1,5 +1,5 @@
 import { ChangeEvent, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import axios from "axios";
 import "../../components/Css/profile.css";
 
@@ -86,6 +86,9 @@ function EditBlogs() {
     <div className="flex-1 w-full flex flex-col items-center justify-center p-4 mx-auto mt-10">
       <div className="max-w-[1440px] w-full flex flex-col items-start bg-white p-6 rounded-lg shadow-md">
         <div>
+          <Link to={`/blogsAdmin`} className="text-yellow">
+            Go Back
+          </Link>
           <h1 className="text-3xl font-semibold text-yellow-600 mb-6">
             Edit Blog
           </h1>
