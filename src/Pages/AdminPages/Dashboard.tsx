@@ -24,7 +24,7 @@ function Dashboard() {
             Comments
           </Link>
           <Link
-            to={`/flower`}
+            to={`/flowersAdmin`}
             className="block text-center bg-yellow text-white py-6 px-4 rounded-lg text-xl font-semibold hover:bg-pink-600 transition-colors"
           >
             Flowers

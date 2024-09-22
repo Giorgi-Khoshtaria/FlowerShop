@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 
 function EditCommentsPage() {
@@ -7,7 +7,6 @@ function EditCommentsPage() {
   const navigate = useNavigate();
   const [commentText, setCommentText] = useState("");
   const [rating, setRating] = useState("");
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     fetchCommentById();
@@ -26,7 +25,6 @@ function EditCommentsPage() {
       );
       setCommentText(response.data.comment);
       setRating(response.data.rating);
-      setLoading(false);
     } catch (error) {
       console.error(error);
     }
@@ -61,8 +59,6 @@ function EditCommentsPage() {
       console.error(error);
     }
   };
-
-  if (loading) return <div>Loading...</div>;
 
   return (
     <div className="flex-1 flex items-center justify-center mt-20 p-4">

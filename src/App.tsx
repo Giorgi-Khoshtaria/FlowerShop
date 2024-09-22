@@ -26,6 +26,7 @@ import UpdateUser from "./Pages/AdminPages/UpdateUser.tsx";
 import BlogsAdmin from "./Pages/AdminPages/BlogsAdmin.tsx";
 import CommetsAdmin from "./Pages/AdminPages/CommetsAdmin.tsx";
 import EditCommentsPage from "./Pages/AdminPages/EditCommentsPage.tsx";
+import FlowersAdmin from "./Pages/AdminPages/FlowersAdmin.tsx";
 
 const router = createBrowserRouter([
   {
@@ -116,6 +117,10 @@ const router = createBrowserRouter([
       {
         path: "/editComment/:id",
         element: <EditCommentsPage />,
+      },
+      {
+        path: "/flowersAdmin",
+        element: <FlowersAdmin />,
       },
     ],
   },

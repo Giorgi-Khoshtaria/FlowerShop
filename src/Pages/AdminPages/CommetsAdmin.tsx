@@ -133,7 +133,7 @@ function CommetsAdmin() {
                       <td className="py-2 px-4">
                         {comment.flowersName || "No Info"}
                       </td>
-                      <td className="py-2 px-4 w-[200px] max-w-[200px] overflow-x-auto ">
+                      <td className="py-2 px-4 max-w-[200px] overflow-hidden text-ellipsis">
                         {comment.comment || "No Info"}
                       </td>
                       <td className="py-2 px-4">{comment.rating}</td>

@@ -25,7 +25,7 @@ const Comment: React.FC<CommentProps> = ({
       />
       <div className="w-[356px] max-[1200px]:w-full max-sm:w-[200px]">
         <p className="text-black font-inter text-[22px] mb-[10px]">{name}</p>
-        <p className="text-darkGray font-inter text-[22px] mb-[15px] overflow-y-auto w-[300px]">
+        <p className="text-darkGray font-inter text-[22px] mb-[15px] max-w-[356px] max-sm:max-w-[200px] break-words">
           {comment}
         </p>
         <div className="flex items-center gap-2">
