@@ -25,6 +25,7 @@ function Users() {
   const [userInfo, setUserInfo] = useState<UserInfo[] | null>(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
+  // const [comments, setComments] = useState<Comment[] | null>(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -65,6 +66,17 @@ function Users() {
         }
       );
 
+      const userComments = await axios.get(
+        `http://localhost:3005/api/reviews/getCommets`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      console.log("Fetched comments:", userComments.data);
+      // setComments(userComments.data);
+
       // Delete all blogs for the user
       if (userBlogs.data.length > 0) {
         for (const blog of userBlogs.data) {
@@ -78,7 +90,18 @@ function Users() {
           );
         }
       }
-
+      if (userComments.data.length > 0) {
+        for (const comment of userComments.data) {
+          await axios.delete(
+            `http://localhost:3005/api/reviews/deleteCommentByUserId/${comment.userId}`,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
+        }
+      }
       // Once blogs are deleted, delete the user
       await axios.delete(`http://localhost:3005/api/user/delateUser/${id}`, {
         headers: {
@@ -90,7 +113,9 @@ function Users() {
       await fetchAllUsers();
     } catch (error) {
       console.error("Error deleting user or blogs:", error);
-      alert("Failed to delete the user and their blogs. Please try again.");
+      alert(
+        "Failed to delete the user and their blogs and commets. Please try again."
+      );
     }
   };
   const handleUpdateUser = (id: string) => {
