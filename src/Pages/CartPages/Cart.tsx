@@ -1,4 +1,3 @@
-import React from "react";
 import { useCart } from "../../Contexts/CartContext";
 import { useAuth } from "../../Contexts/AuthContext";
 import CartItemDetails from "../../components/Cartcomponents/CartItemDetails";
@@ -8,9 +7,9 @@ function Cart() {
   const { cartItems, clearCart } = useCart();
   const { userData } = useAuth();
   const userId = userData?.user.id;
-  console.log(cartItems, "cart");
+
   const total = cartItems.reduce(
-    (acc, item) => acc + item.price * item.quantity,
+    (acc, item) => acc + Number(item.price) * item.quantity, // Ensure price is a number
     0
   );
 
@@ -20,7 +19,7 @@ function Cart() {
         flowerId: item.id,
         flowerImage: item.mainImage,
         flowerName: item.name,
-        flowerPrice: item.price,
+        flowerPrice: Number(item.price), // Ensure price is a number
         flowerQuantity: item.quantity,
       })),
       userId: userId,
@@ -63,7 +62,7 @@ function Cart() {
                   <CartItemDetails
                     flowerImage={item.mainImage}
                     flowerName={item.name}
-                    flowerPrice={item.price}
+                    flowerPrice={Number(item.price)} // Ensure price is a number
                     flowerQuantity={item.quantity}
                     flowerId={item.id}
                   />
@@ -72,7 +71,9 @@ function Cart() {
             </div>
           </div>
         ) : (
-          <p>There are no items in the cart.</p>
+          <p className="flex items-center justify-center">
+            There are no items in the cart.
+          </p>
         )}
 
         {cartItems.length > 0 && (

@@ -6,6 +6,7 @@ import yellowStar from "/assets/yellowStar.svg";
 import whiteStar from "/assets/whiteStar.svg";
 import { useAuth } from "../../Contexts/AuthContext";
 import { useCart } from "../../Contexts/CartContext";
+import { RiseLoader } from "react-spinners";
 // import user from "/assets/user-solid.svg";
 
 interface Flower {
@@ -239,9 +240,7 @@ function FlowersDetails() {
   if (loading) {
     return (
       <div className="flex-1 flex items-center justify-center mt-20 p-4">
-        <div className="max-w-[1440px] w-full">
-          <p className="text-2xl">Loading...</p>
-        </div>
+        <RiseLoader color="#FF8F52" margin={0} size={15} speedMultiplier={1} />
       </div>
     );
   }
@@ -366,7 +365,14 @@ function FlowersDetails() {
                   </div>
                 ))
               ) : (
-                <p>There are no more items</p>
+                <div className="flex-1 flex items-center justify-center ">
+                  <RiseLoader
+                    color="#FF8F52"
+                    margin={0}
+                    size={15}
+                    speedMultiplier={1}
+                  />
+                </div>
               )}
             </div>
           </div>

@@ -1,87 +1,119 @@
-import { useEffect, useState } from "react";
-import Flowers from "../SemiComponents/Flowers";
+import { useCart } from "../../Contexts/CartContext";
+import { useAuth } from "../../Contexts/AuthContext";
+import CartItemDetails from "../../components/Cartcomponents/CartItemDetails";
 import axios from "axios";
-import { RiseLoader } from "react-spinners";
+import { useState } from "react";
+import { RiseLoader } from "react-spinners"; // Import the RiseLoader
 
-interface Flowers {
-  _id: string;
-  flowersName: string;
-  flowersDescription: string;
-  flowersPrice: number;
-  flowersRating: string;
-  flowersPhoto: string;
-}
+function Cart() {
+  const { cartItems, clearCart } = useCart();
+  const { userData } = useAuth();
+  const userId = userData?.user.id;
 
-function BestSellers() {
-  const [flowerdata, setFlowersData] = useState<Flowers[]>([]);
-  const [loading, setLoading] = useState(true); // Add loading state
+  const [loading, setLoading] = useState(false);
+  const total = cartItems.reduce(
+    (acc, item) => acc + Number(item.price) * item.quantity,
+    0
+  );
 
-  useEffect(() => {
-    fetchFlowersData();
-  }, []);
+  const fetchCheckout = async () => {
+    const checkoutData = {
+      cartItems: cartItems.map((item) => ({
+        flowerId: item.id,
+        flowerImage: item.mainImage,
+        flowerName: item.name,
+        flowerPrice: Number(item.price),
+        flowerQuantity: item.quantity,
+      })),
+      userId: userId,
+    };
 
-  const fetchFlowersData = async () => {
+    setLoading(true); // Set loading to true when starting checkout
+
     try {
       const token = localStorage.getItem("token");
-      const response = await axios.get(
-        `http://localhost:3005/api/flowers/getFlowers`,
+      const response = await axios.post(
+        `http://localhost:3005/api/checkout/addcheckout`,
+        checkoutData,
         {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         }
       );
-      setFlowersData(response.data);
-      setLoading(false); // Stop loading once data is fetched
+
+      if (response.status === 201) {
+        alert("Checkout successful! Your order has been placed.");
+        clearCart();
+      }
     } catch (error) {
-      console.error("Error fetching flowers data:", error);
-      setLoading(false); // Stop loading in case of error
+      console.error("Error during checkout:", error);
+      alert("There was an error during checkout. Please try again.");
+    } finally {
+      setLoading(false); // Set loading to false after checkout completes
     }
   };
 
-  // Filter for specific flower names
-  const bestSellers = flowerdata.filter((flower) =>
-    ["Rose", "Hellebore", "Gloriosa Lily", "Tulip"].includes(flower.flowersName)
-  );
-
   return (
-    <div className="mt-[116px] w-full">
-      <div className="flex items-center justify-center gap-[19px]  max-sm:gap-3">
-        <div className="h-[2px] w-[165px] bg-semiGray max-sm:w-10"></div>
-        <h2 className="text-black text-[32px] not-italic font-normal leading-[normal]">
-          Best Sellers
-        </h2>
-        <div className="h-[2px] w-[165px] bg-semiGray max-sm:w-10"></div>
+    <div className="flex-1 flex items-center justify-center mt-20 p-4">
+      <div className="max-w-[1440px] w-full flex gap-4 items-baseline justify-between max-[900px]:flex-col">
+        {cartItems.length > 0 ? (
+          <div className="w-full pt-[33px] px-[41px] pb-[46px] bg-white">
+            <h1 className="text-black text-[22px] not-italic font-normal leading-[normal] pb-12">
+              Cart
+            </h1>
+            <div className="flex flex-col gap-7 w-full">
+              {cartItems.map((item) => (
+                <div key={item.id}>
+                  <CartItemDetails
+                    flowerImage={item.mainImage}
+                    flowerName={item.name}
+                    flowerPrice={Number(item.price)}
+                    flowerQuantity={item.quantity}
+                    flowerId={item.id}
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+        ) : (
+          <p className="flex items-center justify-center">
+            There are no items in the cart.
+          </p>
+        )}
+
+        {cartItems.length > 0 && (
+          <div className="w-[384px] max-sm:w-full pt-[33px] pr-4 pb-5 pl-4 bg-white">
+            <p className="text-black text-xl not-italic font-normal leading-[normal]">
+              Subtotal for {cartItems.length} items:{" "}
+              <span className="font-bold">{total}$</span>
+            </p>
+            <button
+              onClick={fetchCheckout}
+              className="mt-[21px] w-full py-[10px] text-lg not-italic font-normal leading-[normal] text-white rounded-md bg-yellow"
+            >
+              {loading ? "Processing..." : "Checkout"}
+            </button>
+          </div>
+        )}
       </div>
 
-      {/* Show loader while data is being fetched */}
-      {loading ? (
-        <div className="flex justify-center items-center mt-[33px]">
-          <div className="loader">
-            <RiseLoader
-              color="#FF8F52"
-              margin={0}
-              size={15}
-              speedMultiplier={1}
-            />
-          </div>{" "}
-          {/* Replace this with your loader */}
-        </div>
-      ) : (
-        <div className="flex items-center justify-between flex-wrap mt-[33px] gap-5 max-xl:justify-center">
-          {bestSellers.map((flower) => (
-            <Flowers
-              key={flower._id}
-              img={flower.flowersPhoto}
-              name={flower.flowersName}
-              price={flower.flowersPrice}
-              flowerId={flower._id}
-            />
-          ))}
+      {loading && (
+        <div className="fixed inset-0 flex justify-center items-center bg-gray-800 bg-opacity-50 z-50">
+          <div className="flex justify-center items-center mt-[33px]">
+            <div className="loader">
+              <RiseLoader
+                color="#FF8F52"
+                margin={0}
+                size={15}
+                speedMultiplier={1}
+              />
+            </div>
+          </div>
         </div>
       )}
     </div>
   );
 }
 
-export default BestSellers;
+export default Cart;
