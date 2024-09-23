@@ -1,11 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useCart } from "../../Contexts/CartContext";
+import toast, { Toaster } from "react-hot-toast";
 
 interface FlowersProps {
   img: string;
   name: string;
-  price: number;
+  price: string;
   flowerId: string;
 }
 
@@ -27,8 +28,15 @@ const Flowers: React.FC<FlowersProps> = ({ img, name, price, flowerId }) => {
 
     if (!itemExists) {
       addToCart(cartItem);
-      console.log(cartItem, "Cart item");
-      alert("Item successfully added to cart");
+
+      // alert("Item successfully added to cart");
+      toast.success("Item successfully added to cart.", {
+        style: {
+          border: "1px solid #713200",
+          padding: "16px",
+          color: "#713200",
+        },
+      });
     } else {
       // If the item is already in the cart, show an alert
       alert("This item is already in your cart.");
@@ -37,6 +45,7 @@ const Flowers: React.FC<FlowersProps> = ({ img, name, price, flowerId }) => {
 
   return (
     <div className="bg-white p-4 rounded-[5px] w-[287px]">
+      <Toaster position="top-right" reverseOrder={false} />
       <Link to={`/flowersDetails/${flowerId}`}>
         <img src={img} alt="flowers image" className=" w-[251px] h-[251px]" />
         <p className="text-[22px] not-italic font-normal leading-[normal] text-black mt-[9px] mb-[39px]">
