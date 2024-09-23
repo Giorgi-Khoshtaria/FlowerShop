@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useAuth } from "../../Contexts/AuthContext";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import { RiseLoader } from "react-spinners"; // Import the loader
 
 interface BlogDetails {
   _id: string;
@@ -10,15 +11,16 @@ interface BlogDetails {
   blogImage: string;
   createdAt: string;
 }
+
 function MyBlogs() {
   const { userData } = useAuth();
-
   const [isLoadingBlogs, setIsLoadingBlogs] = useState(true);
   const [blogsByUser, setBlogsByUser] = useState<BlogDetails[]>([]);
 
   useEffect(() => {
     fetchBlogsByBlogUserId();
   }, [userData]);
+
   const fetchBlogsByBlogUserId = async () => {
     try {
       const token = localStorage.getItem("token");
@@ -38,12 +40,11 @@ function MyBlogs() {
     }
   };
 
-  // Delete blog by blog ID
   const handleDeleteBlog = async (blogId: string) => {
     const confirmDelete = window.confirm(
       "Are you sure you want to delete this blog?"
     );
-    if (!confirmDelete) return; // If user cancels, return early
+    if (!confirmDelete) return;
 
     try {
       const token = localStorage.getItem("token");
@@ -55,7 +56,6 @@ function MyBlogs() {
           },
         }
       );
-      // Update the state to remove the deleted blog from the list
       setBlogsByUser((prevBlogs) =>
         prevBlogs.filter((blog) => blog._id !== blogId)
       );
@@ -67,7 +67,7 @@ function MyBlogs() {
   };
 
   return (
-    <div className=" flex-1 flex items-center justify-center">
+    <div className="flex-1 flex items-center justify-center">
       <div className="max-w-[1440px] w-full mt-10">
         <h1 className="text-2xl font-semibold mb-4">
           {userData?.user?.username}'s Uploaded Blogs
@@ -75,14 +75,16 @@ function MyBlogs() {
 
         {/* Loading Blogs */}
         {isLoadingBlogs ? (
-          <p>Loading blogs...</p>
+          <div className="flex items-center justify-center h-40">
+            <RiseLoader color="#FF8F52" size={15} />
+          </div>
         ) : blogsByUser.length === 0 ? (
           <p>No blogs available for this user</p>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {blogsByUser.map((blog, index) => (
+            {blogsByUser.map((blog) => (
               <div
-                key={index}
+                key={blog._id}
                 className="bg-white rounded-lg shadow-md p-6 flex flex-col items-start"
               >
                 <div className="w-full flex items-center justify-between">
@@ -96,7 +98,7 @@ function MyBlogs() {
                     onClick={() => handleDeleteBlog(blog._id)}
                     className="text-yellow text-base"
                   >
-                    Delate Blog
+                    Delete Blog
                   </button>
                 </div>
 
