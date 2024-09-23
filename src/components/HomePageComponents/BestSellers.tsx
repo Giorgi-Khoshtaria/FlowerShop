@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import Flowers from "../SemiComponents/Flowers";
 import axios from "axios";
+import { RiseLoader } from "react-spinners";
 
 interface Flowers {
   _id: string;
@@ -56,7 +57,14 @@ function BestSellers() {
       {/* Show loader while data is being fetched */}
       {loading ? (
         <div className="flex justify-center items-center mt-[33px]">
-          <div className="loader">Loading...</div>{" "}
+          <div className="loader">
+            <RiseLoader
+              color="#FF8F52"
+              margin={0}
+              size={15}
+              speedMultiplier={1}
+            />
+          </div>{" "}
           {/* Replace this with your loader */}
         </div>
       ) : (

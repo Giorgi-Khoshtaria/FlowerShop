@@ -7,7 +7,7 @@ interface BlogsProps {
   mainImage: string;
   blogName: string;
   description: string;
-  like: number;
+
   view: number;
   blogId: string;
   blogUserId: string;
@@ -30,7 +30,7 @@ const BlogsSection: React.FC<BlogsProps> = ({
   description,
   blogId,
   blogUserId,
-  like,
+
   view,
 }) => {
   const formattedDate = formatDate(date); // Format the date here
@@ -96,9 +96,6 @@ const BlogsSection: React.FC<BlogsProps> = ({
                 fill="#838383"
               />
             </svg>
-            <p className="text-xs not-italic font-normal leading-[normal] text-darkGray">
-              {like}
-            </p>
           </div>
           <div className="flex items-center justify-start gap-1">
             <svg
