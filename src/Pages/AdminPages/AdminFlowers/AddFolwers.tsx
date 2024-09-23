@@ -11,8 +11,8 @@ function AddFlowers() {
   const [price, setPrice] = useState("");
   const [rating, setRating] = useState<number | null>(null);
   const [alertMessage, setAlertMessage] = useState("");
-  const [submitError, setSubmitError] = useState<string | null>(null);
-  const [submitSuccess, setSubmitSuccess] = useState<string | null>(null);
+  // const [submitError, setSubmitError] = useState<string | null>(null);
+  // const [submitSuccess, setSubmitSuccess] = useState<string | null>(null);
 
   // Reference for the file input
   const fileInputRef = useRef<HTMLInputElement | null>(null);
@@ -59,8 +59,8 @@ function AddFlowers() {
       );
 
       if (response.status === 201) {
-        setSubmitSuccess("Flower added successfully!");
-        setSubmitError(null);
+        alert("Flower added successfully!");
+
         // Clear form after successful submission
         setPhoto(null);
         setName("");
@@ -72,12 +72,10 @@ function AddFlowers() {
           fileInputRef.current.value = "";
         }
       } else {
-        setSubmitError("Failed to submit the form.");
-        setSubmitSuccess(null);
+        alert("Failed to submit the form.");
       }
     } catch (error) {
-      setSubmitError("An error occurred while submitting the form.");
-      setSubmitSuccess(null);
+      alert("An error occurred while submitting the form.");
     }
   };
 
@@ -192,16 +190,6 @@ function AddFlowers() {
               <div className="mb-4 text-red-600 font-medium">
                 {alertMessage}
               </div>
-            )}
-
-            {/* Submission Success or Error Messages */}
-            {submitSuccess && (
-              <div className="mb-4 text-green-600 font-medium">
-                {submitSuccess}
-              </div>
-            )}
-            {submitError && (
-              <div className="mb-4 text-red-600 font-medium">{submitError}</div>
             )}
 
             <div className="flex w-full justify-end">

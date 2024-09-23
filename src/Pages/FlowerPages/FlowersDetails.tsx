@@ -354,13 +354,13 @@ function FlowersDetails() {
                 randomFlower.map((flower) => (
                   <div
                     key={flower._id}
-                    className="w-[246px] max-[1200px]:w-[340px]"
+                    className="w-[246px] h-[223px] max-[1200px]:w-[340px]"
                   >
                     <Link to={`/flowersDetails/${flower._id}`}>
                       <img
                         src={flower.flowersPhoto}
                         alt="flowerPhoto"
-                        className="w-full h-auto  max-[1200px]:"
+                        className="w-full h-full  max-[1200px]:"
                       />
                     </Link>
                   </div>
