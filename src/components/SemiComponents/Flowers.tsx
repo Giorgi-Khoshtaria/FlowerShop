@@ -30,16 +30,10 @@ const Flowers: React.FC<FlowersProps> = ({ img, name, price, flowerId }) => {
       addToCart(cartItem);
 
       // alert("Item successfully added to cart");
-      toast.success("Item successfully added to cart.", {
-        style: {
-          border: "1px solid #713200",
-          padding: "16px",
-          color: "#713200",
-        },
-      });
+      toast.success("Item successfully added to cart.");
     } else {
       // If the item is already in the cart, show an alert
-      alert("This item is already in your cart.");
+      toast.error("This item is already in your cart.");
     }
   };
 

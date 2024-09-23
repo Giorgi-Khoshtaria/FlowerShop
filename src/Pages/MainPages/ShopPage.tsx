@@ -154,7 +154,7 @@ function ShopPage() {
                   <Flowers
                     img={flower.flowersPhoto}
                     name={flower.flowersName}
-                    price={flower.flowersPrice}
+                    price={flower.flowersPrice.toString()}
                     flowerId={flower._id}
                   />
                 </div>

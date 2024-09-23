@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import axios, { AxiosError } from "axios";
 import houseimg from "/assets/house.svg";
 import registerImage from "/assets/register.png";
+import toast, { Toaster } from "react-hot-toast";
 
 function Register() {
   const [email, setEmail] = useState("");
@@ -22,7 +23,7 @@ function Register() {
     e.preventDefault();
 
     if (!validatePassword(password)) {
-      alert(
+      toast.error(
         "Password must contain at least 8 characters, including uppercase, lowercase, numbers, and special characters."
       );
       return;
@@ -46,7 +47,7 @@ function Register() {
 
       // Handle successful response
       if (response.status === 201) {
-        alert("Registration successful!");
+        toast.success("Registration successful!");
         setEmail("");
         setUsername("");
         setPassword("");
@@ -58,25 +59,30 @@ function Register() {
         if (error.response) {
           switch (error.response.status) {
             case 400:
-              alert("Error registering user: " + error.response.data.message);
+              toast.error(
+                "Error registering user: " + error.response.data.message
+              );
               break;
             case 409:
-              alert("Username or email already exists.");
+              toast.error("Username or email already exists.");
               break;
             default:
-              alert("Error registering user: " + error.response.data.message);
+              toast.error(
+                "Error registering user: " + error.response.data.message
+              );
           }
         } else {
-          alert("No response from the server.");
+          toast.error("No response from the server.");
         }
       } else {
-        alert("An unexpected error occurred.");
+        toast.error("An unexpected error occurred.");
       }
     }
   };
 
   return (
     <div className="flex-1 px-[20px] min-h-screen flex items-center justify-center max-lg:flex-col-reverse">
+      <Toaster position="top-right" reverseOrder={false} />{" "}
       <div className="pt-[30px] pr-[49px] pb-[43px] pl-[48px] bg-white w-[488px] max-sm:w-[327px]">
         <div className="flex items-baseline justify-between mb-[57px] max-sm:flex-col-reverse max-sm:gap-2">
           <div>

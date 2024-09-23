@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios, { AxiosError } from "axios";
 import houseimg from "/assets/house.svg";
+import toast, { Toaster } from "react-hot-toast";
 
 function ForgotPassword() {
   const [username, setUsername] = useState("");
@@ -48,7 +49,7 @@ function ForgotPassword() {
       );
 
       if (response.status === 200) {
-        alert("Password updated successfully!");
+        toast.success("Password updated successfully!");
         setUsername("");
         setNewPassword("");
         setConfirmPassword("");
@@ -65,21 +66,22 @@ function ForgotPassword() {
               alert(error.response.data.message);
               break;
             case 404:
-              alert("User does not exist.");
+              toast.error("User does not exist.");
               break;
             default:
-              alert("An unexpected error occurred.");
+              toast.error("An unexpected error occurred.");
           }
         } else {
-          alert("No response from the server.");
+          toast.error("No response from the server.");
         }
       } else {
-        alert("An unexpected error occurred.");
+        toast.error("An unexpected error occurred.");
       }
     }
   };
   return (
     <div className=" flex-1 px-[20px] min-h-screen flex items-center justify-center max-lg:flex-col-reverse">
+      <Toaster position="top-right" reverseOrder={false} />{" "}
       <div className="pt-[33px] pr-[49px] pb-[67px] pl-[48px] bg-white w-[488px] max-sm:w-[327px]">
         <div className="flex items-baseline flex-col mb-[40px] max-sm:gap-2">
           <div className="flex items-center justify-center mb-3">

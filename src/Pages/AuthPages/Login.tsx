@@ -4,6 +4,7 @@ import axios, { AxiosError } from "axios";
 import houseimg from "/assets/house.svg";
 import loginImage from "/assets/login.png";
 import { useAuth } from "../../Contexts/AuthContext";
+import toast, { Toaster } from "react-hot-toast";
 
 function Login() {
   const [username, setUsername] = useState("");
@@ -35,7 +36,7 @@ function Login() {
         console.log(response.data);
         setPassword("");
         setUsername("");
-        alert("Login successful!");
+        toast.success("Login successful!");
         localStorage.setItem("token", response.data.token);
         navigate("/home"); // Redirect the user to the home page
       }
@@ -44,27 +45,28 @@ function Login() {
         if (error.response) {
           switch (error.response.status) {
             case 404:
-              alert("User not found.");
+              toast.error("User not found.");
               break;
             case 400:
-              alert("Invalid username or password.");
+              toast.error("Invalid username or password.");
               break;
             default:
-              alert(
+              toast.error(
                 error.response.data.message || "An error occurred during login."
               );
           }
         } else {
-          alert("No response from the server.");
+          toast.error("No response from the server.");
         }
       } else {
-        alert("An unexpected error occurred.");
+        toast.error("An unexpected error occurred.");
       }
     }
   };
 
   return (
     <div className=" flex-1 px-[20px] min-h-screen flex items-center justify-center max-lg:flex-col-reverse">
+      <Toaster position="top-right" reverseOrder={false} />{" "}
       <div className="pt-[33px] pr-[49px] pb-[67px] pl-[48px] bg-white w-[488px] max-sm:w-[327px]">
         <div className="flex items-baseline justify-between mb-[57px] max-sm:flex-col-reverse max-sm:gap-2">
           <div>
