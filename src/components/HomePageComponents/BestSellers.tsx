@@ -1,25 +1,77 @@
+import { useEffect, useState } from "react";
 import Flowers from "../SemiComponents/Flowers";
-import best1 from "/assets/best1.png";
-import best2 from "/assets/best2.png";
-import best3 from "/assets/best3.png";
-import best4 from "/assets/best4.png";
+import axios from "axios";
+
+interface Flowers {
+  _id: string;
+  flowersName: string;
+  flowersDescription: string;
+  flowersPrice: number;
+  flowersRating: string;
+  flowersPhoto: string;
+}
 
 function BestSellers() {
+  const [flowerdata, setFlowersData] = useState<Flowers[]>([]);
+  const [loading, setLoading] = useState(true); // Add loading state
+
+  useEffect(() => {
+    fetchFlowersData();
+  }, []);
+
+  const fetchFlowersData = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      const response = await axios.get(
+        `http://localhost:3005/api/flowers/getFlowers`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      setFlowersData(response.data);
+      setLoading(false); // Stop loading once data is fetched
+    } catch (error) {
+      console.error("Error fetching flowers data:", error);
+      setLoading(false); // Stop loading in case of error
+    }
+  };
+
+  // Filter for specific flower names
+  const bestSellers = flowerdata.filter((flower) =>
+    ["Rose", "Hellebore", "Gloriosa Lily", "Tulip"].includes(flower.flowersName)
+  );
+
   return (
     <div className="mt-[116px] w-full">
       <div className="flex items-center justify-center gap-[19px]  max-sm:gap-3">
         <div className="h-[2px] w-[165px] bg-semiGray max-sm:w-10"></div>
-        <h2 className=" text-black text-[32px] not-italic font-normal leading-[normal]  ">
-          Best selers
+        <h2 className="text-black text-[32px] not-italic font-normal leading-[normal]">
+          Best Sellers
         </h2>
-        <div className="h-[2px] w-[165px] bg-semiGray  max-sm:w-10"> </div>
+        <div className="h-[2px] w-[165px] bg-semiGray max-sm:w-10"></div>
       </div>
-      <div className="flex items-center justify-between  flex-wrap mt-[33px] gap-5 max-xl:justify-center">
-        <Flowers img={best1} name="Daisy" price={5} />
-        <Flowers img={best2} name="Sun flower" price={5} />
-        <Flowers img={best3} name="White Rose" price={5} />
-        <Flowers img={best4} name="Periwinkle" price={5} />
-      </div>
+
+      {/* Show loader while data is being fetched */}
+      {loading ? (
+        <div className="flex justify-center items-center mt-[33px]">
+          <div className="loader">Loading...</div>{" "}
+          {/* Replace this with your loader */}
+        </div>
+      ) : (
+        <div className="flex items-center justify-between flex-wrap mt-[33px] gap-5 max-xl:justify-center">
+          {bestSellers.map((flower) => (
+            <Flowers
+              key={flower._id}
+              img={flower.flowersPhoto}
+              name={flower.flowersName}
+              price={flower.flowersPrice}
+              flowerId={flower._id}
+            />
+          ))}
+        </div>
+      )}
     </div>
   );
 }
