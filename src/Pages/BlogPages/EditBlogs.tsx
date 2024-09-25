@@ -3,6 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import axios from "axios";
 import { RiseLoader } from "react-spinners"; // Import the loader
 import "../../components/Css/profile.css";
+import toast, { Toaster } from "react-hot-toast";
 
 interface BlogDetail {
   createdAt: string;
@@ -81,7 +82,7 @@ function EditBlogs() {
           },
         }
       );
-      alert("Blog updated successfully.");
+      toast.success("Blog updated successfully.");
     } catch (error) {
       console.error("Error updating blog:", error);
     }
@@ -89,6 +90,7 @@ function EditBlogs() {
 
   return (
     <div className="flex-1 w-full flex flex-col items-center justify-center p-4 mx-auto mt-10">
+      <Toaster position="top-right" reverseOrder={false} />{" "}
       <div className="max-w-[1440px] w-full flex flex-col items-start bg-white p-6 rounded-lg shadow-md">
         <div>
           <Link to={`/myblogs`} className="text-yellow">

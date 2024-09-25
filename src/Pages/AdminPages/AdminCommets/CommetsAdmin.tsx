@@ -3,6 +3,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import UserImg from "/assets/user-solid.svg";
+import toast, { Toaster } from "react-hot-toast";
 
 interface Comment {
   _id: string;
@@ -60,7 +61,7 @@ function CommetsAdmin() {
         },
       }
     );
-    alert("The comment has been deleted");
+    toast.success("The comment has been deleted");
     fetchAllComments();
   };
 
@@ -78,6 +79,7 @@ function CommetsAdmin() {
 
   return (
     <div className="flex-1 flex items-center justify-center mt-20 p-4">
+      <Toaster position="top-right" reverseOrder={false} />{" "}
       <div className="max-w-[1440px] w-full">
         <Link to={`/dashboard`} className="text-yellow">
           Go Back

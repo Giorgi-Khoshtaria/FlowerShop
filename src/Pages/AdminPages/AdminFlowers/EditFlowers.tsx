@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useState, useEffect, ChangeEvent } from "react";
+import toast, { Toaster } from "react-hot-toast";
 import { useParams, useNavigate, Link } from "react-router-dom";
 // import "../../components/Css/profile.css"; // Assuming this contains common styles if needed
 
@@ -76,8 +77,24 @@ function EditFlowers() {
           },
         }
       );
-      alert("Flower details updated successfully!");
-      navigate("/flowersAdmin");
+
+      toast
+        .promise(
+          new Promise((resolve) => {
+            toast.success("Flower details updated successfully!");
+            // Resolve the promise after 1.5 seconds to give the toast time to show
+            setTimeout(resolve, 1500);
+          }),
+          {
+            loading: " updating...",
+            success: "updated successful!",
+            error: "update failed",
+          }
+        )
+        .then(() => {
+          // After the toast is displayed, navigate to the home page
+          navigate("/flowersAdmin");
+        });
     } catch (error) {
       console.error("Error updating flower details:", error);
     }
@@ -85,6 +102,7 @@ function EditFlowers() {
 
   return (
     <div className="flex-1 w-full flex flex-col items-center justify-center p-4 mx-auto mt-10">
+      <Toaster position="top-right" reverseOrder={false} />{" "}
       <div className="max-w-[1440px] w-full flex flex-col items-start bg-white p-6 rounded-lg shadow-md">
         <Link to={`/flowersAdmin`} className="text-yellow ">
           Go Back

@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import toast, { Toaster } from "react-hot-toast";
 import { useParams, useNavigate, Link } from "react-router-dom";
 
 function EditCommentsPage() {
@@ -36,7 +37,7 @@ function EditCommentsPage() {
 
     // Validation for rating
     if (ratingNumber > 5) {
-      alert("Please enter a rating of 5 or less.");
+      toast.error("Please enter a rating of 5 or less.");
       return;
     } else if (ratingNumber < 1) {
       setRating("0"); // Reset to 0 if less than 1
@@ -53,8 +54,24 @@ function EditCommentsPage() {
           },
         }
       );
-      alert("Comment updated successfully!");
-      navigate("/comments"); // Redirect to comments list after update
+
+      toast
+        .promise(
+          new Promise((resolve) => {
+            toast.success("Comment updated successfully!");
+            // Resolve the promise after 1.5 seconds to give the toast time to show
+            setTimeout(resolve, 1500);
+          }),
+          {
+            loading: "Comment updating...",
+            success: "Comment updated successfully!",
+            error: "Comment update failed",
+          }
+        )
+        .then(() => {
+          // After the toast is displayed, navigate to the home page
+          navigate("/comments"); // Redirect to comments list after update
+        });
     } catch (error) {
       console.error(error);
     }
@@ -62,6 +79,8 @@ function EditCommentsPage() {
 
   return (
     <div className="flex-1 flex items-center justify-center mt-20 p-4">
+      {" "}
+      <Toaster position="top-right" reverseOrder={false} />{" "}
       <div className="max-w-[1440px] w-full">
         <Link to={`/comments`} className="text-yellow">
           Go Back

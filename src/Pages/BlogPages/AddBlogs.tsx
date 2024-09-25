@@ -1,6 +1,7 @@
 import { ChangeEvent, useEffect, useRef, useState } from "react";
 import { useAuth } from "../../Contexts/AuthContext";
 import axios from "axios";
+import toast, { Toaster } from "react-hot-toast";
 
 function AddBlogs() {
   const { userData } = useAuth();
@@ -89,7 +90,7 @@ function AddBlogs() {
   const handleSubmit = async () => {
     // Check if all required fields are filled
     if (!blogData.blogName || !blogData.blogDescription || !blogImage) {
-      alert("All fields, including the image, must be filled out.");
+      toast.error("All fields, including the image, must be filled out.");
       return; // Stop submission if validation fails
     }
 
@@ -117,17 +118,17 @@ function AddBlogs() {
 
       if (response.status === 201) {
         resetFields(); // Reset all fields on success
-        console.log("Blog created successfully:", response.data);
-        alert("Blog created successfully:");
+        toast.success("Blog created successfully:");
       }
     } catch (error) {
       console.error("Error creating blog:", error);
-      alert("There was an error creating the blog.");
+      toast.error("There was an error creating the blog.");
     }
   };
 
   return (
     <div className="flex-1 flex items-center justify-center mt-20 p-4">
+      <Toaster position="top-right" reverseOrder={false} />{" "}
       <div className="max-w-[1440px] w-full flex flex-col items-start bg-white p-6 rounded-lg shadow-md">
         <h1 className="text-3xl font-semibold text-yellow mb-6">Add Blog</h1>
 

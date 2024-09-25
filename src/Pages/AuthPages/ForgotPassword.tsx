@@ -21,14 +21,14 @@ function ForgotPassword() {
     e.preventDefault();
 
     if (!validatePassword(newPassword)) {
-      alert(
+      toast.error(
         "Password must contain at least 8 characters, including uppercase, lowercase, numbers, and special characters."
       );
       return;
     }
 
     if (newPassword !== confirmPassword) {
-      alert("Passwords do not match.");
+      toast.error("Passwords do not match.");
       return;
     }
 

@@ -7,6 +7,7 @@ import whiteStar from "/assets/whiteStar.svg";
 import { useAuth } from "../../Contexts/AuthContext";
 import { useCart } from "../../Contexts/CartContext";
 import { RiseLoader } from "react-spinners";
+import toast, { Toaster } from "react-hot-toast";
 // import user from "/assets/user-solid.svg";
 
 interface Flower {
@@ -72,11 +73,10 @@ function FlowersDetails() {
         quantity: 1, // Set default quantity as 1 for the initial order
       };
       addToCart(cartItem);
-      console.log(cartItem, "Cart item");
-      alert("Item successfully added to cart");
+      toast.success("Item successfully added to cart");
     } else {
       // If the item is already in the cart, show an alert
-      alert("This item is already in your cart.");
+      toast.error("This item is already in your cart.");
     }
   };
 
@@ -109,7 +109,7 @@ function FlowersDetails() {
 
   const handleRatingChange = (value: number) => {
     if (value > 5) {
-      alert("Rating cannot be more than 5.");
+      toast.error("Rating cannot be more than 5.");
     } else {
       return;
     }
@@ -130,7 +130,7 @@ function FlowersDetails() {
           },
         }
       );
-      console.log("add flowers data");
+
       setMoreFlowerdata(response.data);
     } catch (error) {
       console.error("Error fetching flowers data:", error);
@@ -226,16 +226,16 @@ function FlowersDetails() {
           setShowCommentModal(false);
           getCommentsByFlowerId();
           setRating(0);
-          alert("Review submitted!");
+          toast.success("Review submitted!");
         }
       } catch (error) {
         console.error("Error submitting review:", error);
-        alert("Error submitting review");
+        toast.error("Error submitting review");
       }
     } else {
       setShowCommentModal(false);
       setRating(0);
-      alert("you need to login first");
+      toast.error("you need to login first");
     }
   };
 
@@ -248,6 +248,7 @@ function FlowersDetails() {
   }
   return (
     <div className="flex-1 flex items-center justify-center mt-20 p-4">
+      <Toaster position="top-right" reverseOrder={false} />
       <div className="max-w-[1440px] w-full">
         <div className="bg-white  rounded-md pt-12 pr-[37px] pb-12 pl-12 flex items-top justify-between gap-14  max-[960px]:flex-col ">
           <div>

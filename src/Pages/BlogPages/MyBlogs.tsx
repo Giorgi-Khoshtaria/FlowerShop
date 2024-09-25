@@ -3,6 +3,7 @@ import { useAuth } from "../../Contexts/AuthContext";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { RiseLoader } from "react-spinners"; // Import the loader
+import toast, { Toaster } from "react-hot-toast";
 
 interface BlogDetails {
   _id: string;
@@ -59,15 +60,16 @@ function MyBlogs() {
       setBlogsByUser((prevBlogs) =>
         prevBlogs.filter((blog) => blog._id !== blogId)
       );
-      alert("Blog deleted successfully.");
+      toast.success("Blog deleted successfully.");
     } catch (error) {
       console.error("Error deleting blog:", error);
-      alert("Failed to delete the blog. Please try again.");
+      toast.error("Failed to delete the blog. Please try again.");
     }
   };
 
   return (
     <div className="flex-1 flex items-center justify-center">
+      <Toaster position="top-right" reverseOrder={false} />{" "}
       <div className="max-w-[1440px] w-full mt-10">
         <h1 className="text-2xl font-semibold mb-4">
           {userData?.user?.username}'s Uploaded Blogs

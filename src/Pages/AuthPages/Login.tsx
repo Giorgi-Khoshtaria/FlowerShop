@@ -41,7 +41,7 @@ function Login() {
         // Clear input fields
         setUsername("");
         setPassword("");
-        console.log("Login successful, triggering toast...");
+
         // Show success alert only after user data and token are set
         toast
           .promise(

@@ -3,6 +3,7 @@ import { ChangeEvent, useRef, useState } from "react";
 import axios from "axios";
 import yellowStar from "/assets/yellowStar.svg";
 import whiteStar from "/assets/whiteStar.svg";
+import toast, { Toaster } from "react-hot-toast";
 
 function AddFlowers() {
   const [photo, setPhoto] = useState<string | null>(null);
@@ -30,7 +31,7 @@ function AddFlowers() {
     e.preventDefault();
 
     if (rating === null || rating > 5) {
-      alert("Rating cannot exceed 5");
+      toast.error("Rating cannot exceed 5");
       setRating(null); // Reset rating
       setAlertMessage("");
       return;
@@ -59,7 +60,7 @@ function AddFlowers() {
       );
 
       if (response.status === 201) {
-        alert("Flower added successfully!");
+        toast.success("Flower added successfully!");
 
         // Clear form after successful submission
         setPhoto(null);
@@ -72,10 +73,10 @@ function AddFlowers() {
           fileInputRef.current.value = "";
         }
       } else {
-        alert("Failed to submit the form.");
+        toast.error("Failed to submit the form.");
       }
     } catch (error) {
-      alert("An error occurred while submitting the form.");
+      toast.error("An error occurred while submitting the form.");
     }
   };
 
@@ -92,6 +93,7 @@ function AddFlowers() {
 
   return (
     <div className="flex-1 flex justify-center items-center p-4 w-full">
+      <Toaster position="top-right" reverseOrder={false} />{" "}
       <div className="flex justify-between items-center p-6 bg-white max-w-[1440px] w-full">
         <div className="w-full">
           <h2 className="text-xl font-bold mb-4 text-yellow">Add New Flower</h2>
