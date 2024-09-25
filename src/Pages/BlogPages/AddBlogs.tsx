@@ -13,6 +13,7 @@ function AddBlogs() {
   const [blogData, setBlogData] = useState({
     blogName: "",
     blogDescription: "",
+    blogPhrase: "",
     blogUserId: userId,
     blogUserName: userData?.user.username,
   });
@@ -45,6 +46,7 @@ function AddBlogs() {
     setBlogData({
       blogName: "",
       blogDescription: "",
+      blogPhrase: "",
       blogUserId: userId,
       blogUserName: userData?.user.username,
     });
@@ -97,6 +99,7 @@ function AddBlogs() {
     const formData = {
       blogName: blogData.blogName,
       blogDescription: blogData.blogDescription,
+      blogPhrase: blogData.blogPhrase,
       blogUserId: blogData.blogUserId,
       blogImage: blogImage,
       blogUserImage: blogUserImage,
@@ -174,6 +177,22 @@ function AddBlogs() {
             id="blogName"
             name="blogName"
             value={blogData.blogName}
+            onChange={handleChange}
+            className="w-full border border-semiGray p-3 rounded-lg text-yellow-600"
+          />
+        </div>
+        <div className="mb-6 w-full">
+          <label
+            htmlFor="BlogPhrase"
+            className="text-lg font-medium text-yellow mb-2"
+          >
+            Blog Phrase
+          </label>
+          <input
+            type="text"
+            id="blogPhrase"
+            name="blogPhrase"
+            value={blogData.blogPhrase}
             onChange={handleChange}
             className="w-full border border-semiGray p-3 rounded-lg text-yellow-600"
           />

@@ -10,6 +10,7 @@ interface BlogDetail {
   blogImage: string;
   blogName: string;
   blogDescription: string;
+  blogPhrase: string;
   likes: number;
   views: number;
 }
@@ -51,6 +52,7 @@ const BlogDetails: React.FC = () => {
         ) : (
           <div className="p-10 max-w-[1440px] w-full">
             <div className="flex items-center mb-6">
+              {" "}
               {blog?.blogUserImage ? (
                 <img
                   src={blog?.blogUserImage}
@@ -74,8 +76,11 @@ const BlogDetails: React.FC = () => {
               alt="Blog"
               className="w-[800px] h-auto mb-6"
             />
-            <h1 className="text-3xl font-bold mb-4">{blog?.blogName}</h1>
-            <p className="text-lg mb-4">{blog?.blogDescription}</p>
+            <h1 className="text-3xl font-bold mb-4">Title:{blog?.blogName}</h1>
+            <p className="text-lg mb-4">
+              Phrase: <span className="italic">"{blog?.blogPhrase}"</span>{" "}
+            </p>
+            <p className="text-lg mb-4">Description:{blog?.blogDescription}</p>
             <div className="flex items-center gap-4">
               <p className="flex items-center">
                 {/* Views Icon */}

@@ -6,8 +6,8 @@ interface BlogsProps {
   date: string; // Pass the createdAt date as a string
   mainImage: string;
   blogName: string;
-  description: string;
 
+  phrase: string;
   view: number;
   blogId: string;
   blogUserId: string;
@@ -27,7 +27,8 @@ const BlogsSection: React.FC<BlogsProps> = ({
   date,
   mainImage,
   blogName,
-  description,
+  // description,
+  phrase,
   blogId,
   blogUserId,
 
@@ -36,7 +37,7 @@ const BlogsSection: React.FC<BlogsProps> = ({
   const formattedDate = formatDate(date); // Format the date here
 
   return (
-    <div className="bg-white pb-[18px] w-[360px]">
+    <div className="bg-white pb-[18px] w-[360px] px-1">
       <div className=" w-[360px] flex items-center justify-between px-[10px] pt-[10px]">
         <div className="flex items-center justify-start gap-2">
           <div>
@@ -76,8 +77,8 @@ const BlogsSection: React.FC<BlogsProps> = ({
         <h2 className="mb-[13px] w-[255px] text-xl not-italic font-normal leading-[normal] text-black">
           {blogName}
         </h2>
-        <p className="w-[354px] text-base not-italic font-normal leading-[25px] text-darkGray">
-          {description}
+        <p className="text-base italic font-normal leading-[25px] text-darkGray">
+          "{phrase ? phrase : "No phrase available"} "
         </p>
       </div>
 

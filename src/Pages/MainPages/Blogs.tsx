@@ -11,6 +11,7 @@ interface Blog {
   blogImage: string;
   blogName: string;
   blogDescription: string;
+  blogPhrase: string;
   blogUserName: string;
   blogUserId: string;
   likes: number;
@@ -70,10 +71,10 @@ function Blogs() {
                       date={blog.createdAt}
                       mainImage={blog.blogImage}
                       blogName={blog.blogName}
-                      description={blog.blogDescription}
                       blogId={blog._id}
                       blogUserId={blog.blogUserId}
                       view={blog.views}
+                      phrase={blog.blogPhrase} // This should now correctly reference blogPhrase
                     />
                   </div>
                 ))}

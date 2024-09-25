@@ -170,6 +170,7 @@ function Users() {
           <table className="min-w-full table-auto">
             <thead className="bg-gray-200">
               <tr>
+                <th className="py-2 px-4 text-left">UserId</th>
                 <th className="py-2 px-4 text-left">Profile</th>
                 <th className="py-2 px-4 text-left">Name</th>
                 <th className="py-2 px-4 text-left">UserName</th>
@@ -185,6 +186,9 @@ function Users() {
               {filteredUsers ? (
                 filteredUsers.map((user) => (
                   <tr key={user._id} className="border-b border-gray-300">
+                    <td className="py-2 px-4">
+                      #{user._id || "No Information"}
+                    </td>
                     <td className="py-2 px-4">
                       <img
                         src={
