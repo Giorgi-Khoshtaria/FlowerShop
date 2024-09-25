@@ -29,7 +29,7 @@ interface Comment {
 
 function FlowersDetails() {
   const { flowersId } = useParams();
-  const { userData, logout } = useAuth();
+  const { userData, logout, isAuthenticated } = useAuth();
   const userId = userData?.user.id;
   const [rating, setRating] = useState<number | null>(null);
   const [flowerDetails, setFlowerDetails] = useState({
@@ -156,49 +156,45 @@ function FlowersDetails() {
     }
   };
   const fetchProfileData = async () => {
-    try {
-      const token = localStorage.getItem("token");
-      const response = await axios.get(
-        `http://localhost:3005/api/user/getUserProfile/${userId}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-          params: {
-            userId,
-          },
-        }
-      );
-      if (response.data.profilePicture) {
-        setUserPicture(response.data.profilePicture);
-      } else {
-        setUserPicture(null); // Ensure no image is set if none exists
-      }
-    } catch (error) {
-      if (axios.isAxiosError(error)) {
-        if (error.response?.status === 401) {
-          logout();
+    if (isAuthenticated === true) {
+      try {
+        const token = localStorage.getItem("token");
+        const response = await axios.get(
+          `http://localhost:3005/api/user/getUserProfile/${userId}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+            params: {
+              userId,
+            },
+          }
+        );
+        if (response.data.profilePicture) {
+          setUserPicture(response.data.profilePicture);
         } else {
-          console.error("Error fetching user profile data:", error.message);
+          setUserPicture(null); // Ensure no image is set if none exists
         }
-      } else {
-        console.error("Unexpected error:", error);
+      } catch (error) {
+        if (axios.isAxiosError(error)) {
+          if (error.response?.status === 401) {
+            logout();
+          } else {
+            console.error("Error fetching user profile data:", error.message);
+          }
+        } else {
+          console.error("Unexpected error:", error);
+        }
       }
     }
   };
 
   const getCommentsByFlowerId = async () => {
     try {
-      const token = localStorage.getItem("token");
       const response = await axios.get(
-        `http://localhost:3005/api/reviews/getCommentsByFlowerId/${flowersId}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
+        `http://localhost:3005/api/reviews/getCommentsByFlowerId/${flowersId}`
       );
-      console.log(getComments);
+
       setGetComments(response.data);
     } catch (error) {
       console.error(error, "error fetching comments");
@@ -206,34 +202,40 @@ function FlowersDetails() {
   };
 
   const submitReview = async () => {
-    const token = localStorage.getItem("token");
-    try {
-      const response = await axios.post(
-        `http://localhost:3005/api/reviews/addComment`,
-        {
-          userId: userId,
-          userImage: userPicture,
-          userName: userData?.user.username,
-          flowersId: flowersId,
-          flowersName: flowerDetails.flowersName,
-          comment: comment,
-          rating: rating,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
+    if (isAuthenticated === true) {
+      const token = localStorage.getItem("token");
+      try {
+        const response = await axios.post(
+          `http://localhost:3005/api/reviews/addComment`,
+          {
+            userId: userId,
+            userImage: userPicture,
+            userName: userData?.user.username,
+            flowersId: flowersId,
+            flowersName: flowerDetails.flowersName,
+            comment: comment,
+            rating: rating,
           },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        if (response.status === 201) {
+          setShowCommentModal(false);
+          getCommentsByFlowerId();
+          setRating(0);
+          alert("Review submitted!");
         }
-      );
-      if (response.status === 201) {
-        setShowCommentModal(false);
-        getCommentsByFlowerId();
-        setRating(0);
-        alert("Review submitted!");
+      } catch (error) {
+        console.error("Error submitting review:", error);
+        alert("Error submitting review");
       }
-    } catch (error) {
-      console.error("Error submitting review:", error);
-      alert("Error submitting review");
+    } else {
+      setShowCommentModal(false);
+      setRating(0);
+      alert("you need to login first");
     }
   };
 

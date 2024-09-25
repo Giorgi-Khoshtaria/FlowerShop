@@ -31,14 +31,22 @@ function Login() {
       );
 
       if (response.status === 200) {
+        // Save the token in localStorage first
+        localStorage.setItem("token", response.data.token);
+
+        // Set user context and login state
         login(response.data);
         setUserData(response.data);
-        console.log(response.data);
-        setPassword("");
+
+        // Clear input fields
         setUsername("");
+        setPassword("");
+        console.log("Login successful, triggering toast...");
+        // Show success alert only after user data and token are set
         toast.success("Login successful!");
-        localStorage.setItem("token", response.data.token);
-        navigate("/home"); // Redirect the user to the home page
+
+        // Redirect to the home page
+        navigate("/home");
       }
     } catch (error: unknown) {
       if (error instanceof AxiosError) {

@@ -22,14 +22,8 @@ function BestSellers() {
 
   const fetchFlowersData = async () => {
     try {
-      const token = localStorage.getItem("token");
       const response = await axios.get(
-        `http://localhost:3005/api/flowers/getFlowers`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
+        `http://localhost:3005/api/flowers/getFlowers`
       );
       setFlowersData(response.data);
       setLoading(false); // Stop loading once data is fetched

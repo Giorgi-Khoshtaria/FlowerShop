@@ -22,14 +22,8 @@ const BlogDetails: React.FC = () => {
   useEffect(() => {
     const fetchBlogDetails = async () => {
       try {
-        const token = localStorage.getItem("token");
         const response = await axios.get(
-          `http://localhost:3005/api/blogs/getBlog/${blogid}`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
+          `http://localhost:3005/api/blogs/getBlog/${blogid}`
         );
         setBlog(response.data);
       } catch (error) {

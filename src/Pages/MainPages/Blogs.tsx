@@ -27,14 +27,8 @@ function Blogs() {
 
   const fetchBlogs = async () => {
     try {
-      const token = localStorage.getItem("token");
       const response = await axios.get(
-        "http://localhost:3005/api/blogs/getBlogs",
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
+        "http://localhost:3005/api/blogs/getBlogs"
       );
       console.log(response.data); // Change this to log the fetched data
       setBlogData(response.data);

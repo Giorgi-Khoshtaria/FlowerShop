@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
+import { RiseLoader } from "react-spinners";
 
 interface UserDetails {
   id: string;
@@ -38,14 +39,8 @@ function UserProfile() {
 
   const fetchBlogUserDetails = async () => {
     try {
-      const token = localStorage.getItem("token");
       const response = await axios.get(
-        `http://localhost:3005/api/user/getUserDetails/${blogUserId}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
+        `http://localhost:3005/api/user/getUserDetails/${blogUserId}`
       );
       setUserDetailsData(response.data);
     } catch (error) {
@@ -57,14 +52,8 @@ function UserProfile() {
 
   const fetchBlogsByBlogUserId = async () => {
     try {
-      const token = localStorage.getItem("token");
       const response = await axios.get(
-        `http://localhost:3005/api/blogs/getBlogByUserId/${blogUserId}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
+        `http://localhost:3005/api/blogs/getBlogByUserId/${blogUserId}`
       );
       setBlogsByUser(response.data);
     } catch (error) {
@@ -83,7 +72,14 @@ function UserProfile() {
 
         {/* Loading User Details */}
         {isLoadingUserDetails ? (
-          <p>Loading user details...</p>
+          <div className="flex w-full items-center justify-center">
+            <RiseLoader
+              color="#FF8F52"
+              margin={0}
+              size={15}
+              speedMultiplier={1}
+            />
+          </div>
         ) : (
           userDetailsData && (
             <div className="w-full flex items-start justify-between gap-6 max-sm:flex-col-reverse">
@@ -154,13 +150,19 @@ function UserProfile() {
 
       {/* Blog Section */}
       <div className="max-w-[1440px] w-full mt-10">
+        {/* Loading Blogs */}{" "}
         <h1 className="text-2xl font-semibold mb-4">
           {userDetailsData?.username}'s Uploaded Blogs
         </h1>
-
-        {/* Loading Blogs */}
         {isLoadingBlogs ? (
-          <p>Loading blogs...</p>
+          <div className="flex items-center justify-center">
+            <RiseLoader
+              color="#FF8F52"
+              margin={0}
+              size={15}
+              speedMultiplier={1}
+            />
+          </div>
         ) : blogsByUser.length === 0 ? (
           <p>No blogs available for this user</p>
         ) : (
