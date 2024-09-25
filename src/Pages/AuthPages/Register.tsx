@@ -47,11 +47,27 @@ function Register() {
 
       // Handle successful response
       if (response.status === 201) {
-        toast.success("Registration successful!");
         setEmail("");
         setUsername("");
         setPassword("");
-        navigate("/login"); // Redirect the user to the login page
+        toast
+          .promise(
+            new Promise((resolve) => {
+              toast.success("Registration successful!");
+              // Resolve the promise after 1.5 seconds to give the toast time to show
+              setTimeout(resolve, 1500);
+            }),
+            {
+              loading: "Registering...",
+              success: "Registration successful!",
+              error: "Registration  failed",
+            }
+          )
+          .then(() => {
+            // After the toast is displayed, navigate to the home page
+            navigate("/login");
+          });
+        // Redirect the user to the login page
       }
     } catch (error: unknown) {
       // Handle error response

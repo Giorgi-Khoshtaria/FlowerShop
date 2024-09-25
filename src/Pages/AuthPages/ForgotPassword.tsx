@@ -49,14 +49,29 @@ function ForgotPassword() {
       );
 
       if (response.status === 200) {
-        toast.success("Password updated successfully!");
         setUsername("");
         setNewPassword("");
         setConfirmPassword("");
 
-        // Navigate to the login page after a short delay to allow the user to see the success message
+        toast
+          .promise(
+            new Promise((resolve) => {
+              toast.success("Password updated successfully!");
+              // Resolve the promise after 1.5 seconds to give the toast time to show
+              setTimeout(resolve, 1500);
+            }),
+            {
+              loading: "Password updating...",
+              success: "Password updated successfully!",
+              error: "Password update failed",
+            }
+          )
+          .then(() => {
+            // After the toast is displayed, navigate to the home page
+            navigate("/login");
+          });
 
-        navigate("/login");
+        // Navigate to the login page after a short delay to allow the user to see the success message
       }
     } catch (error: unknown) {
       if (error instanceof AxiosError) {

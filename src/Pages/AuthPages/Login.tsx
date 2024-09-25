@@ -43,10 +43,23 @@ function Login() {
         setPassword("");
         console.log("Login successful, triggering toast...");
         // Show success alert only after user data and token are set
-        toast.success("Login successful!");
-
-        // Redirect to the home page
-        navigate("/home");
+        toast
+          .promise(
+            new Promise((resolve) => {
+              toast.success("Login successful!");
+              // Resolve the promise after 1.5 seconds to give the toast time to show
+              setTimeout(resolve, 1500);
+            }),
+            {
+              loading: "Logging in...",
+              success: "Login successful!",
+              error: "Login failed",
+            }
+          )
+          .then(() => {
+            // After the toast is displayed, navigate to the home page
+            navigate("/home");
+          });
       }
     } catch (error: unknown) {
       if (error instanceof AxiosError) {

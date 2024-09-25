@@ -5,7 +5,7 @@ import axios from "axios";
 
 function Cart() {
   const { cartItems, clearCart } = useCart();
-  const { userData } = useAuth();
+  const { userData, isAuthenticated } = useAuth();
   const userId = userData?.user.id;
 
   const total = cartItems.reduce(
@@ -14,37 +14,41 @@ function Cart() {
   );
 
   const fetchCheckout = async () => {
-    const checkoutData = {
-      cartItems: cartItems.map((item) => ({
-        flowerId: item.id,
-        flowerImage: item.mainImage,
-        flowerName: item.name,
-        flowerPrice: Number(item.price), // Ensure price is a number
-        flowerQuantity: item.quantity,
-      })),
-      userId: userId,
-    };
+    if (isAuthenticated === true) {
+      const checkoutData = {
+        cartItems: cartItems.map((item) => ({
+          flowerId: item.id,
+          flowerImage: item.mainImage,
+          flowerName: item.name,
+          flowerPrice: Number(item.price), // Ensure price is a number
+          flowerQuantity: item.quantity,
+        })),
+        userId: userId,
+      };
 
-    try {
-      const token = localStorage.getItem("token");
-      const response = await axios.post(
-        `http://localhost:3005/api/checkout/addcheckout`,
-        checkoutData,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+      try {
+        const token = localStorage.getItem("token");
+        const response = await axios.post(
+          `http://localhost:3005/api/checkout/addcheckout`,
+          checkoutData,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        // Show an alert if checkout was successful
+        if (response.status === 201) {
+          alert("Checkout successful! Your order has been placed.");
+          clearCart();
         }
-      );
-
-      // Show an alert if checkout was successful
-      if (response.status === 201) {
-        alert("Checkout successful! Your order has been placed.");
-        clearCart();
+      } catch (error) {
+        console.error("Error during checkout:", error);
+        alert("There was an error during checkout. Please try again.");
       }
-    } catch (error) {
-      console.error("Error during checkout:", error);
-      alert("There was an error during checkout. Please try again.");
+    } else {
+      alert("login first");
     }
   };
 
