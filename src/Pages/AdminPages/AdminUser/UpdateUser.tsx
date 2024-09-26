@@ -27,12 +27,12 @@ function UpdateUser() {
   useEffect(() => {
     fetchUser();
   }, [id]);
-
+  const apiUrl = import.meta.env.VITE_API_URL;
   const fetchUser = async () => {
     try {
       const token = localStorage.getItem("token");
       const response = await axios.get(
-        `http://localhost:3005/api/user/getUserProfile/${id}`,
+        `${apiUrl}/api/user/getUserProfile/${id}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -63,7 +63,7 @@ function UpdateUser() {
     try {
       const token = localStorage.getItem("token");
       await axios.put(
-        `http://localhost:3005/api/user/updateUser/${id}`,
+        `${apiUrl}/api/user/updateUser/${id}`,
         {
           ...userInfo,
           password, // Include password in the update if provided

@@ -27,13 +27,16 @@ function Header() {
   useEffect(() => {
     setShowUser(false);
   }, [location]);
+
+  const apiUrl = import.meta.env.VITE_API_URL;
+
   useEffect(() => {
     if (isAuthenticated && userId) {
       // Fetch the user profile data using Axios
       const fetchUserProfile = async () => {
         try {
           const response = await axios.get(
-            `http://localhost:3005/api/user/getUserProfile/${userId}`,
+            `${apiUrl}/api/user/getUserProfile/${userId}`,
             {
               params: {
                 userId,

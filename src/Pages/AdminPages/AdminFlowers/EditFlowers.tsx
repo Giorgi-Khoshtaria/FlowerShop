@@ -19,12 +19,12 @@ function EditFlowers() {
   useEffect(() => {
     fetchFlowersDetails();
   }, [id]);
-
+  const apiUrl = import.meta.env.VITE_API_URL;
   const fetchFlowersDetails = async () => {
     try {
       const token = localStorage.getItem("token");
       const response = await axios.get(
-        `http://localhost:3005/api/flowers/getFlowersById/${id}`,
+        `${apiUrl}/api/flowers/getFlowersById/${id}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -68,7 +68,7 @@ function EditFlowers() {
     try {
       const token = localStorage.getItem("token");
       await axios.put(
-        `http://localhost:3005/api/flowers/updateFlower/${id}`,
+        `${apiUrl}/api/flowers/updateFlower/${id}`,
         updatedFlower,
         {
           headers: {

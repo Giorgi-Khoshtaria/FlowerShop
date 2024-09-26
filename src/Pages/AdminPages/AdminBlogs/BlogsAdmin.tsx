@@ -31,18 +31,15 @@ function BlogsAdmin() {
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value);
   };
-
+  const apiUrl = import.meta.env.VITE_API_URL;
   const fetchAllBlogs = async () => {
     try {
       const token = localStorage.getItem("token");
-      const response = await axios.get(
-        `http://localhost:3005/api/blogs/getBlogs`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const response = await axios.get(`${apiUrl}/api/blogs/getBlogs`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       setBlogs(response.data);
     } catch (error) {
       console.error("Error fetching blogs:", error);
@@ -69,7 +66,7 @@ function BlogsAdmin() {
 
   const handleDeleteblog = async (id: string) => {
     const token = localStorage.getItem("token");
-    await axios.delete(`http://localhost:3005/api/blogs/deleteBlog/${id}`, {
+    await axios.delete(`${apiUrl}/api/blogs/deleteBlog/${id}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },

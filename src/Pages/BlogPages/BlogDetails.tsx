@@ -19,12 +19,12 @@ const BlogDetails: React.FC = () => {
   const { blogid } = useParams<{ blogid: string }>();
   const [blog, setBlog] = useState<BlogDetail | null>(null);
   const [loading, setLoading] = useState(true);
-
+  const apiUrl = import.meta.env.VITE_API_URL;
   useEffect(() => {
     const fetchBlogDetails = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3005/api/blogs/getBlog/${blogid}`
+          `${apiUrl}/api/blogs/getBlog/${blogid}`
         );
         setBlog(response.data);
       } catch (error) {

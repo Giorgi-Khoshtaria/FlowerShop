@@ -19,12 +19,11 @@ function BestSellers() {
   useEffect(() => {
     fetchFlowersData();
   }, []);
+  const apiUrl = import.meta.env.VITE_API_URL;
 
   const fetchFlowersData = async () => {
     try {
-      const response = await axios.get(
-        `http://localhost:3005/api/flowers/getFlowers`
-      );
+      const response = await axios.get(`${apiUrl}/api/flowers/getFlowers`);
       setFlowersData(response.data);
       setLoading(false); // Stop loading once data is fetched
     } catch (error) {

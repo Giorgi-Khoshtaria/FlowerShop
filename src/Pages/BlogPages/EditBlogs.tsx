@@ -17,14 +17,14 @@ function EditBlogs() {
   const [blog, setBlog] = useState<BlogDetail | null>(null);
   const [base64Image, setBase64Image] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true); // Loading state
-
+  const apiUrl = import.meta.env.VITE_API_URL;
   useEffect(() => {
     const fetchBlogDetails = async () => {
       setIsLoading(true); // Set loading to true
       try {
         const token = localStorage.getItem("token");
         const response = await axios.get(
-          `http://localhost:3005/api/blogs/getBlog/${blogId}`,
+          `${apiUrl}/api/blogs/getBlog/${blogId}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -72,16 +72,12 @@ function EditBlogs() {
 
     try {
       const token = localStorage.getItem("token");
-      await axios.put(
-        `http://localhost:3005/api/blogs/updateBlog/${blogId}`,
-        updatedBlog,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      await axios.put(`${apiUrl}/api/blogs/updateBlog/${blogId}`, updatedBlog, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      });
       toast.success("Blog updated successfully.");
     } catch (error) {
       console.error("Error updating blog:", error);

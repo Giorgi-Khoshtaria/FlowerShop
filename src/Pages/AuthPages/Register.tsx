@@ -17,7 +17,7 @@ function Register() {
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+{}|:<>?~=\\[\];',./-])[A-Za-z\d!@#$%^&*()_+{}|:<>?~=\\[\];',./-]{8,25}$/;
     return passwordRegex.test(password);
   };
-
+  const apiUrl = import.meta.env.VITE_API_URL;
   // Handle form submission
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -32,7 +32,7 @@ function Register() {
     try {
       const token = localStorage.getItem("token");
       const response = await axios.post(
-        "http://localhost:3005/api/user/signup",
+        `${apiUrl}/api/user/signup`,
         {
           email,
           username,

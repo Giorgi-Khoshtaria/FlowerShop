@@ -12,12 +12,12 @@ function EditCommentsPage() {
   useEffect(() => {
     fetchCommentById();
   }, []);
-
+  const apiUrl = import.meta.env.VITE_API_URL;
   const fetchCommentById = async () => {
     try {
       const token = localStorage.getItem("token");
       const response = await axios.get(
-        `http://localhost:3005/api/reviews/getCommentById/${id}`,
+        `${apiUrl}/api/reviews/getCommentById/${id}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -46,7 +46,7 @@ function EditCommentsPage() {
     try {
       const token = localStorage.getItem("token");
       await axios.put(
-        `http://localhost:3005/api/reviews/updateComment/${id}`,
+        `${apiUrl}/api/reviews/updateComment/${id}`,
         { comment: commentText, rating: ratingNumber <= 5 ? ratingNumber : 5 },
         {
           headers: {

@@ -32,18 +32,15 @@ function CommetsAdmin() {
   useEffect(() => {
     fetchAllComments();
   }, []);
-
+  const apiUrl = import.meta.env.VITE_API_URL;
   const fetchAllComments = async () => {
     try {
       const token = localStorage.getItem("token");
-      const response = await axios.get(
-        `http://localhost:3005/api/reviews/getCommets`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const response = await axios.get(`${apiUrl}/api/reviews/getCommets`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       console.log("Fetched comments:", response.data);
       setComments(response.data);
     } catch (error) {
@@ -53,14 +50,11 @@ function CommetsAdmin() {
 
   const handleDeleteComment = async (id: string) => {
     const token = localStorage.getItem("token");
-    await axios.delete(
-      `http://localhost:3005/api/reviews/deleteComment/${id}`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+    await axios.delete(`${apiUrl}/api/reviews/deleteComment/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     toast.success("The comment has been deleted");
     fetchAllComments();
   };

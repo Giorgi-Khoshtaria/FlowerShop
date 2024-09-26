@@ -25,12 +25,10 @@ function LatestBlogs() {
   useEffect(() => {
     fetchBlogs();
   }, []);
-
+  const apiUrl = import.meta.env.VITE_API_URL;
   const fetchBlogs = async () => {
     try {
-      const response = await axios.get(
-        "http://localhost:3005/api/blogs/getBlogs"
-      );
+      const response = await axios.get(`${apiUrl}/api/blogs/getBlogs`);
       setBlogData(response.data); // Set fetched blogs
       setLoading(false); // Stop loading once data is fetched
     } catch (error) {

@@ -12,7 +12,7 @@ function Cart() {
     (acc, item) => acc + Number(item.price) * item.quantity, // Ensure price is a number
     0
   );
-
+  const apiUrl = import.meta.env.VITE_API_URL;
   const fetchCheckout = async () => {
     if (isAuthenticated === true) {
       const checkoutData = {
@@ -29,7 +29,7 @@ function Cart() {
       try {
         const token = localStorage.getItem("token");
         const response = await axios.post(
-          `http://localhost:3005/api/checkout/addcheckout`,
+          `${apiUrl}/api/checkout/addcheckout`,
           checkoutData,
           {
             headers: {

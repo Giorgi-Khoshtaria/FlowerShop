@@ -17,7 +17,7 @@ function AddFlowers() {
 
   // Reference for the file input
   const fileInputRef = useRef<HTMLInputElement | null>(null);
-
+  const apiUrl = import.meta.env.VITE_API_URL;
   const handleRatingChange = (value: number) => {
     if (value > 5) {
       setAlertMessage("Rating cannot be more than 5.");
@@ -49,7 +49,7 @@ function AddFlowers() {
     try {
       const token = localStorage.getItem("token");
       const response = await axios.post(
-        "http://localhost:3005/api/flowers/addFlowers",
+        `${apiUrl}/api/flowers/addFlowers`,
         formData,
         {
           headers: {

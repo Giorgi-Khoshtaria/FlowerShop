@@ -21,12 +21,12 @@ function MyBlogs() {
   useEffect(() => {
     fetchBlogsByBlogUserId();
   }, [userData]);
-
+  const apiUrl = import.meta.env.VITE_API_URL;
   const fetchBlogsByBlogUserId = async () => {
     try {
       const token = localStorage.getItem("token");
       const response = await axios.get(
-        `http://localhost:3005/api/blogs/getBlogByUserId/${userData?.user.id}`,
+        `${apiUrl}/api/blogs/getBlogByUserId/${userData?.user.id}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -49,14 +49,11 @@ function MyBlogs() {
 
     try {
       const token = localStorage.getItem("token");
-      await axios.delete(
-        `http://localhost:3005/api/blogs/deleteBlog/${blogId}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      await axios.delete(`${apiUrl}/api/blogs/deleteBlog/${blogId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       setBlogsByUser((prevBlogs) =>
         prevBlogs.filter((blog) => blog._id !== blogId)
       );

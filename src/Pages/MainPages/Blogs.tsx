@@ -24,12 +24,10 @@ function Blogs() {
   useEffect(() => {
     fetchBlogs();
   }, []);
-
+  const apiUrl = import.meta.env.VITE_API_URL;
   const fetchBlogs = async () => {
     try {
-      const response = await axios.get(
-        "http://localhost:3005/api/blogs/getBlogs"
-      );
+      const response = await axios.get(`${apiUrl}/api/blogs/getBlogs`);
       console.log(response.data); // Change this to log the fetched data
       setBlogData(response.data);
     } catch (error) {

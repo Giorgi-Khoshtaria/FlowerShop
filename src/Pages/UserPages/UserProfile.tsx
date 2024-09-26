@@ -36,11 +36,11 @@ function UserProfile() {
     fetchBlogUserDetails();
     fetchBlogsByBlogUserId();
   }, [blogUserId]);
-
+  const apiUrl = import.meta.env.VITE_API_URL;
   const fetchBlogUserDetails = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:3005/api/user/getUserDetails/${blogUserId}`
+        `${apiUrl}/api/user/getUserDetails/${blogUserId}`
       );
       setUserDetailsData(response.data);
     } catch (error) {
@@ -53,7 +53,7 @@ function UserProfile() {
   const fetchBlogsByBlogUserId = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:3005/api/blogs/getBlogByUserId/${blogUserId}`
+        `${apiUrl}/api/blogs/getBlogByUserId/${blogUserId}`
       );
       setBlogsByUser(response.data);
     } catch (error) {

@@ -57,12 +57,13 @@ function AddBlogs() {
       fileInputRef.current.value = ""; // Clears the file input
     }
   };
+  const apiUrl = import.meta.env.VITE_API_URL;
   useEffect(() => {
     const fetchProfileData = async () => {
       try {
         const token = localStorage.getItem("token");
         const response = await axios.get(
-          `http://localhost:3005/api/user/getUserProfile/${userId}`,
+          `${apiUrl}/api/user/getUserProfile/${userId}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -109,7 +110,7 @@ function AddBlogs() {
     try {
       const token = localStorage.getItem("token");
       const response = await axios.post(
-        "http://localhost:3005/api/blogs/addBlog",
+        `${apiUrl}/api/blogs/addBlog`,
         formData,
         {
           headers: {

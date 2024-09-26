@@ -35,18 +35,15 @@ function Users() {
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value);
   };
-
+  const apiUrl = import.meta.env.VITE_API_URL;
   const fetchAllUsers = async () => {
     try {
       const token = localStorage.getItem("token");
-      const response = await axios.get(
-        `http://localhost:3005/api/user/getAllUser`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const response = await axios.get(`${apiUrl}/api/user/getAllUser`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       setUserInfo(response.data);
     } catch (error) {
       console.error("Error fetching all users:", error);
@@ -58,7 +55,7 @@ function Users() {
       // Fetch user's blogs (assuming the API endpoint exists)
       const token = localStorage.getItem("token");
       const userBlogs = await axios.get(
-        `http://localhost:3005/api/blogs/getBlogByUserId/${id}`,
+        `${apiUrl}/api/blogs/getBlogByUserId/${id}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -66,34 +63,28 @@ function Users() {
         }
       );
 
-      const userComments = await axios.get(
-        `http://localhost:3005/api/reviews/getCommets`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const userComments = await axios.get(`${apiUrl}/api/reviews/getCommets`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       console.log("Fetched comments:", userComments.data);
       // setComments(userComments.data);
 
       // Delete all blogs for the user
       if (userBlogs.data.length > 0) {
         for (const blog of userBlogs.data) {
-          await axios.delete(
-            `http://localhost:3005/api/blogs/deleteBlog/${blog._id}`,
-            {
-              headers: {
-                Authorization: `Bearer ${token}`,
-              },
-            }
-          );
+          await axios.delete(`${apiUrl}/api/blogs/deleteBlog/${blog._id}`, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
         }
       }
       if (userComments.data.length > 0) {
         for (const comment of userComments.data) {
           await axios.delete(
-            `http://localhost:3005/api/reviews/deleteCommentByUserId/${comment.userId}`,
+            `${apiUrl}/api/reviews/deleteCommentByUserId/${comment.userId}`,
             {
               headers: {
                 Authorization: `Bearer ${token}`,
@@ -103,7 +94,7 @@ function Users() {
         }
       }
       // Once blogs are deleted, delete the user
-      await axios.delete(`http://localhost:3005/api/user/delateUser/${id}`, {
+      await axios.delete(`${apiUrl}/api/user/delateUser/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

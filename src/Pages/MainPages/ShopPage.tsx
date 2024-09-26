@@ -22,18 +22,15 @@ function ShopPage() {
   useEffect(() => {
     fetchFlowersData();
   }, []);
-
+  const apiUrl = import.meta.env.VITE_API_URL;
   const fetchFlowersData = async () => {
     try {
       const token = localStorage.getItem("token");
-      const response = await axios.get(
-        `http://localhost:3005/api/flowers/getFlowers`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const response = await axios.get(`${apiUrl}/api/flowers/getFlowers`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       setFlowersData(response.data);
     } catch (error) {
       console.error("Error fetching flowers data:", error);

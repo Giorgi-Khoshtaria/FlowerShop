@@ -11,14 +11,14 @@ function Login() {
   const [password, setPassword] = useState("");
   const { login, setUserData } = useAuth();
   const navigate = useNavigate(); // Initialize the navigate function
-
+  const apiUrl = import.meta.env.VITE_API_URL;
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     try {
       const token = localStorage.getItem("token");
       const response = await axios.post(
-        "http://localhost:3005/api/user/login",
+        `${apiUrl}/api/user/login`,
         {
           username,
           password,

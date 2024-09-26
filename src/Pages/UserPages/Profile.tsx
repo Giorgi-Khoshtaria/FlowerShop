@@ -25,14 +25,14 @@ function Profile() {
     logout();
     navigate("/home");
   };
-
+  const apiUrl = import.meta.env.VITE_API_URL;
   useEffect(() => {
     const fetchProfileData = async () => {
       setLoading(true); // Set loading to true when starting to fetch data
       try {
         const token = localStorage.getItem("token");
         const response = await axios.get(
-          `http://localhost:3005/api/user/getUserProfile/${userId}`,
+          `${apiUrl}/api/user/getUserProfile/${userId}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -110,19 +110,15 @@ function Profile() {
     setLoading(true); // Set loading to true when starting to save changes
     try {
       const token = localStorage.getItem("token");
-      await axios.post(
-        `http://localhost:3005/api/user/updateProfile/${userId}`,
-        formData,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-          params: {
-            userId,
-          },
-        }
-      );
+      await axios.post(`${apiUrl}/api/user/updateProfile/${userId}`, formData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        params: {
+          userId,
+        },
+      });
       alert("Profile updated successfully.");
     } catch (error) {
       console.error("Error updating profile:", error);

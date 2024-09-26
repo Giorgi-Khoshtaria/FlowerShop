@@ -35,13 +35,13 @@ const MyOrdersPage: React.FC = () => {
       fetchOrders();
     }
   }, [userId]);
-
+  const apiUrl = import.meta.env.VITE_API_URL;
   const fetchOrders = async () => {
     try {
       setLoading(true); // Set loading to true before the API call
       const token = localStorage.getItem("token");
       const response = await axios.get<Order[]>(
-        `http://localhost:3005/api/checkout/getOrdersByUserId/${userId}`,
+        `${apiUrl}/api/checkout/getOrdersByUserId/${userId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -61,7 +61,7 @@ const MyOrdersPage: React.FC = () => {
     try {
       const token = localStorage.getItem("token");
       await axios.delete<Order[]>(
-        `http://localhost:3005/api/checkout/detaleOrder/${orderId}`,
+        `${apiUrl}/api/checkout/detaleOrder/${orderId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
