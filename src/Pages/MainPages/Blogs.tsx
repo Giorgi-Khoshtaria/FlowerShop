@@ -14,7 +14,6 @@ interface Blog {
   blogPhrase: string;
   blogUserName: string;
   blogUserId: string;
-  likes: number;
   views: number;
 }
 

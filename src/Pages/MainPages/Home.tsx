@@ -1,5 +1,4 @@
 import BestSellers from "../../components/HomePageComponents/BestSellers";
-import Coments from "../../components/HomePageComponents/Coments";
 import HomePageHero from "../../components/HomePageComponents/HomePageHero";
 import LatestBlogs from "../../components/HomePageComponents/LatestBlogs";
 
@@ -10,7 +9,6 @@ function Home() {
         <HomePageHero />
         <BestSellers />
         <LatestBlogs />
-        <Coments />
       </div>
     </div>
   );
