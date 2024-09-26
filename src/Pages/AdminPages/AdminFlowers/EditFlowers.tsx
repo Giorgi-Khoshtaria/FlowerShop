@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useState, useEffect, ChangeEvent } from "react";
+import { useState, useEffect, ChangeEvent } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import { useParams, useNavigate, Link } from "react-router-dom";
 // import "../../components/Css/profile.css"; // Assuming this contains common styles if needed
