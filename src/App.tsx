@@ -28,6 +28,7 @@ import CommetsAdmin from "./Pages/AdminPages/AdminCommets/CommetsAdmin.tsx";
 import EditCommentsPage from "./Pages/AdminPages/AdminCommets/EditCommentsPage.tsx";
 import FlowersAdmin from "./Pages/AdminPages/AdminFlowers/FlowersAdmin.tsx";
 import EditFlowers from "./Pages/AdminPages/AdminFlowers/EditFlowers.tsx";
+import Contact from "./Pages/MainPages/Contact.tsx";
 
 const router = createBrowserRouter([
   {
@@ -53,6 +54,10 @@ const router = createBrowserRouter([
       {
         path: "/about",
         element: <About />,
+      },
+      {
+        path: "/contact",
+        element: <Contact />,
       },
       {
         path: "/profile",

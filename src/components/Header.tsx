@@ -32,13 +32,9 @@ function Header() {
       // Fetch the user profile data using Axios
       const fetchUserProfile = async () => {
         try {
-          const token = localStorage.getItem("token");
           const response = await axios.get(
             `http://localhost:3005/api/user/getUserProfile/${userId}`,
             {
-              headers: {
-                Authorization: `Bearer ${token}`,
-              },
               params: {
                 userId,
               },
@@ -103,7 +99,15 @@ function Header() {
                 to="/about"
                 className="text-xl font-normal hover:text-yellow"
               >
-                About
+                About Us
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/contact"
+                className="text-xl font-normal hover:text-yellow"
+              >
+                Contact Us
               </Link>
             </li>
           </ul>
@@ -299,6 +303,14 @@ function Header() {
                   onClick={showModal}
                 >
                   About
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/contact"
+                  className="text-xl font-normal hover:text-yellow"
+                >
+                  Contact Us
                 </Link>
               </li>
             </ul>
