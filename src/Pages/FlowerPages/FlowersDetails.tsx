@@ -95,6 +95,9 @@ function FlowersDetails() {
       setRendomFlower([]);
     }
   }, [moreFlowerdata, flowersId]);
+
+  const apiUrl = import.meta.env.VITE_API_URL;
+
   const handleRatingChange = (value: number) => {
     if (value > 5) {
       toast.error("Rating cannot be more than 5.");
@@ -108,7 +111,7 @@ function FlowersDetails() {
   const fetchFlowersData = async () => {
     try {
       const token = localStorage.getItem("token");
-      await axios.get(`http://localhost:3005/api/flowers/getFlowers`, {
+      await axios.get(`${apiUrl}/api/flowers/getFlowers`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -121,7 +124,7 @@ function FlowersDetails() {
     try {
       const token = localStorage.getItem("token");
       const response = await axios.get(
-        `http://localhost:3005/api/flowers/getFlowersById/${flowersId}`,
+        `${apiUrl}/api/flowers/getFlowersById/${flowersId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -140,7 +143,7 @@ function FlowersDetails() {
       try {
         const token = localStorage.getItem("token");
         const response = await axios.get(
-          `http://localhost:3005/api/user/getUserProfile/${userId}`,
+          `${apiUrl}/api/user/getUserProfile/${userId}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -171,7 +174,7 @@ function FlowersDetails() {
   const getCommentsByFlowerId = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:3005/api/reviews/getCommentsByFlowerId/${flowersId}`
+        `${apiUrl}/api/reviews/getCommentsByFlowerId/${flowersId}`
       );
       setGetComments(response.data);
     } catch (error) {
@@ -183,7 +186,7 @@ function FlowersDetails() {
       const token = localStorage.getItem("token");
       try {
         const response = await axios.post(
-          `http://localhost:3005/api/reviews/addComment`,
+          `${apiUrl}/api/reviews/addComment`,
           {
             userId: userId,
             userImage: userPicture,
