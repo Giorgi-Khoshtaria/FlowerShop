@@ -37,7 +37,7 @@ function FlowersDetails() {
     flowersRating: "",
   });
   const [loading, setLoading] = useState(true);
-  const [moreFlowerdata] = useState<Flower[]>([]);
+  const [moreFlowerdata, setMoreFlowerData] = useState<Flower[]>([]);
   const [showCommentModal, setShowCommentModal] = useState(false);
   const [userPicture, setUserPicture] = useState<string | null>();
   const [comment, setComment] = useState<string>("");
@@ -111,11 +111,12 @@ function FlowersDetails() {
   const fetchFlowersData = async () => {
     try {
       const token = localStorage.getItem("token");
-      await axios.get(`${apiUrl}/api/flowers/getFlowers`, {
+      const response = await axios.get(`${apiUrl}/api/flowers/getFlowers`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
+      setMoreFlowerData(response.data);
     } catch (error) {
       console.error("Error fetching flowers data:", error);
     }
